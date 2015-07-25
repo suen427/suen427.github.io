@@ -154,19 +154,6 @@ function createTableBody(){
 	}
 }
 
-//打乱arr的顺序
-function disOrder(arr){
-	var len = arr.length;
-	for ( var i = 0; i<len; i++){
-		var a=Math.floor(Math.random()*len);
-		var b=Math.floor(Math.random()*len);
-		var temp = arr[a];
-		arr[a]=arr[b];
-		arr[b]=temp;
-	}
-	return arr;
-}
-
 //获得某个时刻所在月份的天数
 function getDaysNumOfMonth(date){
 	var year = date.getFullYear(),
@@ -445,32 +432,42 @@ btn2.addEventListener('click',function(event){
 			work1 = 0,
 			work2 = 0,
 			work3 = 0,
-			work4 = 0;
+			work4 = 0,
+			continueWork = 0,
+			maxWork = 0,
+			flag = false;
 		for(var j=0; j<len; j=j+2){
 			switch(children[j+3].innerHTML){
 				case '岗1' :
-					work1++
+					work1++;
+					continueWork++;
 					break;
 				case '岗2' :
-					work2++
+					work2++;
+					continueWork++;
 					break;
 				case '岗3' :
-					work3++
+					work3++;
+					continueWork++;
 					break;
 				case '岗4' :
-					work4++
+					work4++;
+					continueWork++;
 					break;
 				case '-' :
 					rest++;
 					if(children[j+1].innerHTML=='-'){
 						dblrest++;
 					}
+					maxWork = maxWork<continueWork?continueWork:maxWork;
+					continueWork = 0;
 					break;
 			}
 		}
 		ps[i+1].innerHTML = names[i]+'&nbsp;&nbsp;&nbsp;'+work1+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+work2+
 				'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+work3+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
-				work4+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+rest+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+dblrest
+				work4+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+rest+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+dblrest+
+				'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+maxWork
 	}
 },false)
 
