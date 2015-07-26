@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录学习成长的点点滴滴]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://suen427.github.io//"/>
-  <updated>2015-07-25T15:28:05.274Z</updated>
+  <updated>2015-07-26T13:31:42.904Z</updated>
   <id>http://suen427.github.io//</id>
   
   <author>
@@ -16,11 +16,73 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[JavaScript作用域和作用域链]]></title>
+    <link href="http://suen427.github.io/2015/07/26/JavaScript%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/"/>
+    <id>http://suen427.github.io/2015/07/26/JavaScript作用域和作用域链/</id>
+    <published>2015-07-26T12:52:38.000Z</published>
+    <updated>2015-07-26T13:31:42.904Z</updated>
+    <content type="html"><![CDATA[<p>作用域（scope）是JavaScript最重要的概念之一，想要学好JavaScript就需要理解JavaScript作用域和作用域链的工作原理。</p>
+<h2 id="作用域">作用域</h2><p>所有编程语言都有作用域的概念。简单的说，作用域就是变量与函数的可访问范围，即作用域控制着变量与函数的可见性和生命周期。在程序设计语言中一般分几种作用域：全局作用域、局部作用域和块作用域。在JavaScript中没有块作用域。</p>
+<h3 id="全局作用域(Global_Scope)">全局作用域(Global Scope)</h3><p>在程序中的任何位置都能够访问到的对象具有全局作用域。</p>
+<ol>
+<li><p>一般在最外层函数外定义的变量具有全局作用域：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var a=<span class="string">"a"</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">doSomething</span></span>()&#123;</span><br><span class="line">    var b=<span class="string">"b"</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">innerSay</span></span>()&#123;</span><br><span class="line">        alert(b);</span><br><span class="line">    &#125;</span><br><span class="line">    innerSay();</span><br><span class="line">&#125;</span><br><span class="line">alert(a); // a</span><br><span class="line">alert(b); // undefinde</span><br><span class="line"><span class="keyword">do</span>Something(); //b</span><br><span class="line">innerSay() //脚本错误</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在JavaScript中未声明直接赋值的变量具有全局作用域：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">doSomething</span></span>()&#123;</span><br><span class="line">    var a=<span class="string">"a"</span>;</span><br><span class="line">    b= =<span class="string">"b"</span>;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">do</span>Something(); // a</span><br><span class="line">alert(b); // b</span><br><span class="line">alert(a); // 脚本错误</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在JavaScript中，window对象的属性也拥有全局作用域。</p>
+</li>
+</ol>
+<h3 id="局部作用域">局部作用域</h3><p>具有局部作用域的对象一般只能在一段代码内访问到，在JavaScript中通常是函数内部。如上面的例子，在函数内部定义的变量不能在函数外面访问到。</p>
+<h2 id="作用域链（Scope_Chain）">作用域链（Scope Chain）</h2><blockquote>
+<p>在JavaScript中，函数也是对象，实际上，JavaScript里一切都是对象。函数对象和其它对象一样，拥有可以通过代码访问的属性和一系列仅供JavaScript引擎访问的内部属性。其中一个内部属性是[[Scope]]，由ECMA-262标准第三版定义，该内部属性包含了函数被创建的作用域中对象的集合，这个集合被称为函数的作用域链，它决定了哪些数据能被函数访问。</p>
+</blockquote>
+<p>JavaScript的作用域和C语言的作用域有些不同。在JavaScript中，函数的作用域在函数定义的时候就已经确定了，和函数调用的位置没有关系。</p>
+<blockquote>
+<p>JavaScript中的函数运行在它们被定义的作用域里,而不是它们被执行的作用域里</p>
+</blockquote>
+<p>任何执行上下文时刻的作用域, 都是由作用域链(scope chain)来实现.在一个函数被定义的时候, 会将它定义时刻的scope chain链接到这个函数对象的[[scope]]属性.在一个函数对象被调用的时候，会创建一个活动对象(也就是一个对象), 然后对于每一个函数的形参，都命名为该活动对象的命名属性, 然后将这个活动对象做为此时的作用域链(scope chain)最前端, 并将这个函数对象的[[scope]]加入到scope chain中.</p>
+<p>在函数执行过程中，没遇到一个变量，都会经历一次标识符解析过程以决定从哪里获取和存储数据。该过程从作用域链头部，也就是从活动对象开始搜索，查找同名的标识符，如果找到了就使用这个标识符对应的变量，如果没找到继续搜索作用域链中的下一个对象，如果搜索完所有对象都未找到，则认为该标识符未定义。函数执行过程中，每个标识符都要经历这样的搜索过程。<br><img src="http://pic002.cnblogs.com/images/2011/36987/2011090414444843.jpg" alt=""></p>
+<h3 id="作用域链和代码优化">作用域链和代码优化</h3><p>从作用域链的结构可以看出，在运行期上下文的作用域链中，标识符所在的位置越深，读写速度就会越慢。如上图所示，因为全局变量总是存在于运行期上下文作用域链的最末端，因此在标识符解析的时候，查找全局变量是最慢的。所以，在编写代码的时候应尽量少使用全局变量，尽可能使用局部变量。一个好的经验法则是：如果一个跨作用域的对象被引用了一次以上，则先把它存储到局部变量里再使用。例如下面的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">changeColor</span></span>()&#123;</span><br><span class="line">    document.getElementById(<span class="string">"btnChange"</span>).onclick=<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        document.getElementById(<span class="string">"targetCanvas"</span>).style.backgroundColor=<span class="string">"red"</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个函数引用了两次全局变量document，查找该变量必须遍历整个作用域链，直到最后在全局对象中才能找到。这段代码可以重写如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">changeColor</span></span>()&#123;</span><br><span class="line">    var doc=document;</span><br><span class="line">    doc.getElementById(<span class="string">"btnChange"</span>).onclick=<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        doc.getElementById(<span class="string">"targetCanvas"</span>).style.backgroundColor=<span class="string">"red"</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码比较简单，重写后不会显示出巨大的性能提升，但是如果程序中有大量的全局变量被从反复访问，那么重写后的代码性能会有显著改善</p>
+<h3 id="改变作用域链">改变作用域链</h3><p>函数每次执行时对应的运行期上下文都是独一无二的，所以多次调用同一个函数就会导致创建多个运行期上下文，当函数执行完毕，执行上下文会被销毁。每一个运行期上下文都和一个作用域链关联。一般情况下，在运行期上下文运行的过程中，其作用域链只会被 with 语句和 catch 语句影响。</p>
+<p>with会降低代码执行效率。</p>
+<p>另外一个会改变作用域链的是try-catch语句中的catch语句。当try代码块中发生错误时，执行过程会跳转到catch语句，然后把异常对象推入一个可变对象并置于作用域的头部。在catch代码块内部，函数的所有局部变量将会被放在第二个作用域链对象中。</p>
+<p>请注意，一旦catch语句执行完毕，作用域链机会返回到之前的状态。try-catch语句在代码调试和异常处理中非常有用，因此不建议完全避免。你可以通过优化代码来减少catch语句对性能的影响。一个很好的模式是将错误委托给一个函数处理。</p>
+<h2 id="Javascript的预编译">Javascript的预编译</h2><p>JavaScript是一种脚本语言，JavaScript执行过程是一种翻译执行的过程，那么JavaScript的执行中, 有没有类似编译的过程呢?其实JavaScript是有预编译过程的。看下面的例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">alert(typeof eve); //<span class="keyword">function</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">eve</span></span>() &#123;</span><br><span class="line">   alert(<span class="string">'I am Laruence'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>在eve声明前调用它是有意义的。JavaScript在执行每一段JavaScript代码之前, 都会首先处理var关键字和function定义式(函数定义式和函数表达式)。在调用函数执行之前, 会首先创建一个活动对象, 然后搜寻这个函数中的局部变量定义,和函数定义, 将变量名和函数名都做为这个活动对象的同名属性; 对于局部变量定义,变量的值会在真正执行的时候才计算, 此时只是简单的赋为undefined。</p>
+<p><strong>对于函数的定义需要注意</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">alert(typeof eve); //结果:<span class="keyword">function</span></span><br><span class="line">alert(typeof walle); //结果:undefined</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">eve</span></span>() &#123; //函数定义式</span><br><span class="line">	alert(<span class="string">'I am Laruence'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">var walle = <span class="function"><span class="title">function</span></span>() &#123; //函数表达式</span><br><span class="line">&#125;</span><br><span class="line">alert(typeof walle); //结果:<span class="keyword">function</span></span><br></pre></td></tr></table></figure></p>
+<p>函数定义式和函数表达式是不同, 对于函数定义式, 会将函数定义提前，而函数表达式, 会在执行过程中才计算</p>
+<p>JavaScript在执行<strong>每一段</strong>代码JavaScript时会进行预编译，看下面的例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    alert(typeof eve); //结果:undefined</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">eve</span></span>() &#123;</span><br><span class="line">        alert(<span class="string">'I am Laruence'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>一个问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var name = <span class="string">'laruence'</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">echo</span></span>() &#123;</span><br><span class="line">    alert(name);</span><br><span class="line">    var name = <span class="string">'eve'</span>;</span><br><span class="line">    alert(name);</span><br><span class="line">    alert(age);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">echo</span>();</span><br></pre></td></tr></table></figure></p>
+<p>三次alert()输出的内容分别是什么？</p>
+<p>很多人可能马上给出的答案是这样的：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">laruence</span><br><span class="line">eve</span><br><span class="line">[脚本出错]</span><br></pre></td></tr></table></figure></p>
+<p>但其实, 运行结果应该是:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">undefined</span><br><span class="line">eve</span><br><span class="line">[脚本出错]</span><br></pre></td></tr></table></figure></p>
+<p>因为会以为在echo中, 第一次alert的时候, 会取到全局变量name的值, 而第二次值被局部变量name覆盖, 所以第二次alert是’eve’. 而age属性没有定义, 所以脚本会出错。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[JavaScript作用域和作用域链 | Sun's Blog]]>
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://suen427.github.io/tags/JavaScript/"/>
+    
+      <category term="作用域" scheme="http://suen427.github.io/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/"/>
+    
+      <category term="作用域链" scheme="http://suen427.github.io/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/"/>
+    
+      <category term="WEB前端" scheme="http://suen427.github.io/categories/WEB%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[通过Hexo与github搭建一个静态的个人博客]]></title>
     <link href="http://suen427.github.io/2015/07/25/how-tob-build-a-blog/"/>
     <id>http://suen427.github.io/2015/07/25/how-tob-build-a-blog/</id>
     <published>2015-07-25T11:52:38.000Z</published>
-    <updated>2015-07-25T15:28:05.274Z</updated>
+    <updated>2015-07-26T06:16:07.054Z</updated>
     <content type="html"><![CDATA[<p>这篇博客记录了我搭建我的个人博客的全过程。网络上有很多关于搭建个人博客的文章，但很多文章都不全，这里完整的记录了我搭建这儿静态博客的过程，希望可以帮助有相同需求的人。</p>
 <h2 id="前言">前言</h2><p>为什么要写博客，因为我想就下自己在学习和生活中的点点滴滴。以前学习很多东西，看一两遍就记住了。但是最近发现自己的记性没有以前好了，所以就想到了建个博客。一来可以把自己学习经验和生活感触写下来，二来是可以和大家分享自己的那么一点点有用的东西。</p>
 <p>为什么要开博客？可以看看cnFeat的这篇<a href="http://zhuanlan.zhihu.com/cnfeat/19743861" target="_blank" rel="external">《为什么你要写博客？》</a></p>
@@ -37,9 +99,7 @@
 </ol>
 <p>hexo可以帮助生成静态页面。</p>
 <h2 id="GitHub_Pages是什么？">GitHub Pages是什么？</h2><p>GitHub Pages本用于介绍托管在GitHub上的项目， 不过，由于他的空间免费稳定，用来做搭建一个博客再好不过了。</p>
-<blockquote>
 <p>github Pages可以被认为是用户编写的、托管在github上的静态网页。<br><img src="http://cnfeat.qiniudn.com/1.png" alt=""></p>
-</blockquote>
 <h2 id="购买域名">购买域名</h2><p>只推荐上godaddy购买，安全，而且可以使用支付宝。</p>
 <p>教程（截止至2014年5月10日）如下</p>
 <p><strong>1、查你想要的域名；</strong><br><img src="http://cnfeat.qiniudn.com/2.png" alt=""></p>
@@ -52,9 +112,9 @@
 <p><strong>5、结算。</strong>登录或注册界面，填完必要的信息之后，选择用支付宝结算。<br><img src="http://cnfeat.qiniudn.com/7.png" alt=""><br>如果以上的教程如果不够清晰，可以参照这一份<a href="http://www.admin5.com/article/20131014/527495.shtml" target="_blank" rel="external">《2013年10月新版godaddy域名注册图文教程》</a>。</p>
 <p><strong>6、检查。</strong>结算后，重新登录，去「My Account」，域名已经显示在你的账户了。<br><img src="http://cnfeat.qiniudn.com/8.png" alt=""></p>
 <p><strong>7、补充一些注意事项：</strong></p>
-<p>—输入优惠码没有优惠或者优惠幅度较低，请清除浏览器cookies再尝试；<br>—如果没有支付宝支付选项，有可能是使用的优惠码不支持支付宝，请重新清除浏览器cookies再尝试；<br>—注册时用户填写信息时一定要输入正确的邮箱名字，否则修改十分麻烦。<br>—买完域名之后一定要记得去自己的邮箱查看激活邮件，否则域名激活不了。</p>
-<h2 id="安装所需软件">安装所需软件</h2><p>安装下来软件：<br>—{Node.js](<a href="http://nodejs.org/" target="_blank" rel="external">http://nodejs.org/</a>)<br>—<a href="http://git-scm.com/" target="_blank" rel="external">Git</a></p>
-<h2 id="打开Git">打开Git</h2><p>可以通过下面两种方式打开Git：<br>—Windows开始菜单的快捷方式it Bash<br>！<a href="http://cnfeat.qiniudn.com/9.jpg" target="_blank" rel="external"></a><br>—鼠标右键打开Git Bash<br><img src="http://cnfeat.qiniudn.com/s10.jpg" alt=""></p>
+<p>-输入优惠码没有优惠或者优惠幅度较低，请清除浏览器cookies再尝试；<br>-如果没有支付宝支付选项，有可能是使用的优惠码不支持支付宝，请重新清除浏览器cookies再尝试；<br>-注册时用户填写信息时一定要输入正确的邮箱名字，否则修改十分麻烦。<br>-买完域名之后一定要记得去自己的邮箱查看激活邮件，否则域名激活不了。</p>
+<h2 id="安装所需软件">安装所需软件</h2><p>安装下来软件：<br>-{Node.js](<a href="http://nodejs.org/" target="_blank" rel="external">http://nodejs.org/</a>)<br>-<a href="http://git-scm.com/" target="_blank" rel="external">Git</a></p>
+<h2 id="打开Git">打开Git</h2><p>可以通过下面两种方式打开Git：<br>-Windows开始菜单的快捷方式it Bash<br>！<a href="http://cnfeat.qiniudn.com/9.jpg" target="_blank" rel="external"></a><br>-鼠标右键打开Git Bash<br><img src="http://cnfeat.qiniudn.com/s10.jpg" alt=""></p>
 <h2 id="验证Node-js是否安装成功">验证Node.js是否安装成功</h2><p>在Windows下win+R打开运行，输入cmd回车<br><img src="" alt=""><br>打开命令行窗口<br><img src="" alt=""><br>在命令行窗口输入node回车，出现下面的提示表示安装成功<br><img src="" alt=""></p>
 <h2 id="注册Github">注册Github</h2><p>访问：<a href="http://www.github.com" target="_blank" rel="external">www.github.com</a></p>
 <p>注册你的username和邮箱，邮箱十分重要，GitHub上很多通知都是通过邮箱的。</p>
@@ -71,9 +131,9 @@
 <p>注意：输入密码的时候没有*字样的，你直接输入就可以了。</p>
 <p>最后看到这样的界面，就成功设置ssh key了：<br><img src="http://cnfeat.qiniudn.com/11.png" alt=""></p>
 <h3 id="添加SSH_Key到GitHub">添加SSH Key到GitHub</h3><p>在本机设置SSH Key之后，需要添加到GitHub上，以完成SSH链接的设置。</p>
-<p>—打开本地C:\Documents and Settings\Administrator.ssh\id_rsa.pub文件。此文件里面内容为刚才生成人密钥。如果看不到这个文件，你需要设置显示隐藏文件。准确的复制这个文件的内容，才能保证设置的成功。</p>
-<p>—登陆github系统。点击右上角的 Account Settings—-&gt;SSH Public keys —-&gt; add another public keys</p>
-<p>—把你本地生成的密钥复制到里面（key文本框中）， 点击 add key 就ok了<br><img src="http://cnfeat.qiniudn.com/s12.jpg" alt=""></p>
+<p>-打开本地C:\Documents and Settings\Administrator.ssh\id_rsa.pub文件。此文件里面内容为刚才生成人密钥。如果看不到这个文件，你需要设置显示隐藏文件。准确的复制这个文件的内容，才能保证设置的成功。</p>
+<p>-登陆github系统。点击右上角的 Account Settings—-&gt;SSH Public keys —-&gt; add another public keys</p>
+<p>-把你本地生成的密钥复制到里面（key文本框中）， 点击 add key 就ok了<br><img src="http://cnfeat.qiniudn.com/s12.jpg" alt=""></p>
 <h3 id="测试">测试</h3><p>可以输入下面的命令，看看设置是否成功，git@github.com的部分不要修改：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure></p>
 <p>如果是下面的反馈：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host <span class="string">'github.com (207.97.227.239)'</span> can<span class="string">'t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span></span><br></pre></td></tr></table></figure></p>
 <p>不要紧张，输入yes就好，然后会看到：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi cnfeat! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure></p>

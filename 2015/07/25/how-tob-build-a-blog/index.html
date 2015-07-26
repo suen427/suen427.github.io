@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://cnfeat.qiniudn.com/17.jpg">
 <meta property="og:image" content="http://cnfeat.qiniudn.com/18.jpg">
 <meta property="og:image" content="http://cnfeat.qiniudn.com/19.jpg">
-<meta property="og:updated_time" content="2015-07-25T15:28:05.274Z">
+<meta property="og:updated_time" content="2015-07-26T06:16:07.054Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过Hexo与github搭建一个静态的个人博客">
 <meta name="twitter:description" content="通过Hexo与github搭建一个静态博客 | Sun&apos;s Blog">
@@ -134,9 +134,7 @@
 </ol>
 <p>hexo可以帮助生成静态页面。</p>
 <h2 id="GitHub_Pages是什么？">GitHub Pages是什么？</h2><p>GitHub Pages本用于介绍托管在GitHub上的项目， 不过，由于他的空间免费稳定，用来做搭建一个博客再好不过了。</p>
-<blockquote>
 <p>github Pages可以被认为是用户编写的、托管在github上的静态网页。<br><img src="http://cnfeat.qiniudn.com/1.png" alt=""></p>
-</blockquote>
 <h2 id="购买域名">购买域名</h2><p>只推荐上godaddy购买，安全，而且可以使用支付宝。</p>
 <p>教程（截止至2014年5月10日）如下</p>
 <p><strong>1、查你想要的域名；</strong><br><img src="http://cnfeat.qiniudn.com/2.png" alt=""></p>
@@ -149,9 +147,9 @@
 <p><strong>5、结算。</strong>登录或注册界面，填完必要的信息之后，选择用支付宝结算。<br><img src="http://cnfeat.qiniudn.com/7.png" alt=""><br>如果以上的教程如果不够清晰，可以参照这一份<a href="http://www.admin5.com/article/20131014/527495.shtml" target="_blank" rel="external">《2013年10月新版godaddy域名注册图文教程》</a>。</p>
 <p><strong>6、检查。</strong>结算后，重新登录，去「My Account」，域名已经显示在你的账户了。<br><img src="http://cnfeat.qiniudn.com/8.png" alt=""></p>
 <p><strong>7、补充一些注意事项：</strong></p>
-<p>—输入优惠码没有优惠或者优惠幅度较低，请清除浏览器cookies再尝试；<br>—如果没有支付宝支付选项，有可能是使用的优惠码不支持支付宝，请重新清除浏览器cookies再尝试；<br>—注册时用户填写信息时一定要输入正确的邮箱名字，否则修改十分麻烦。<br>—买完域名之后一定要记得去自己的邮箱查看激活邮件，否则域名激活不了。</p>
-<h2 id="安装所需软件">安装所需软件</h2><p>安装下来软件：<br>—{Node.js](<a href="http://nodejs.org/" target="_blank" rel="external">http://nodejs.org/</a>)<br>—<a href="http://git-scm.com/" target="_blank" rel="external">Git</a></p>
-<h2 id="打开Git">打开Git</h2><p>可以通过下面两种方式打开Git：<br>—Windows开始菜单的快捷方式it Bash<br>！<a href="http://cnfeat.qiniudn.com/9.jpg" target="_blank" rel="external"></a><br>—鼠标右键打开Git Bash<br><img src="http://cnfeat.qiniudn.com/s10.jpg" alt=""></p>
+<p>-输入优惠码没有优惠或者优惠幅度较低，请清除浏览器cookies再尝试；<br>-如果没有支付宝支付选项，有可能是使用的优惠码不支持支付宝，请重新清除浏览器cookies再尝试；<br>-注册时用户填写信息时一定要输入正确的邮箱名字，否则修改十分麻烦。<br>-买完域名之后一定要记得去自己的邮箱查看激活邮件，否则域名激活不了。</p>
+<h2 id="安装所需软件">安装所需软件</h2><p>安装下来软件：<br>-{Node.js](<a href="http://nodejs.org/" target="_blank" rel="external">http://nodejs.org/</a>)<br>-<a href="http://git-scm.com/" target="_blank" rel="external">Git</a></p>
+<h2 id="打开Git">打开Git</h2><p>可以通过下面两种方式打开Git：<br>-Windows开始菜单的快捷方式it Bash<br>！<a href="http://cnfeat.qiniudn.com/9.jpg" target="_blank" rel="external"></a><br>-鼠标右键打开Git Bash<br><img src="http://cnfeat.qiniudn.com/s10.jpg" alt=""></p>
 <h2 id="验证Node-js是否安装成功">验证Node.js是否安装成功</h2><p>在Windows下win+R打开运行，输入cmd回车<br><img src="" alt=""><br>打开命令行窗口<br><img src="" alt=""><br>在命令行窗口输入node回车，出现下面的提示表示安装成功<br><img src="" alt=""></p>
 <h2 id="注册Github">注册Github</h2><p>访问：<a href="http://www.github.com" target="_blank" rel="external">www.github.com</a></p>
 <p>注册你的username和邮箱，邮箱十分重要，GitHub上很多通知都是通过邮箱的。</p>
@@ -168,9 +166,9 @@
 <p>注意：输入密码的时候没有*字样的，你直接输入就可以了。</p>
 <p>最后看到这样的界面，就成功设置ssh key了：<br><img src="http://cnfeat.qiniudn.com/11.png" alt=""></p>
 <h3 id="添加SSH_Key到GitHub">添加SSH Key到GitHub</h3><p>在本机设置SSH Key之后，需要添加到GitHub上，以完成SSH链接的设置。</p>
-<p>—打开本地C:\Documents and Settings\Administrator.ssh\id_rsa.pub文件。此文件里面内容为刚才生成人密钥。如果看不到这个文件，你需要设置显示隐藏文件。准确的复制这个文件的内容，才能保证设置的成功。</p>
-<p>—登陆github系统。点击右上角的 Account Settings—-&gt;SSH Public keys —-&gt; add another public keys</p>
-<p>—把你本地生成的密钥复制到里面（key文本框中）， 点击 add key 就ok了<br><img src="http://cnfeat.qiniudn.com/s12.jpg" alt=""></p>
+<p>-打开本地C:\Documents and Settings\Administrator.ssh\id_rsa.pub文件。此文件里面内容为刚才生成人密钥。如果看不到这个文件，你需要设置显示隐藏文件。准确的复制这个文件的内容，才能保证设置的成功。</p>
+<p>-登陆github系统。点击右上角的 Account Settings—-&gt;SSH Public keys —-&gt; add another public keys</p>
+<p>-把你本地生成的密钥复制到里面（key文本框中）， 点击 add key 就ok了<br><img src="http://cnfeat.qiniudn.com/s12.jpg" alt=""></p>
 <h3 id="测试">测试</h3><p>可以输入下面的命令，看看设置是否成功，git@github.com的部分不要修改：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure></p>
 <p>如果是下面的反馈：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host <span class="string">'github.com (207.97.227.239)'</span> can<span class="string">'t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span></span><br></pre></td></tr></table></figure></p>
 <p>不要紧张，输入yes就好，然后会看到：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi cnfeat! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure></p>
@@ -281,6 +279,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2015/07/26/JavaScript作用域和作用域链/" title="JavaScript作用域和作用域链">
+  <strong>上一篇：</strong><br/>
+  <span>
+  JavaScript作用域和作用域链</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2015/07/25/hello-world/"  title="我的第一篇博客">
@@ -318,6 +324,10 @@
 		<ul>
 		
 		  
+			<li><a href="/categories/WEB前端/" title="WEB前端">WEB前端<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/建站/" title="建站">建站<sup>1</sup></a></li>
 		  
 		
@@ -335,7 +345,15 @@
 			
 		
 			
-				<li><a href="/tags/Hello-World/" title="Hello World">Hello World<sup>1</sup></a></li>
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/作用域/" title="作用域">作用域<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
 			
 		
 			
@@ -344,6 +362,10 @@
 		
 			
 				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hello-World/" title="Hello World">Hello World<sup>1</sup></a></li>
 			
 		
 		</ul>
