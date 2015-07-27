@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录学习成长的点点滴滴]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://suen427.github.io//"/>
-  <updated>2015-07-26T16:17:20.565Z</updated>
+  <updated>2015-07-27T12:47:17.687Z</updated>
   <id>http://suen427.github.io//</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[sublime text3打开文件，中文乱码问题解决办法]]></title>
+    <link href="http://suen427.github.io/2015/07/28/sublime%20text3%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%EF%BC%8C%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>http://suen427.github.io/2015/07/28/sublime text3打开文件，中文乱码问题解决办法/</id>
+    <published>2015-07-27T16:12:23.000Z</published>
+    <updated>2015-07-27T12:47:17.687Z</updated>
+    <content type="html"><![CDATA[<ol>
+<li>首先要确保本机sublime已经有安装包管理器，如果没有，安装方法：<a href="http://blog.chinaunix.net/uid-12014716-id-4269991.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-12014716-id-4269991.html</a> 文中的第一步：安装包管理器；</li>
+<li>安装乱码处理插件：<br>调用ctrl+shift+p,输入：install package，回车，在稍后弹出的安装包框中搜索：ConvertToUTF8或者GBK Encoding Support，选择点击安装；<br>从此带有中文的文件打开就不会有乱码了。<br><img src="http://blog.chinaunix.net/attachment/201407/14/12014716_1405307154qrnd.jpg" alt=""></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[sublime中文乱码问题解决办法 | Sun's Blog]]>
+    
+    </summary>
+    
+      <category term="sublime" scheme="http://suen427.github.io/tags/sublime/"/>
+    
+      <category term="乱码" scheme="http://suen427.github.io/tags/%E4%B9%B1%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[JavaScript原型及原型链]]></title>
