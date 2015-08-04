@@ -212,7 +212,7 @@
     <link href="http://suen427.github.io/2015/07/25/how-tob-build-a-blog/"/>
     <id>http://suen427.github.io/2015/07/25/how-tob-build-a-blog/</id>
     <published>2015-07-25T11:52:38.000Z</published>
-    <updated>2015-08-04T12:51:25.540Z</updated>
+    <updated>2015-08-04T12:54:09.343Z</updated>
     <content type="html"><![CDATA[<p>这篇博客记录了我搭建我的个人博客的全过程。网络上有很多关于搭建个人博客的文章，但很多文章都不全，这里完整的记录了我搭建这儿静态博客的过程，希望可以帮助有相同需求的人。</p>
 <h2 id="前言">前言</h2><p>为什么要写博客，因为我想就下自己在学习和生活中的点点滴滴。以前学习很多东西，看一两遍就记住了。但是最近发现自己的记性没有以前好了，所以就想到了建个博客。一来可以把自己学习经验和生活感触写下来，二来是可以和大家分享自己的那么一点点有用的东西。</p>
 <p>为什么要开博客？可以看看cnFeat的这篇<a href="http://zhuanlan.zhihu.com/cnfeat/19743861" target="_blank" rel="external">《为什么你要写博客？》</a></p>
@@ -255,7 +255,7 @@
 </ul>
 <h2 id="打开Git">打开Git</h2><p>可以通过下面两种方式打开Git：</p>
 <ul>
-<li>Windows开始菜单的快捷方式it Bash<br>！<a href="http://7xkn13.com1.z0.glb.clouddn.com/7-25-9.jpg" target="_blank" rel="external"></a></li>
+<li>Windows开始菜单的快捷方式it Bash<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-9.jpg" alt=""></li>
 <li>鼠标右键打开Git Bash<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-s10.jpg" alt=""></li>
 </ul>
 <h2 id="验证Node-js是否安装成功">验证Node.js是否安装成功</h2><p>在Windows下win+R打开运行，输入cmd回车<br><img src="" alt=""><br>打开命令行窗口<br><img src="" alt=""><br>在命令行窗口输入node回车，出现下面的提示表示安装成功<br><img src="" alt=""></p>
