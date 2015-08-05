@@ -81,6 +81,102 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/08/05/JavaScript-closure2/" title="JavaScript闭包（closure）学习笔记（2）" itemprop="url">JavaScript闭包（closure）学习笔记（2）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-04T16:52:38.000Z" itemprop="datePublished"> 发表于 2015-08-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="闭包的三种实现">闭包的三种实现</h2><ul>
+<li><p>with语句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with(obj)&#123;</span><br><span class="line">    //这里是对象闭包</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数体</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">	//函数闭包</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>catch语句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">//...</span><br><span class="line">&#125; catch(e) &#123;</span><br><span class="line">//catch闭包 但IE里不行</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>一个例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> User( properties ) &#123;    </span><br><span class="line">    //这里一定要声明一个变量来指向当前的instance    </span><br><span class="line">    var objthis = this;    </span><br><span class="line">    <span class="keyword">for</span> ( var i <span class="keyword">in</span> properties ) &#123;    </span><br><span class="line">        (<span class="function"><span class="title">function</span></span>()&#123;    </span><br><span class="line">                //在闭包内，t每次都是新的，而 properties[i] 的值是<span class="keyword">for</span>里面的    </span><br><span class="line">                var t = properties[i];    </span><br><span class="line">                objthis[ <span class="string">"get"</span> + i ] = <span class="function"><span class="title">function</span></span>() &#123;<span class="built_in">return</span> t;&#125;;    </span><br><span class="line">                objthis[ <span class="string">"set"</span> + i ] = <span class="keyword">function</span>(val) &#123;t = val;&#125;;    </span><br><span class="line">        &#125;)();     </span><br><span class="line">    &#125;    </span><br><span class="line">&#125;    </span><br><span class="line">     </span><br><span class="line">//测试代码    </span><br><span class="line">var user = new User(&#123;    </span><br><span class="line">    name: <span class="string">"Bob"</span>,    </span><br><span class="line">    age: <span class="number">44</span>    </span><br><span class="line">&#125;);    </span><br><span class="line">     </span><br><span class="line">alert( user.getname());//BOb</span><br><span class="line">alert( user.getage());//<span class="number">44</span></span><br><span class="line">     </span><br><span class="line">user.setname(<span class="string">"Mike"</span>);    </span><br><span class="line">alert( user.getname());  //Mike  </span><br><span class="line">alert( user.getage());  //<span class="number">44</span></span><br><span class="line">     </span><br><span class="line">user.setage( <span class="number">22</span> );    </span><br><span class="line">alert( user.getname()); //Mike   </span><br><span class="line">alert( user.getage());  //<span class="number">22</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="闭包使用案例">闭包使用案例</h2><p>让下面这三个节点的Onclick事件都能正确的弹出相应的参数。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">   &lt;li id=<span class="string">"a1"</span>&gt;aa&lt;/li&gt;</span><br><span class="line">   &lt;li id=<span class="string">"a2"</span>&gt;aa&lt;/li&gt;</span><br><span class="line">   &lt;li id=<span class="string">"a3"</span>&gt;aa&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"> </span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">1</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">   var id = document.getElementById(<span class="string">"a"</span> + i);</span><br><span class="line">   id.onclick = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        alert(i);//现在都是返回<span class="number">4</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在上面这段代码中，通过for循环为三个<code>li</code>元素注册了<code>click</code>事件。在循环结束后<code>i</code>的值<code>4</code>，这个值是个全局变量。当触发<code>click</code>事件时，处理函数返回的是全局对象<code>i</code>，这个值与事件注册时的<code>i</code>值比已经发生了改变，所以实际返回值都是<code>4</code>.</p>
+<p>解决方法：</p>
+<ol>
+<li>使用闭包函数<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var lists = document.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">0</span>,l=lists.length; i &lt; l; i++)&#123;</span><br><span class="line">  lists[i].onclick = (<span class="keyword">function</span>(i)&#123;//保存于外部函函数</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">      alert(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>或<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var lists = document.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">0</span>,l=lists.length; i &lt; l; i++)&#123;</span><br><span class="line">  lists[i].onclick = new <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    var t = i;</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">      alert(t+<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>利用事件代理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var ul = document.getElementsByTagName(<span class="string">"ul"</span>)[<span class="number">0</span>];</span><br><span class="line">ul.onclick = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  var e = arguments[<span class="number">0</span>] || window.event,</span><br><span class="line">  target = e.srcElement ? e.srcElement : e.target;</span><br><span class="line">  <span class="keyword">if</span>(target.nodeName.toLowerCase() == <span class="string">"li"</span>)&#123;</span><br><span class="line">    alert(target.id.slice(-<span class="number">1</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将暂时变量保留于元素节点上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var lists = document.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">0</span>,t=<span class="number">0</span>,el; el = list[i++];)&#123;</span><br><span class="line">  el.i = t++</span><br><span class="line">  el.onclick = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    alert(this.i)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用with语句造成的对象闭包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var els = document.getElementsByTagName(<span class="string">"li"</span>)</span><br><span class="line">	 <span class="keyword">for</span>(var i=<span class="number">0</span>,n=els.length;i&lt;n;i++)&#123;</span><br><span class="line">	   with (&#123;i:i&#125;)</span><br><span class="line">	   els[i].onclick = <span class="function"><span class="title">function</span></span>() &#123; alert(this.innerHTML+i) &#125;;</span><br><span class="line">	 &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用try…catch语句构造的异常闭包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var lists = document.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">0</span>,l=lists.length; i &lt; l; i++)&#123;</span><br><span class="line">  try&#123;</span><br><span class="line">    throw i;</span><br><span class="line">  &#125;catch(i)&#123;</span><br><span class="line">    lists[i].onclick =  <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">      alert(i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/WEB前端/">WEB前端</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/闭包/">闭包</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/08/05/JavaScript-closure2/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/08/05/JavaScript-closure2/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/08/02/JavaScript-closure/" title="JavaScript闭包（closure）学习笔记" itemprop="url">JavaScript闭包（closure）学习笔记</a>
   </h1>
   <p class="article-author">By
@@ -430,222 +526,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/07/25/how-tob-build-a-blog/" title="通过Hexo与github搭建一个静态的个人博客" itemprop="url">通过Hexo与github搭建一个静态的个人博客</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-25T11:52:38.000Z" itemprop="datePublished"> 发表于 2015-07-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>这篇博客记录了我搭建我的个人博客的全过程。网络上有很多关于搭建个人博客的文章，但很多文章都不全，这里完整的记录了我搭建这儿静态博客的过程，希望可以帮助有相同需求的人。</p>
-<h2 id="前言">前言</h2><p>为什么要写博客，因为我想就下自己在学习和生活中的点点滴滴。以前学习很多东西，看一两遍就记住了。但是最近发现自己的记性没有以前好了，所以就想到了建个博客。一来可以把自己学习经验和生活感触写下来，二来是可以和大家分享自己的那么一点点有用的东西。</p>
-<p>为什么要开博客？可以看看cnFeat的这篇<a href="http://zhuanlan.zhihu.com/cnfeat/19743861" target="_blank" rel="external">《为什么你要写博客？》</a></p>
-<p>或者也可看看这篇文章<a href="http://zhuanlan.zhihu.com/cnfeat/19743255" target="_blank" rel="external">《我的博客时代》</a></p>
-<p>有人会问为什么要搭建一个属于自己的独立博客，网上有很多博客网站可以选择。答案很简单，一个独立的博客是真正属于自己的。</p>
-<h2 id="为什么选择hexo和Github_Pages">为什么选择hexo和Github Pages</h2><p>很多人用wordpress，你为什么要用github pages来搭建？</p>
-<ol>
-<li>github pages有300M免费空间，资料自己管理，保存可靠；</li>
-<li>学着用github，享受github的便利，上面有很多大牛，眼界会开阔很多；</li>
-<li>顺便看看github工作原理，最好的团队协作流程；</li>
-<li>github是趋势；</li>
-<li>你不觉得一个文科生用github很geek吗？瞬间跻身技术界；</li>
-<li>就算github被墙了，我可以搬到国内的gitcafe中去。</li>
-</ol>
-<p>hexo可以帮助生成静态页面。</p>
-<h2 id="GitHub_Pages是什么？">GitHub Pages是什么？</h2><p>GitHub Pages本用于介绍托管在GitHub上的项目， 不过，由于他的空间免费稳定，用来做搭建一个博客再好不过了。</p>
-<p>github Pages可以被认为是用户编写的、托管在github上的静态网页。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-1.png" alt=""></p>
-<h2 id="购买域名">购买域名</h2><p>只推荐上godaddy购买，安全，而且可以使用支付宝。</p>
-<p>教程（截止至2014年5月10日）如下</p>
-<p><strong>1、查你想要的域名；</strong><br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-2.png" alt=""></p>
-<p><strong>2、查到适合的域名之后选择「continue to Cart」;</strong><br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-3.png" alt=""></p>
-<p><strong>3、godaddy附加收费服务，不要管，继续「continue to Cart」;</strong><br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-4.png" alt=""></p>
-<p><strong>4、确认购买。</strong>修改购买年限，默认是两年，可以修改成1/2/3/5/10年，随自己喜欢。现在godaddy上com每年的默认费用是12.99美元，附加上ICANN的管理费用就是13.17美元。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-5.png" alt=""><br>如果你不是土豪，可以上网搜godaddy的优惠码，一大堆，找一个填进这里，填完之后，一年的费用会变成8.99美元。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-61.png" alt=""></p>
-<p><strong>说明一下：</strong>一般来讲，使用网上的优惠码第一年收费8.99美元，以后每年的收费是10.99美元，不过在网上可以搜到合适的优惠码，可以每年的收费都是8.99美元，记得多测试自行鉴别。</p>
-<p>如图，我买了五年的费用就是45.85美元，随后点击「Proceed to Checkout」</p>
-<p><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-6.png" alt=""></p>
-<p><strong>5、结算。</strong>登录或注册界面，填完必要的信息之后，选择用支付宝结算。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-7.png" alt=""><br>如果以上的教程如果不够清晰，可以参照这一份<a href="http://www.admin5.com/article/20131014/527495.shtml" target="_blank" rel="external">《2013年10月新版godaddy域名注册图文教程》</a>。</p>
-<p><strong>6、检查。</strong>结算后，重新登录，去「My Account」，域名已经显示在你的账户了。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-8.png" alt=""></p>
-<p><strong>7、补充一些注意事项：</strong></p>
-<ul>
-<li>输入优惠码没有优惠或者优惠幅度较低，请清除浏览器cookies再尝试；</li>
-<li>如果没有支付宝支付选项，有可能是使用的优惠码不支持支付宝，请重新清除浏览器cookies再尝试；</li>
-<li>注册时用户填写信息时一定要输入正确的邮箱名字，否则修改十分麻烦。</li>
-<li>买完域名之后一定要记得去自己的邮箱查看激活邮件，否则域名激活不了。</li>
-</ul>
-<h2 id="安装所需软件">安装所需软件</h2><p>安装下来软件：</p>
-<ul>
-<li><a href="http://nodejs.org/" target="_blank" rel="external">Node.js</a></li>
-<li><a href="http://git-scm.com/" target="_blank" rel="external">Git</a></li>
-</ul>
-<h2 id="打开Git">打开Git</h2><p>可以通过下面两种方式打开Git：</p>
-<ul>
-<li>Windows开始菜单的快捷方式it Bash<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-9.png" alt=""></li>
-<li>鼠标右键打开Git Bash<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-s10.jpg" alt=""></li>
-</ul>
-<h2 id="验证Node-js是否安装成功">验证Node.js是否安装成功</h2><p>在Windows下win+R打开运行，输入cmd回车<br><img src="" alt=""><br>打开命令行窗口<br><img src="" alt=""><br>在命令行窗口输入node回车，出现下面的提示表示安装成功<br><img src="" alt=""></p>
-<h2 id="注册Github">注册Github</h2><p>访问：<a href="http://www.github.com" target="_blank" rel="external">www.github.com</a></p>
-<p>注册你的username和邮箱，邮箱十分重要，GitHub上很多通知都是通过邮箱的。</p>
-<p>注册过程比较简单，详细也可以看：<br><a href="http://pchou.info/web-build/2013/01/03/build-github-blog-page-01.html" target="_blank" rel="external">一步步在GitHub上创建博客主页全系列</a></p>
-<h2 id="配置SSH_keys">配置SSH keys</h2><p>要想让本地的给项目与在github上的项目联系，需要使用SSH keys。</p>
-<h3 id="检查SSH_keys的设置">检查SSH keys的设置</h3><p>首先我们需要检查你电脑上现有的ssh key：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh   检查本机的ssh密钥</span><br></pre></td></tr></table></figure>
-<p>如果提示：No such file or directory 说明你是第一次使用git。</p>
-<h3 id="生成新的SSH_Key：">生成新的SSH Key：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">"邮件地址@youremail.com"</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;</span><br></pre></td></tr></table></figure>
-<p>注意1: 此处的邮箱地址，你可以输入自己的邮箱地址；注意2: 此处的「-C」的是大写的「C」</p>
-<p>然后系统会要你输入密码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):&lt;输入加密串&gt;</span><br><span class="line">Enter same passphrase again:&lt;再次输入加密串&gt;</span><br></pre></td></tr></table></figure>
-<p>在回车中会提示你输入一个密码，这个密码会在你提交项目时使用，如果为空的话提交项目时则不用输入。这个设置是防止别人往你的项目里提交内容。</p>
-<p>注意：输入密码的时候没有*字样的，你直接输入就可以了。</p>
-<p>最后看到这样的界面，就成功设置ssh key了：<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-11.png" alt=""></p>
-<h3 id="添加SSH_Key到GitHub">添加SSH Key到GitHub</h3><p>在本机设置SSH Key之后，需要添加到GitHub上，以完成SSH链接的设置。</p>
-<ul>
-<li><p>打开本地C:\Documents and Settings\Administrator.ssh\id_rsa.pub文件。此文件里面内容为刚才生成人密钥。如果看不到这个文件，你需要设置显示隐藏文件。准确的复制这个文件的内容，才能保证设置的成功。</p>
-</li>
-<li><p>登陆github系统。点击右上角的 Account Settings—-&gt;SSH Public keys —-&gt; add another public keys</p>
-</li>
-<li><p>把你本地生成的密钥复制到里面（key文本框中）， 点击 add key 就ok了<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-s12.jpg" alt=""></p>
-</li>
-</ul>
-<h3 id="测试">测试</h3><p>可以输入下面的命令，看看设置是否成功，git@github.com的部分不要修改：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure></p>
-<p>如果是下面的反馈：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host <span class="string">'github.com (207.97.227.239)'</span> can<span class="string">'t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span></span><br></pre></td></tr></table></figure></p>
-<p>不要紧张，输入yes就好，然后会看到：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi cnfeat! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="设置用户信息">设置用户信息</h3><p>现在你已经可以通过SSH链接到GitHub了，还有一些个人信息需要完善的。</p>
-<p>Git会根据用户的名字和邮箱来记录提交。GitHub也是用这些信息来做权限的处理，输入下面的代码进行个人信息的设置，把名称和邮箱替换成你自己的，名字必须是你的真名，而不是GitHub的昵称。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config -global user.name <span class="string">"cnfeat"</span>//用户名</span><br><span class="line">$ git config -global user.email  <span class="string">"cnfeat@gmail.com"</span>//填写自己的邮箱</span><br></pre></td></tr></table></figure></p>
-<h3 id="SSH_Key配置成功">SSH Key配置成功</h3><p>本机已成功连接到github。</p>
-<p>若有问题，请重新设置。常见错误请参考：</p>
-<p><a href="http://help.github.com/articles/generating-ssh-keys" target="_blank" rel="external">GitHub Help - Generating SSH Keys</a></p>
-<p><a href="http://help.github.com/articles/error-permission-denied-publickey" target="_blank" rel="external">GitHub Help - Error Permission denied (publickey)</a></p>
-<h2 id="使用GitHub_Pages建立博客">使用GitHub Pages建立博客</h2><p>与GitHub建立好链接之后，就可以方便的使用它提供的Pages服务，GitHub Pages分两种，一种是你的GitHub用户名建立的username.github.io这样的用户&amp;组织页（站），另一种是依附项目的pages。</p>
-<p>想建立个人博客是用的第一种，形如<a href="https://suen427.github.io">suen427.github.io</a>这样的可访问的站，每个用户名下面只能建立一个。</p>
-<h3 id="github上建立仓库">github上建立仓库</h3><p>登录后系统，在github首页，点击页面右下角「New Repository」<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-13.png" alt=""><br>填写项目信息：</p>
-<p><strong>project name：</strong>cnfeat.github.io</p>
-<p><strong>description：</strong> Sun’s Blog</p>
-<p>注：Github Pages的Repository名字是特定的，比如我Github账号是suen427，那么我Github Pages Repository名字就是suen427.github.io。<br>点击「Create Repository」完成创建。</p>
-<p>详细可以看这里：<a href="http://pchou.info/web-build/2013/01/05/build-github-blog-page-02.html" target="_blank" rel="external">一步步在GitHub上创建博客主页(2)</a></p>
-<h2 id="用Hexo克隆主题">用Hexo克隆主题</h2><h3 id="Hexo介绍">Hexo介绍</h3><p>Hexo的作者是<a href="https://github.com/tommy351/hexo" target="_blank" rel="external">tommy351</a>，根据<a href="http://hexo.io/docs/index.html" target="_blank" rel="external">官方介绍</a>，Hexo是一个简单、快速、强大的博客发布工具，支持Markdown格式。</p>
-<h3 id="安装Hexo">安装Hexo</h3><p>利用 npm 命令即可安装。(在任意位置点击鼠标右键，选择Git bash)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo</span><br></pre></td></tr></table></figure></p>
-<h3 id="部署Hexo">部署Hexo</h3><p>安装完成后，在你喜爱的文件夹下（如<code>H:\hexo</code>），执行以下指令(在<code>H:\hexo</code>内点击鼠标右键，选择Git bash)，Hexo 即会自动在目标文件夹建立网站所需要的所有文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure></p>
-<h3 id="安装依赖包">安装依赖包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-<h3 id="本地查看">本地查看</h3><p>现在我们已经搭建起本地的hexo博客了，执行以下命令(在<code>H:\hexo</code>)，然后到浏览器输入<code>localhost:4000</code>看看。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></p>
-<h3 id="复制博客的主题">复制博客的主题</h3><p>建立了Hexo文件之后复制wuchong的修改的主题，我的就是复制他的修改的。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/wuchong/jacman.git themes/jacman</span><br></pre></td></tr></table></figure></p>
-<p>或者复制yangjian的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/A-limon/pacman.git themes/pacman</span><br></pre></td></tr></table></figure></p>
-<h3 id="启用博客的主题">启用博客的主题</h3><p>修改<code>Hexo</code>目录下的<code>_config.yml</code>配置文件中的<code>theme</code>属性，将其设置为<code>jacman</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: jacman</span><br></pre></td></tr></table></figure></p>
-<p>注意：Hexo有两个<code>_config.yml</code>文件，一个在根目录，一个在<code>theme</code>下，此时修改的是在根目录下的。</p>
-<h3 id="更新主题">更新主题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> themes/jacman</span><br><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
-<p>注意：为避免出错，请先备份你的<code>_config.yml</code>文件后再升级。</p>
-<h3 id="使用与调试">使用与调试</h3><p>在本地如果需要预览或者调试你的博客，可以启动本地服务器：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo serve</span><br></pre></td></tr></table></figure></p>
-<p>部署到Github前需要配置<code>_config.yml</code>文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line"><span class="built_in">type</span>: github</span><br><span class="line">repository: git@github.com:suen427/suen427.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></p>
-<p>如果你是为一个项目制作网站，那么需要把branch设置为gh-pages。若要绑定自定义域名也可以参考Hexo或Github Page的帮助文档，制作一个cname文件。</p>
-<p>之后执行下列指令即可完成部署，注意部署会覆盖掉你之前在版本库中存放的文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo generate</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
-<h2 id="将独立域名与GitHub_Pages的空间绑定">将独立域名与GitHub Pages的空间绑定</h2><h3 id="GitHub_Pages的设置">GitHub Pages的设置</h3><p>方法一：在Repository的根目录下面，新建一个名为CNAME的文本文件，里面写入你要绑定的域名，比如suen427.com。</p>
-<p>方法二：到我的github仓库，点击右下角的「Download ZIP」，下载源文件，解压，找到CNAME文件，用记事本打开，将suen427.com修改成你的域名，放进Hexo\source目录下，用hexo命令提交上去。</p>
-<h3 id="DNS设置">DNS设置</h3><p>用DNSpod，快，免费，稳定。</p>
-<p>注册DNSpod，添加域名，如下图设置。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-15.png" alt=""></p>
-<p>其中A的两条记录指向的ip地址是github Pages的提供的ip</p>
-<ul>
-<li>192.30.252.153</li>
-<li>192.30.252.154</li>
-</ul>
-<p>如博客不能登录，有可能是github更改了空间服务的ip地址，记得及时到在<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages" target="_blank" rel="external">GitHub Pages</a>查看最新的ip即可</p>
-<p>www指定的记录是你在github注册的仓库。</p>
-<h3 id="去Godaddy修改DNS地址">去Godaddy修改DNS地址</h3><p>更改godaddy的Nameservers为DNSpod的NameServers。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-16.png" alt=""><br>1、点击「My Account」，管理我的域名。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-17.jpg" alt=""><br>2、点击域名。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-18.jpg" alt=""><br>3、将godaddy的Nameservers更改成f1g1ns1.dnspod.net和f1g1ns2.dnspod.net<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-25-19.jpg" alt=""><br>如有不详看可以看<a href="https://support.dnspod.cn/Kb/showarticle/tsid/42/" target="_blank" rel="external">DNSpod提供的官方帮助</a></p>
-<p>详细也可以看这里：<a href="http://pchou.info/web-build/2013/01/05/build-github-blog-page-03.html" target="_blank" rel="external">一步步在GitHub上创建博客主页(3)</a></p>
-<h2 id="搭建完成">搭建完成</h2><p>至此，独立博客就算搭建完成，如需进步一完善请在参看以下文章或博客下留言。</p>
-<p><a href="http://yangjian.me/workspace/introducing-pacman-theme/" target="_blank" rel="external">Pacman主题介绍</a> by yangjian</p>
-<p><a href="http://yangjian.me/workspace/building-blog-with-hexo/" target="_blank" rel="external">使用hexo搭建博客</a> by yangjian</p>
-<p><a href="http://zipperary.com/2013/05/28/hexo-guide-2/" target="_blank" rel="external">hexo系列教程：（二）搭建hexo博客</a> by zippera（推荐）</p>
-<p><a href="http://zipperary.com/2013/05/29/hexo-guide-3/" target="_blank" rel="external">hexo系列教程：（三）hexo博客的配置、使用</a> by zippera（推荐）</p>
-<h2 id="进阶篇：Hexo设置">进阶篇：Hexo设置</h2><p>网站搭建完成后，就可以根据自己爱好来对Hexo生成的网站进行设置了，对整站的设置，只要修改项目目录的<code>_config.yml</code>就可以了，这是我的设置，可供参考。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: http://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Site #整站的基本信息</span></span><br><span class="line">title: Sun<span class="string">'s Blog #网站标题</span><br><span class="line">subtitle: 记录学习成长的点点滴滴  #网站副标题</span><br><span class="line">description: 个人博客 学习分享 笔记 随笔 #网站描述</span><br><span class="line">author: Sun #网站作者</span><br><span class="line">email: suen427@gmail.com #联系邮箱</span><br><span class="line">language: zh-CN #网站语言</span><br><span class="line">timezone: Asia/Shanghai #时区</span><br><span class="line"></span><br><span class="line"># URL</span><br><span class="line">## If your site is put in a subdirectory, set url as '</span>http://yoursite.com/child<span class="string">' and root as '</span>/child/<span class="string">'</span><br><span class="line">url: http://suen427.github.io #你的域名</span><br><span class="line">root: /</span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br><span class="line"></span><br><span class="line"># Directory</span><br><span class="line">source_dir: source</span><br><span class="line">public_dir: public</span><br><span class="line">tag_dir: tags</span><br><span class="line">archive_dir: archives</span><br><span class="line">category_dir: categories</span><br><span class="line">code_dir: downloads/code</span><br><span class="line">i18n_dir: :lang</span><br><span class="line">skip_render:</span><br><span class="line"></span><br><span class="line"># Writing</span><br><span class="line">new_post_name: :title.md # File name of new posts</span><br><span class="line">default_layout: post</span><br><span class="line">titlecase: false # Transform title into titlecase</span><br><span class="line">external_link: true # Open external links in new tab</span><br><span class="line">filename_case: 0</span><br><span class="line">render_drafts: false</span><br><span class="line">post_asset_folder: false</span><br><span class="line">relative_link: false</span><br><span class="line">future: true</span><br><span class="line">highlight:</span><br><span class="line">  enable: true</span><br><span class="line">  line_number: true</span><br><span class="line">  auto_detect: true</span><br><span class="line">  tab_replace:</span><br><span class="line"></span><br><span class="line"># Category &amp; Tag</span><br><span class="line">default_category: uncategorized</span><br><span class="line">category_map:</span><br><span class="line">tag_map:</span><br><span class="line"></span><br><span class="line"># Archives</span><br><span class="line">## 2: Enable pagination</span><br><span class="line">## 1: Disable pagination</span><br><span class="line">## 0: Fully Disable</span><br><span class="line">archive: 2</span><br><span class="line">category: 2</span><br><span class="line">tag: 2</span><br><span class="line"></span><br><span class="line"># Date / Time format</span><br><span class="line">## Hexo uses Moment.js to parse and display date</span><br><span class="line">## You can customize the date format as defined in</span><br><span class="line">## http://momentjs.com/docs/#/displaying/format/</span><br><span class="line">date_format: YYYY-MM-DD</span><br><span class="line">time_format: HH:mm:ss</span><br><span class="line"></span><br><span class="line"># Pagination</span><br><span class="line">## Set per_page to 0 to disable pagination</span><br><span class="line">per_page: 10</span><br><span class="line">pagination_dir: page</span><br><span class="line"></span><br><span class="line"># Extensions</span><br><span class="line">## Plugins: https://github.com/tommy351/hexo/wiki/Plugins</span><br><span class="line">## Themes: https://github.com/tommy351/hexo/wiki/Themes</span><br><span class="line">theme: jacman</span><br><span class="line">plugins:</span><br><span class="line">- hexo-generator-feed</span><br><span class="line">- hexo-generator-sitemap</span><br><span class="line"></span><br><span class="line">#Feed Atom</span><br><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br><span class="line"></span><br><span class="line"># Markdown</span><br><span class="line">## https://github.com/chjj/marked</span><br><span class="line">markdown:</span><br><span class="line">  gfm: true</span><br><span class="line">  pedantic: false</span><br><span class="line">  sanitize: false</span><br><span class="line">  tables: true</span><br><span class="line">  breaks: true</span><br><span class="line">  smartLists: true</span><br><span class="line">  smartypants: true</span><br><span class="line"></span><br><span class="line"># Stylus</span><br><span class="line">stylus:</span><br><span class="line">  compress: false</span><br><span class="line"></span><br><span class="line"># Deployment</span><br><span class="line">## Docs: http://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:suen427/suen427.github.io.git</span></span><br></pre></td></tr></table></figure>
-<h3 id="修改局部页面">修改局部页面</h3><p>页面展现的全部逻辑都在每个主题中控制，源代码在hexo\themes\jacman\中：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── languages  <span class="comment">#多语言</span></span><br><span class="line">|   ├── default.yml<span class="comment">#默认语言</span></span><br><span class="line">|   └── zh-CN.yml  <span class="comment">#中文语言</span></span><br><span class="line">├── layout <span class="comment">#布局，根目录下的*.ejs文件是对主页，分页，存档等的控制</span></span><br><span class="line">|   ├── _partial   <span class="comment">#局部的布局，此目录下的*.ejs是对头尾等局部的控制</span></span><br><span class="line">|   └── _widget<span class="comment">#小挂件的布局，页面下方小挂件的控制</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment">#源码</span></span><br><span class="line">|   ├── css<span class="comment">#css源码 </span></span><br><span class="line">|   |   ├── _base  <span class="comment">#*.styl基础css</span></span><br><span class="line">|   |   ├── _partial   <span class="comment">#*.styl局部css</span></span><br><span class="line">|   |   ├── fonts  <span class="comment">#字体</span></span><br><span class="line">|   |   ├── images <span class="comment">#图片</span></span><br><span class="line">|   |   └── style.styl <span class="comment">#*.styl引入需要的css源码</span></span><br><span class="line">|   ├── fancybox   <span class="comment">#fancybox效果源码</span></span><br><span class="line">|   └── js <span class="comment">#javascript源代码</span></span><br><span class="line">├── _config.yml<span class="comment">#主题配置文件</span></span><br><span class="line">└── README.md  <span class="comment">#用GitHub的都知道</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="Hexo命令">Hexo命令</h3><p>常用命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">"postName"</span> <span class="comment">#新建文章</span></span><br><span class="line">hexo new page <span class="string">"pageName"</span> <span class="comment">#新建页面</span></span><br><span class="line">hexo generate <span class="comment">#生成静态页面至public目录</span></span><br><span class="line">hexo server <span class="comment">#开启预览访问端口（默认端口4000，'ctrl + c'关闭server）</span></span><br><span class="line">hexo deploy <span class="comment">#将.deploy目录部署到GitHub</span></span><br></pre></td></tr></table></figure></p>
-<p>简写：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo n == hexo new</span><br><span class="line">hexo g == hexo generate</span><br><span class="line">hexo s == hexo server</span><br><span class="line">hexo d == hexo deploy</span><br></pre></td></tr></table></figure></p>
-<p>常用复合命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo d -g <span class="comment">#生成加部署</span></span><br><span class="line">hexo s -g <span class="comment">#预览加部署</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="发表新文章">发表新文章</h3><p>用hexo发表新文章<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n <span class="comment">#写文章</span></span><br></pre></td></tr></table></figure></p>
-<p>其中my new post为文章标题，执行命令后，会在项目\source_posts中生成my new post.md文件，用编辑器打开编写即可。</p>
-<p>当然，也可以直接在\source_posts中新建一个md文件。</p>
-<p>写完后，推送到服务器上，执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g <span class="comment">#生成</span></span><br><span class="line">$ hexo d <span class="comment">#部署 # 可与hexo g合并为 hexo d -g</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="用Hexo发表文章的Markdown语法">用Hexo发表文章的Markdown语法</h3><p>使用jacman或pacman主题，建议按此标准语法写：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: postName <span class="comment">#文章页面上的显示名称，可以任意修改，不会出现在URL中</span></span><br><span class="line">date: <span class="number">2013</span>-<span class="number">12</span>-<span class="number">02</span> <span class="number">15</span>:<span class="number">30</span>:<span class="number">16</span> <span class="comment">#文章生成时间，一般不改，当然也可以任意修改</span></span><br><span class="line">categories: example <span class="comment">#分类</span></span><br><span class="line">tags: [tag1,tag2,tag3] <span class="comment">#文章标签，可空，多标签请用格式，注意:后面有个空格</span></span><br><span class="line">description: 附加一段文章摘要，字数最好在<span class="number">140</span>字以内。</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">以下正文</span><br></pre></td></tr></table></figure></p>
-<h2 id="安装插件">安装插件</h2><p>添加sitemap和feed插件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap</span><br><span class="line">$ npm install hexo-generator-feed</span><br></pre></td></tr></table></figure></p>
-<p>修改<code>_config.yml</code>，增加以下内容<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line">Plugins:</span><br><span class="line">- hexo-generator-feed</span><br><span class="line">- hexo-generator-sitemap</span><br><span class="line"></span><br><span class="line"><span class="comment">#Feed Atom</span></span><br><span class="line">feed:</span><br><span class="line">  <span class="built_in">type</span>: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  <span class="built_in">limit</span>: <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#sitemap</span></span><br><span class="line">sitemap:</span><br><span class="line">  path: sitemap.xml</span><br></pre></td></tr></table></figure></p>
-<h2 id="Hexo上传README文件">Hexo上传README文件</h2><p>Github的版本库通常建议同时附上README.md说明文件，但是hexo默认情况下会把所有md文件解析成html文件，所以即使你在线生成了README.md，它也会在你下一次部署时被删去。怎么解决呢？</p>
-<p>在执行hexo deploy前把在本地写好的README.md文件复制到<code>public</code>文件夹中，再去执行<code>hexo deploy</code>。</p>
-<h2 id="404页面">404页面</h2><p>GitHub Pages有提供制作404页面的指引：<a href="https://help.github.com/articles/custom-404-pages" target="_blank" rel="external">Custom 404 Pages</a>。</p>
-<p>直接在根目录下创建自己的404.html或者404.md就可以。但是自定义404页面仅对绑定顶级域名的项目才起作用，GitHub默认分配的二级域名是不起作用的，使用hexo server在本机调试也是不起作用的。</p>
-<h2 id="图床">图床</h2><p>推荐使用七牛（10G空间，免费）。</p>
-<h2 id="RSS插件">RSS插件</h2><p>hexo提供了RSS的生成插件，需要手动安装和设置。使用插件 <code>hexo-generator-feed</code> 能生成 <code>Atom 1.0</code> 或者 <code>RSS 2.0 feed</code>. 安装很简单<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-feed -save</span><br></pre></td></tr></table></figure></p>
-<p>然后在 <code>Hexo</code> 根目录下的 <code>_config.yml</code> 里配置一下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">feed:</span><br><span class="line">    <span class="built_in">type</span>: atom</span><br><span class="line">    path: atom.xml</span><br><span class="line">    <span class="built_in">limit</span>: <span class="number">20</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>type 表示类型, 是 atom 还是 rss2.</li>
-<li>path 表示 Feed 路径</li>
-<li>limit 最多多少篇最近文章</li>
-</ul>
-<h2 id="sitemap">sitemap</h2><p>同样的，我们使用插件 hexo-generator-sitemap 能生成站点地图, 方法如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap -save</span><br></pre></td></tr></table></figure></p>
-<p>然后在 <code>Hexo</code> 根目录下的 <code>_config.yml</code> 里配置一下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sitemap:</span><br><span class="line">    path: sitemap.xml</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>path 表示 Sitemap 的路径. 默认为 sitemap.xml.<br>对于国内用户还需要安装插件 hexo-generator-baidu-sitemap, 顾名思义是为百度量身打造的. 安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-baidu-sitemap -save</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>然后在 Hexo 根目录下的 _config.yml 里配置一下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">baidusitemap:</span><br><span class="line">    path: baidusitemap.xml</span><br></pre></td></tr></table></figure></p>
-<h2 id="参考资料：">参考资料：</h2><p>[1]<a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明Github Pages与Hexo教程</a><br>[2]<a href="http://lukang.me/2015/optimization-of-hexo-2.html" target="_blank" rel="external">Hexo 优化与定制(二)</a><br>[3]<a href="http://zipperary.com/2013/05/28/hexo-guide-2/" target="_blank" rel="external">hexo系列教程：（二）搭建hexo博客</a></p>
-<h2 id="感谢">感谢</h2><p><a href="http://cnfeat.com/" target="_blank" rel="external">cnFeat</a></p>
-<p><a href="http://wuchong.me/" target="_blank" rel="external">wuchong</a></p>
-<p><a href="http://yangjian.me/" target="_blank" rel="external">yangjian</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/建站/">建站</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Hexo/">Hexo</a><a href="/tags/github/">github</a><a href="/tags/博客/">博客</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/07/25/how-tob-build-a-blog/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/25/how-tob-build-a-blog/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -664,7 +544,7 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/WEB前端/" title="WEB前端">WEB前端<sup>3</sup></a></li>
+			<li><a href="/categories/WEB前端/" title="WEB前端">WEB前端<sup>4</sup></a></li>
 		  
 		
 		  
@@ -681,15 +561,15 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/闭包/" title="闭包">闭包<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/博客/" title="博客">博客<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/sublime/" title="sublime">sublime<sup>1</sup></a></li>
 			
 		
 			
@@ -701,11 +581,11 @@
 			
 		
 			
-				<li><a href="/tags/闭包/" title="闭包">闭包<sup>1</sup></a></li>
+				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
+				<li><a href="/tags/sublime/" title="sublime">sublime<sup>1</sup></a></li>
 			
 		
 			
