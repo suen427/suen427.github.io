@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录学习成长的点点滴滴]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://suen427.github.io//"/>
-  <updated>2015-08-05T02:47:10.710Z</updated>
+  <updated>2015-08-12T12:52:41.938Z</updated>
   <id>http://suen427.github.io//</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[在低版本浏览器中兼容<video>标签]]></title>
+    <link href="http://suen427.github.io/2015/08/12/video/"/>
+    <id>http://suen427.github.io/2015/08/12/video/</id>
+    <published>2015-08-11T16:52:38.000Z</published>
+    <updated>2015-08-12T12:52:41.938Z</updated>
+    <content type="html"><![CDATA[<h2 id="vedio标签">vedio标签</h2><p>在html5中加入了许多新的标签，<code>video</code>就是其中的一个。这个标签使我们可以像插入图片一样的插入视频。下面是一个插入视频的简单代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;video src=<span class="string">"movie.mp4"</span> controls=<span class="string">"controls"</span>&gt;</span><br><span class="line">	您的浏览器不支持 video 标签。</span><br><span class="line">&lt;/video&gt;</span><br></pre></td></tr></table></figure></p>
+<p>虽然主流浏览器都已经支持了video标签，但是很多情况为了兼容低版本的浏览器还是很麻烦。</p>
+<h2 id="兼容地板本浏览器">兼容地板本浏览器</h2><p>etianen开发了一个兼容video标签的js插件。插件地址：<a href="https://github.com/etianen/html5media。" target="_blank" rel="external">https://github.com/etianen/html5media。</a><br>使用该插件很简单，只需要在<code>head</code>中插入下面的代码就可以使用video标签了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"http://api.html5media.info/1.1.8/html5media.min.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以像下面这样插入一个视频：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;video src=<span class="string">"video.mp4"</span> width=<span class="string">"320"</span> height=<span class="string">"200"</span> controls preload&gt;&lt;/video&gt;</span><br></pre></td></tr></table></figure></p>
+<p>该插件也支持<code>audio</code>标签：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;audio src=<span class="string">"audio.mp3"</span> controls preload&gt;&lt;/audio&gt;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[在低版本浏览器中兼容<video>标签 | Sun's Blog]]>
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://suen427.github.io/tags/JavaScript/"/>
+    
+      <category term="html" scheme="http://suen427.github.io/tags/html/"/>
+    
+      <category term="video" scheme="http://suen427.github.io/tags/video/"/>
+    
+      <category term="WEB前端" scheme="http://suen427.github.io/categories/WEB%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[JavaScript闭包（closure）学习笔记（2）]]></title>
