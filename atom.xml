@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录学习成长的点点滴滴]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://suen427.github.io//"/>
-  <updated>2015-08-12T12:52:41.938Z</updated>
+  <updated>2015-08-18T10:05:10.809Z</updated>
   <id>http://suen427.github.io//</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[阿里前端网络笔试]]></title>
+    <link href="http://suen427.github.io/2015/08/18/written-test-of-Ali/"/>
+    <id>http://suen427.github.io/2015/08/18/written-test-of-Ali/</id>
+    <published>2015-08-18T09:52:23.000Z</published>
+    <updated>2015-08-18T10:05:10.809Z</updated>
+    <content type="html"><![CDATA[<p>今天在网上做了阿里的前端笔试题，题不多也不是很难，但是没有做完，还是不够熟练啊！下面来回顾一下题目。</p>
+<h2 id="选择题">选择题</h2><ul>
+<li><p>第一题问哪个单位不是CSS里的长度单位。选项中出现了 mm、pt、px、pc、%、rem等，其中rem应该不是CSS里的长度单位。</p>
+</li>
+<li><p>第二题问考的是CSS，margin简写的顺序，已知：margin：5px 15px 25px 10px; 问左边距是多少。</p>
+</li>
+<li><p>第三题问是关于事件的，主要靠mouseenter、mouseover的区别，我记得mouseenter是不冒泡的，且当鼠标从元素只有用的子元素进入元素不会触发mouseenter事件；而mouseover是会冒泡的，且鼠标从元素只有用的子元素进入元素不会触发mouseover事件。</p>
+</li>
+<li><p>有一题考的是HTML5语义化，这个平时不是很注意。问time、date、mark、figure标签哪个不是H5的语义化标签。网上看了一下除了第二个date其余都是HTML5语义化标签。</p>
+</li>
+</ul>
+<p>选择就记得这么几个，另外记得两个填空题。</p>
+<h2 id="填空题">填空题</h2><p>第一题是数组排序有关的，第二题是将两个字符串合并，并且颠倒顺序。</p>
+<ul>
+<li><p>第一个填空题：<br>请将下面的数组从小到大排列</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="number">6</span>,<span class="number">2</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">5</span>];</span><br><span class="line">arr.sort(________);</span><br><span class="line">//我的答案：</span><br><span class="line"><span class="keyword">function</span> ( a, b ) &#123; <span class="built_in">return</span> a - b; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第二个填空题：<br>将两个字符串合并，并且颠倒顺序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">'abcd'</span>;</span><br><span class="line">str2 = <span class="string">'jjhhgg'</span>;</span><br><span class="line">str3 = str1.______(str2);</span><br><span class="line">str4 = str3.______(<span class="string">''</span>).reverse().concat(<span class="string">''</span>);</span><br><span class="line">//我的答案：</span><br><span class="line">concat和split	//但是这个得到的结果是一个顺序颠倒的数组。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="编程题">编程题</h2><p>一共记得三个编程题，最后一题比较简单，实现一个表格，要求表格奇数行背景为白色，偶数行背景为灰色，hover效果背景为黄色。下面是我的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//css</span><br><span class="line">	tr:nth-child(odd)&#123;</span><br><span class="line">		background-color: <span class="comment">#fff;</span></span><br><span class="line">	&#125;</span><br><span class="line">	tr:nth-child(even)&#123;</span><br><span class="line">		background-color: <span class="comment">#999;</span></span><br><span class="line">	&#125;</span><br><span class="line">	tr:hover&#123;</span><br><span class="line">		background-color: <span class="comment">#ffff00;</span></span><br><span class="line">	&#125;</span><br><span class="line">//html</span><br><span class="line">	&lt;table&gt;</span><br><span class="line">		&lt;tbody&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">11</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">12</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">13</span>&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">21</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">22</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">23</span>&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">31</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">32</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">33</span>&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">41</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">42</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">43</span>&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">		&lt;/tbody&gt;</span><br><span class="line">	&lt;/table&gt;</span><br></pre></td></tr></table></figure></p>
+<p>另外一个大题是考JavaScript的，要求写一个 shuffle 程序，一开始不知道是个什么东西，其实就是将一个数组打乱。<br>可惜最后有了思路，就差一分钟没写完。我的思路是每次产生一个在数组长度内的随机正整数，然后从数组中取出这个随机数对应位置的元素存到一个临时数据中，最后将取出的元素从原数组中删除。下面是我实现的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>, <span class="string">'g'</span>];</span><br><span class="line"><span class="keyword">function</span> shuffle (arr) &#123;</span><br><span class="line">	var temp = [];</span><br><span class="line">	var len = arr.length;</span><br><span class="line">	<span class="keyword">for</span> ( var i = <span class="number">0</span>; i &lt; len; i++ ) &#123;</span><br><span class="line">		temp[temp.length] = arr.splice( Math.floor(Math.random()*arr.length), <span class="number">1</span> )[<span class="number">0</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line">console.log( shuffle(arr) );</span><br></pre></td></tr></table></figure></p>
+<p>倒数第三道大题，问click时间在移动端和桌面端有什么区别，并给出解决方案。这个题完全不会啊！因为根本没有看过移动端的内容。希望知道答案的留个言，谢谢。</p>
+<p>一共11个题，记住了9个。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[阿里前端网络笔试 | Sun's Blog]]>
+    
+    </summary>
+    
+      <category term="CSS" scheme="http://suen427.github.io/tags/CSS/"/>
+    
+      <category term="JavaScript" scheme="http://suen427.github.io/tags/JavaScript/"/>
+    
+      <category term="笔试" scheme="http://suen427.github.io/categories/%E7%AC%94%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[在低版本浏览器中兼容<video>标签]]></title>
