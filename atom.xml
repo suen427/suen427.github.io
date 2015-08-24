@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录学习成长的点点滴滴]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://suen427.github.io//"/>
-  <updated>2015-08-24T07:46:05.704Z</updated>
+  <updated>2015-08-24T07:50:07.736Z</updated>
   <id>http://suen427.github.io//</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://suen427.github.io/2015/08/21/practical-assignment/"/>
     <id>http://suen427.github.io/2015/08/21/practical-assignment/</id>
     <published>2015-08-21T14:44:17.000Z</published>
-    <updated>2015-08-24T07:46:05.704Z</updated>
+    <updated>2015-08-24T07:50:07.736Z</updated>
     <content type="html"><![CDATA[<p>这两天做了网易微前端的大作业，中间遇到了很多问题，通过解决这些问题学到了不少东西向。把在完成大作业过程中的问题记录下来以便日后温故。</p>
 <h2 id="css实现垂直水平居中">css实现垂直水平居中</h2><p>作业要求兼容IE8，一开始用的方法是:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.parent&#123;position: relative;&#125; </span><br><span class="line">.child&#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	top: <span class="number">50</span>%;</span><br><span class="line">	left: <span class="number">50</span>%;</span><br><span class="line">	transform: translate(-<span class="number">50</span>%,-<span class="number">50</span>%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>但是这个方法只有IE9及以上版本浏览器支持。所以有经过一番寻找终于找到了解决方案：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 支持IE7+</span><br><span class="line">.parent&#123;position: relative;&#125; </span><br><span class="line">.child&#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	top: <span class="number">50</span>%;</span><br><span class="line">	left: <span class="number">50</span>%;</span><br><span class="line">	margin-left:-<span class="number">199</span>px; margin-top:-<span class="number">139</span>px; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -39,9 +39,9 @@
     
     </summary>
     
-      <category term="JavaScript" scheme="http://suen427.github.io/tags/JavaScript/"/>
+      <category term="CSS" scheme="http://suen427.github.io/tags/CSS/"/>
     
-      <category term="css" scheme="http://suen427.github.io/tags/css/"/>
+      <category term="JavaScript" scheme="http://suen427.github.io/tags/JavaScript/"/>
     
       <category term="经验" scheme="http://suen427.github.io/categories/%E7%BB%8F%E9%AA%8C/"/>
     
