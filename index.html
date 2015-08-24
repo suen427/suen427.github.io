@@ -81,6 +81,80 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/08/21/practical-assignment/" title="微前端大作业" itemprop="url">微前端大作业</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-21T14:44:17.000Z" itemprop="datePublished"> 发表于 2015-08-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>这两天做了网易微前端的大作业，中间遇到了很多问题，通过解决这些问题学到了不少东西向。把在完成大作业过程中的问题记录下来以便日后温故。</p>
+<h2 id="css实现垂直水平居中">css实现垂直水平居中</h2><p>作业要求兼容IE8，一开始用的方法是:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.parent&#123;position: relative;&#125; </span><br><span class="line">.child&#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	top: <span class="number">50</span>%;</span><br><span class="line">	left: <span class="number">50</span>%;</span><br><span class="line">	transform: translate(-<span class="number">50</span>%,-<span class="number">50</span>%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是这个方法只有IE9及以上版本浏览器支持。所以有经过一番寻找终于找到了解决方案：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 支持IE7+</span><br><span class="line">.parent&#123;position: relative;&#125; </span><br><span class="line">.child&#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	top: <span class="number">50</span>%;</span><br><span class="line">	left: <span class="number">50</span>%;</span><br><span class="line">	margin-left:-<span class="number">199</span>px; margin-top:-<span class="number">139</span>px; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="IE8兼容背景透明">IE8兼容背景透明</h2><p>现代高级流量器已经兼容了css的rgba属性，但是这个属性在IE8中不支持。IE的低版本支持一个特殊的属性，即filter。一开始使用这个filter属性时有个问题，就是背景是透明了，但是背景内的内容也透明了。代码如下面：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.back&#123;</span><br><span class="line">	filter:Alpha(opacity=<span class="number">80</span>); background:<span class="comment">#000;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>经过在网上搜索发现了一个解决方案，如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//css</span><br><span class="line">.back &#123;</span><br><span class="line">	background:rgba(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.6</span>)!important;</span><br><span class="line">	filter:Alpha(opacity=<span class="number">60</span>); background:<span class="comment">#fff; /*　使用IE专属滤镜实现IE背景透明*/ </span></span><br><span class="line">&#125;</span><br><span class="line">.back content&#123; </span><br><span class="line">	position:relative; /*实现IE内容不透明*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//html结构：</span><br><span class="line">&lt;div&gt;</span><br><span class="line">	&lt;div class=<span class="string">"back"</span>&gt;</span><br><span class="line">		&lt;div class=<span class="string">"content"</span>&gt;&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>经过仔细琢磨，发现只要是.back内的内容添加poistion属性就可以是其不再透明。</p>
+<h2 id="IE8浏览器的DOM兼容">IE8浏览器的DOM兼容</h2><p>IE8并不兼容W3C的标准事件模型，且没有实现document.getElementsByClassName()函数。<br>下面是一个兼容IE的事件注册和删除代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//事件注册</span><br><span class="line"><span class="keyword">function</span> addEvent(element, <span class="built_in">type</span>, listener)&#123;</span><br><span class="line">	<span class="keyword">if</span> (!!element.addEventListener)&#123;</span><br><span class="line">		element.addEventListener(<span class="built_in">type</span>, listener, <span class="literal">false</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (element.attachEvent)&#123;</span><br><span class="line">		element.attachEvent(<span class="string">'on'</span>+<span class="built_in">type</span>, listener);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//事件删除</span><br><span class="line"><span class="keyword">function</span> removeEvent(element, <span class="built_in">type</span>, listener)&#123;</span><br><span class="line">	<span class="keyword">if</span> (!!element.removeEventListener)&#123;</span><br><span class="line">		element.removeEventListener(<span class="built_in">type</span>, listener, <span class="literal">false</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (element.detachEvent)&#123;</span><br><span class="line">		element.detachEvent(<span class="string">'on'</span>+<span class="built_in">type</span>, listener);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个兼容IE的getElementsByClassName()函数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 兼容IE的类选择器getElementsByClassName</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;string&#125; className 类名称</span><br><span class="line"> * @<span class="built_in">return</span> &#123;Array.&lt;HTMLElement&gt;&#125; 返回匹配的元素列表</span><br><span class="line"> */</span><br><span class="line"><span class="keyword">function</span> getElementsByClassName(className,context)&#123;</span><br><span class="line">	var context = context || document;</span><br><span class="line">	var result = [];</span><br><span class="line">	<span class="keyword">if</span>(context.getElementsByClassName)&#123;</span><br><span class="line">		result = context.getElementsByClassName(className);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		var temp = context.getElementsByTagName(<span class="string">"*"</span>);</span><br><span class="line">		<span class="keyword">for</span>(var i = <span class="number">0</span>, len = temp.length; i &lt; len; i++)&#123;</span><br><span class="line">			var node = temp[i];</span><br><span class="line">			<span class="keyword">if</span>(hasClass(node, className))&#123;</span><br><span class="line">				result.push(node);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> hasClass(element, className)&#123;</span><br><span class="line">	var classNames = element.className;</span><br><span class="line">    <span class="keyword">if</span> (!classNames) &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    classNames = classNames.split(/\s+/);</span><br><span class="line">    <span class="keyword">for</span> (var i = <span class="number">0</span>, len = classNames.length; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (classNames[i] === className) &#123;</span><br><span class="line">            <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>另外还需要用到cookie，所以在完成作业过程中封装了处理cookie的函数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="built_in">set</span>Cookie (name, value, expires, path, domain, secure) &#123;</span><br><span class="line">	var cookie = encodeURIComponent(name) + <span class="string">'='</span> + encodeURIComponent(value);</span><br><span class="line">	<span class="keyword">if</span> (expires)&#123;</span><br><span class="line">		cookie += <span class="string">';expires='</span>+expires.toGMTString();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (path)&#123;</span><br><span class="line">		cookie += <span class="string">';path='</span>+path;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (domain)&#123;</span><br><span class="line">		cookie += <span class="string">';domain='</span>+domain;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (secure)&#123;</span><br><span class="line">		cookie += <span class="string">';secure='</span>+secure;</span><br><span class="line">	&#125;</span><br><span class="line">	document.cookie = cookie;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getCookie</span></span>()&#123;</span><br><span class="line">	var cookie = &#123;&#125;;</span><br><span class="line">	var all = document.cookie;</span><br><span class="line">	<span class="keyword">if</span> (all === <span class="string">''</span>)&#123;</span><br><span class="line">		<span class="built_in">return</span> cookie;</span><br><span class="line">	&#125;</span><br><span class="line">	var list = all.split(<span class="string">"; "</span>);</span><br><span class="line">	<span class="keyword">for</span> (var i = <span class="number">0</span>; i &lt; list.length; i++)&#123;</span><br><span class="line">		var item = list[i];</span><br><span class="line">		var p = item.indexOf(<span class="string">'='</span>);</span><br><span class="line">		var name = item.substring(<span class="number">0</span>,p);</span><br><span class="line">		name = decodeURIComponent(name);</span><br><span class="line">		var value = item.substring(p+<span class="number">1</span>);</span><br><span class="line">		value = decodeURIComponent(value);</span><br><span class="line">		cookie[name] = value;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> cookie;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> removeCookie(name, path, domain) &#123;</span><br><span class="line">	document.cookie = name + <span class="string">'='</span> </span><br><span class="line">		+ <span class="string">'; path='</span> + path </span><br><span class="line">		+ <span class="string">'; domian='</span> + domain </span><br><span class="line">		+ <span class="string">'; max-age=0'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>IE8不支持element.previousElementSibling属性，所以也封装了一个previousElementSibling( el )方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> previousElementSibling( el ) &#123;</span><br><span class="line">    <span class="keyword">if</span>( el.previousElementSibling ) &#123;</span><br><span class="line">        <span class="built_in">return</span> el.previousElementSibling;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">while</span>( el = el.previousSibling ) &#123;</span><br><span class="line">            <span class="keyword">if</span>( el.nodeType === <span class="number">1</span> ) <span class="built_in">return</span> el;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="未能解决的问题。">未能解决的问题。</h2><p>IE8中由于浏览器限制不能实现Ajax的跨域访问，所以不能在本地访问作业中提供的API接口。解决跨域问题可通过JSONP或者可以使用Frame代理、Web Socket等技术。不过在现代浏览器中已经实现了CORS(Cross-Origin Resource Sharing)的支持，可以实现跨域的资源访问。所以这里没有深入去了解这些技术。</p>
+<p>我的<a href="http://suen427.github.io/fe/">作业</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/经验/">经验</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/css/">css</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/08/21/practical-assignment/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/08/21/practical-assignment/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/08/18/written-test-of-Ali/" title="阿里前端网络笔试" itemprop="url">阿里前端网络笔试</a>
   </h1>
   <p class="article-author">By
@@ -410,67 +484,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/07/28/sublime text3打开文件，中文乱码问题解决办法/" title="sublime text3打开文件，中文乱码问题解决办法" itemprop="url">sublime text3打开文件，中文乱码问题解决办法</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-27T16:12:23.000Z" itemprop="datePublished"> 发表于 2015-07-28</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <ol>
-<li>首先要确保本机sublime已经有安装包管理器，如果没有，安装方法：<a href="http://blog.chinaunix.net/uid-12014716-id-4269991.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-12014716-id-4269991.html</a> 文中的第一步：安装包管理器；</li>
-<li>安装乱码处理插件：<br>调用ctrl+shift+p,输入：install package，回车，在稍后弹出的安装包框中搜索：ConvertToUTF8或者GBK Encoding Support，选择点击安装；<br>从此带有中文的文件打开就不会有乱码了。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-28gbk.jpg" alt=""></li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/sublime/">sublime</a><a href="/tags/乱码/">乱码</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/07/28/sublime text3打开文件，中文乱码问题解决办法/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/28/sublime text3打开文件，中文乱码问题解决办法/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -500,6 +513,10 @@
 			<li><a href="/categories/笔试/" title="笔试">笔试<sup>1</sup></a></li>
 		  
 		
+		  
+			<li><a href="/categories/经验/" title="经验">经验<sup>1</sup></a></li>
+		  
+		
 		</ul>
 </div>
 
@@ -510,7 +527,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>6</sup></a></li>
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>7</sup></a></li>
 			
 		
 			
@@ -542,6 +559,10 @@
 			
 		
 			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 			
 		
@@ -562,7 +583,7 @@
 			
 		
 			
-				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+				<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
 			
 		
 		</ul>

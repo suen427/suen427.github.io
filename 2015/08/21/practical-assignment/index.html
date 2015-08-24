@@ -1,0 +1,566 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>微前端大作业 | Sun&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Sun">
+    
+
+    
+    <meta name="description" content="微前端大作业 | Sun&apos;s Blog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微前端大作业">
+<meta property="og:url" content="http://suen427.github.io/2015/08/21/practical-assignment/index.html">
+<meta property="og:site_name" content="Sun's Blog">
+<meta property="og:description" content="微前端大作业 | Sun&apos;s Blog">
+<meta property="og:updated_time" content="2015-08-24T07:46:05.704Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微前端大作业">
+<meta name="twitter:description" content="微前端大作业 | Sun&apos;s Blog">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Sun&#39;s Blog" title="Sun&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Sun&#39;s Blog">Sun&#39;s Blog</a></h1>
+				<h2 class="blog-motto">记录学习成长的点点滴滴</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">博客</a></li>
+					
+						<li><a href="/archives">文章列表</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+						<li><a href="/sun">个人主页</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:suen427.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/21/practical-assignment/" title="微前端大作业" itemprop="url">微前端大作业</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-21T14:44:17.000Z" itemprop="datePublished"> 发表于 2015-08-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#css实现垂直水平居中"><span class="toc-number">1.</span> <span class="toc-text">css实现垂直水平居中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IE8兼容背景透明"><span class="toc-number">2.</span> <span class="toc-text">IE8兼容背景透明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IE8浏览器的DOM兼容"><span class="toc-number">3.</span> <span class="toc-text">IE8浏览器的DOM兼容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#未能解决的问题。"><span class="toc-number">4.</span> <span class="toc-text">未能解决的问题。</span></a></li></ol>
+		
+		</div>
+		
+		<p>这两天做了网易微前端的大作业，中间遇到了很多问题，通过解决这些问题学到了不少东西向。把在完成大作业过程中的问题记录下来以便日后温故。</p>
+<h2 id="css实现垂直水平居中">css实现垂直水平居中</h2><p>作业要求兼容IE8，一开始用的方法是:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.parent&#123;position: relative;&#125; </span><br><span class="line">.child&#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	top: <span class="number">50</span>%;</span><br><span class="line">	left: <span class="number">50</span>%;</span><br><span class="line">	transform: translate(-<span class="number">50</span>%,-<span class="number">50</span>%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是这个方法只有IE9及以上版本浏览器支持。所以有经过一番寻找终于找到了解决方案：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 支持IE7+</span><br><span class="line">.parent&#123;position: relative;&#125; </span><br><span class="line">.child&#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	top: <span class="number">50</span>%;</span><br><span class="line">	left: <span class="number">50</span>%;</span><br><span class="line">	margin-left:-<span class="number">199</span>px; margin-top:-<span class="number">139</span>px; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="IE8兼容背景透明">IE8兼容背景透明</h2><p>现代高级流量器已经兼容了css的rgba属性，但是这个属性在IE8中不支持。IE的低版本支持一个特殊的属性，即filter。一开始使用这个filter属性时有个问题，就是背景是透明了，但是背景内的内容也透明了。代码如下面：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.back&#123;</span><br><span class="line">	filter:Alpha(opacity=<span class="number">80</span>); background:<span class="comment">#000;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>经过在网上搜索发现了一个解决方案，如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//css</span><br><span class="line">.back &#123;</span><br><span class="line">	background:rgba(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.6</span>)!important;</span><br><span class="line">	filter:Alpha(opacity=<span class="number">60</span>); background:<span class="comment">#fff; /*　使用IE专属滤镜实现IE背景透明*/ </span></span><br><span class="line">&#125;</span><br><span class="line">.back content&#123; </span><br><span class="line">	position:relative; /*实现IE内容不透明*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//html结构：</span><br><span class="line">&lt;div&gt;</span><br><span class="line">	&lt;div class=<span class="string">"back"</span>&gt;</span><br><span class="line">		&lt;div class=<span class="string">"content"</span>&gt;&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>经过仔细琢磨，发现只要是.back内的内容添加poistion属性就可以是其不再透明。</p>
+<h2 id="IE8浏览器的DOM兼容">IE8浏览器的DOM兼容</h2><p>IE8并不兼容W3C的标准事件模型，且没有实现document.getElementsByClassName()函数。<br>下面是一个兼容IE的事件注册和删除代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//事件注册</span><br><span class="line"><span class="keyword">function</span> addEvent(element, <span class="built_in">type</span>, listener)&#123;</span><br><span class="line">	<span class="keyword">if</span> (!!element.addEventListener)&#123;</span><br><span class="line">		element.addEventListener(<span class="built_in">type</span>, listener, <span class="literal">false</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (element.attachEvent)&#123;</span><br><span class="line">		element.attachEvent(<span class="string">'on'</span>+<span class="built_in">type</span>, listener);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//事件删除</span><br><span class="line"><span class="keyword">function</span> removeEvent(element, <span class="built_in">type</span>, listener)&#123;</span><br><span class="line">	<span class="keyword">if</span> (!!element.removeEventListener)&#123;</span><br><span class="line">		element.removeEventListener(<span class="built_in">type</span>, listener, <span class="literal">false</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (element.detachEvent)&#123;</span><br><span class="line">		element.detachEvent(<span class="string">'on'</span>+<span class="built_in">type</span>, listener);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是一个兼容IE的getElementsByClassName()函数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 兼容IE的类选择器getElementsByClassName</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;string&#125; className 类名称</span><br><span class="line"> * @<span class="built_in">return</span> &#123;Array.&lt;HTMLElement&gt;&#125; 返回匹配的元素列表</span><br><span class="line"> */</span><br><span class="line"><span class="keyword">function</span> getElementsByClassName(className,context)&#123;</span><br><span class="line">	var context = context || document;</span><br><span class="line">	var result = [];</span><br><span class="line">	<span class="keyword">if</span>(context.getElementsByClassName)&#123;</span><br><span class="line">		result = context.getElementsByClassName(className);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		var temp = context.getElementsByTagName(<span class="string">"*"</span>);</span><br><span class="line">		<span class="keyword">for</span>(var i = <span class="number">0</span>, len = temp.length; i &lt; len; i++)&#123;</span><br><span class="line">			var node = temp[i];</span><br><span class="line">			<span class="keyword">if</span>(hasClass(node, className))&#123;</span><br><span class="line">				result.push(node);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> hasClass(element, className)&#123;</span><br><span class="line">	var classNames = element.className;</span><br><span class="line">    <span class="keyword">if</span> (!classNames) &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    classNames = classNames.split(/\s+/);</span><br><span class="line">    <span class="keyword">for</span> (var i = <span class="number">0</span>, len = classNames.length; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (classNames[i] === className) &#123;</span><br><span class="line">            <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>另外还需要用到cookie，所以在完成作业过程中封装了处理cookie的函数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="built_in">set</span>Cookie (name, value, expires, path, domain, secure) &#123;</span><br><span class="line">	var cookie = encodeURIComponent(name) + <span class="string">'='</span> + encodeURIComponent(value);</span><br><span class="line">	<span class="keyword">if</span> (expires)&#123;</span><br><span class="line">		cookie += <span class="string">';expires='</span>+expires.toGMTString();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (path)&#123;</span><br><span class="line">		cookie += <span class="string">';path='</span>+path;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (domain)&#123;</span><br><span class="line">		cookie += <span class="string">';domain='</span>+domain;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (secure)&#123;</span><br><span class="line">		cookie += <span class="string">';secure='</span>+secure;</span><br><span class="line">	&#125;</span><br><span class="line">	document.cookie = cookie;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getCookie</span></span>()&#123;</span><br><span class="line">	var cookie = &#123;&#125;;</span><br><span class="line">	var all = document.cookie;</span><br><span class="line">	<span class="keyword">if</span> (all === <span class="string">''</span>)&#123;</span><br><span class="line">		<span class="built_in">return</span> cookie;</span><br><span class="line">	&#125;</span><br><span class="line">	var list = all.split(<span class="string">"; "</span>);</span><br><span class="line">	<span class="keyword">for</span> (var i = <span class="number">0</span>; i &lt; list.length; i++)&#123;</span><br><span class="line">		var item = list[i];</span><br><span class="line">		var p = item.indexOf(<span class="string">'='</span>);</span><br><span class="line">		var name = item.substring(<span class="number">0</span>,p);</span><br><span class="line">		name = decodeURIComponent(name);</span><br><span class="line">		var value = item.substring(p+<span class="number">1</span>);</span><br><span class="line">		value = decodeURIComponent(value);</span><br><span class="line">		cookie[name] = value;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> cookie;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> removeCookie(name, path, domain) &#123;</span><br><span class="line">	document.cookie = name + <span class="string">'='</span> </span><br><span class="line">		+ <span class="string">'; path='</span> + path </span><br><span class="line">		+ <span class="string">'; domian='</span> + domain </span><br><span class="line">		+ <span class="string">'; max-age=0'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>IE8不支持element.previousElementSibling属性，所以也封装了一个previousElementSibling( el )方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> previousElementSibling( el ) &#123;</span><br><span class="line">    <span class="keyword">if</span>( el.previousElementSibling ) &#123;</span><br><span class="line">        <span class="built_in">return</span> el.previousElementSibling;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">while</span>( el = el.previousSibling ) &#123;</span><br><span class="line">            <span class="keyword">if</span>( el.nodeType === <span class="number">1</span> ) <span class="built_in">return</span> el;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="未能解决的问题。">未能解决的问题。</h2><p>IE8中由于浏览器限制不能实现Ajax的跨域访问，所以不能在本地访问作业中提供的API接口。解决跨域问题可通过JSONP或者可以使用Frame代理、Web Socket等技术。不过在现代浏览器中已经实现了CORS(Cross-Origin Resource Sharing)的支持，可以实现跨域的资源访问。所以这里没有深入去了解这些技术。</p>
+<p>我的<a href="http://suen427.github.io/fe/">作业</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/经验/">经验</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/css/">css</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://suen427.github.io/2015/08/21/practical-assignment/" data-title="微前端大作业 | Sun&#39;s Blog" data-tsina="1875227863" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/08/18/written-test-of-Ali/"  title="阿里前端网络笔试">
+ <strong>下一篇：</strong><br/> 
+ <span>阿里前端网络笔试
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/08/21/practical-assignment/" data-title="微前端大作业" data-url="http://suen427.github.io/2015/08/21/practical-assignment/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#css实现垂直水平居中"><span class="toc-number">1.</span> <span class="toc-text">css实现垂直水平居中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IE8兼容背景透明"><span class="toc-number">2.</span> <span class="toc-text">IE8兼容背景透明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IE8浏览器的DOM兼容"><span class="toc-number">3.</span> <span class="toc-text">IE8浏览器的DOM兼容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#未能解决的问题。"><span class="toc-number">4.</span> <span class="toc-text">未能解决的问题。</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/WEB前端/" title="WEB前端">WEB前端<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/建站/" title="建站">建站<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/笔试/" title="笔试">笔试<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经验/" title="经验">经验<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/闭包/" title="闭包">闭包<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客/" title="博客">博客<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html/" title="html">html<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/video/" title="video">video<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sublime/" title="sublime">sublime<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/乱码/" title="乱码">乱码<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CSS/" title="CSS">CSS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hello-World/" title="Hello World">Hello World<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/原型/" title="原型">原型<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/作用域/" title="作用域">作用域<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://weibo.com/1875227863" target="_blank" title="欢迎关注我">我的微博</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="/sun/cv.html" target="_blank" title="欢迎查看我的简历">我的简历</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/suen427" target="_blank" title="Sun的github">github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m the sun of world. <br/>
+			I will illumine this world.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1875227863" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/https://github.com/suen427" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/http://www.zhihu.com/people/hua-sun-31-13" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:suen427@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Sun">Sun</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"sunhua07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
