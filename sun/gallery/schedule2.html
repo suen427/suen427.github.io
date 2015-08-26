@@ -74,11 +74,21 @@
 			position: fixed;
 			left:600px;
 			top: 350px;
-			width: 350px;
-			text-align: left;
-			margin: 0 auto;
 			font-weight: bold;
 			font-size: 16px;
+		}
+		#statistic td,#statistic th{
+			border: none;
+			width: 40px;
+			text-align: center;
+			background-color: #ccc;
+		}
+		#statistic td:first-child{
+			width: 70px;
+			text-align: right;
+		}
+		#statistic tr:nth-child(2n) td{
+			background-color: #0af;
 		}
 		.input{
 			position: absolute;
@@ -167,14 +177,7 @@
 		</select>
 		<button id="setmonth">设置月份</button>
 	</div>
-	<div class="statistic">
-		<p>统&nbsp;&nbsp;&nbsp;计：&nbsp;&nbsp;岗1&nbsp;&nbsp;&nbsp;岗2&nbsp;&nbsp;&nbsp;岗3&nbsp;&nbsp;&nbsp;岗4&nbsp;&nbsp;&nbsp;休&nbsp;&nbsp;&nbsp;连休&nbsp;&nbsp;&nbsp;连岗</p>
-		<p>戎超群：</p>
-		<p>吴&nbsp;&nbsp;&nbsp;艳：</p>
-		<p>吴丹丹：</p>
-		<p>叶佳莹：</p>
-		<p>张&nbsp;&nbsp;&nbsp;智：</p>
-	</div>
+	<div class="statistic" id='statistic'></div>
 	<div class="description">
 		<h3>使用说明：</h3>
 		<p>编辑1：点击按钮后，再点击黑体部分的表格会出现下拉选项，可以选择选项修改表格内容；</p>

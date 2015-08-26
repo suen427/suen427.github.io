@@ -415,16 +415,16 @@ function createSchedule2(){
 					&&p1.doubleDay<3&&p1.doubleWeekend<2&&p2.workTable[firstTue+7*i]+p3.workTable[firstTue+7*i]+
 					p4.workTable[firstTue+7*i]+p5.workTable[firstTue+7*i]<8 && p2.workTable[firstTue+1+7*i]+
 					p3.workTable[firstTue+1+7*i]+p4.workTable[firstTue+1+7*i]+p5.workTable[firstTue+1+7*i]<8){
-				if((firstTue+7*i)==0&&p1.workTable[firstTue+7*i+2]!=4){
+				if((firstTue+7*i)==0&&p1.workTable[firstTue+7*i+2]!=4 && p1.workTable[firstTue+7*i]==0 && p1.workTable[firstTue+7*i+1]==0){
 					p1.weekend[i]=1;
 					p1.workTable[firstTue+7*i]=p1.workTable[firstTue+1+7*i]=4;
 				}
-				if((firstTue+7*i)==daysNumOfMonth-2&&p1.workTable[firstTue+7*i-1]!=4){
+				if((firstTue+7*i)==daysNumOfMonth-2&&p1.workTable[firstTue+7*i-1]!=4 && p1.workTable[firstTue+7*i]==0 && p1.workTable[firstTue+7*i+1]==0){
 					p1.weekend[i]=1;
 					p1.workTable[firstTue+7*i]=p1.workTable[firstTue+1+7*i]=4;
 				}
 				if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p1.workTable[firstTue+7*i+2]!=4
-						&&p1.workTable[firstTue+7*i-1]!=4){
+						&&p1.workTable[firstTue+7*i-1]!=4 && p1.workTable[firstTue+7*i]==0 && p1.workTable[firstTue+7*i+1]==0){
 					p1.weekend[i]=1;
 					p1.workTable[firstTue+7*i]=p1.workTable[firstTue+1+7*i]=4;
 				}
@@ -437,16 +437,16 @@ function createSchedule2(){
 						&&p2.workTable[firstTue+7*i]+p3.workTable[firstTue+7*i]+
 						p4.workTable[firstTue+7*i]+p5.workTable[firstTue+7*i]<8 && p2.workTable[firstTue+1+7*i]+
 						p3.workTable[firstTue+1+7*i]+p4.workTable[firstTue+1+7*i]+p5.workTable[firstTue+1+7*i]<8){
-					if((firstTue+7*i)==0&&p1.workTable[firstTue+7*i+2]!=4){
+					if((firstTue+7*i)==0&&p1.workTable[firstTue+7*i+2]!=4 && p1.workTable[firstTue+7*i]==0 && p1.workTable[firstTue+7*i+1]==0){
 						p1.weekend[i]=1;
 						p1.workTable[firstTue+7*i]=p1.workTable[firstTue+1+7*i]=4;
 					}
-					if((firstTue+7*i)==daysNumOfMonth-2&&p1.workTable[firstTue+7*i-1]!=4){
+					if((firstTue+7*i)==daysNumOfMonth-2&&p1.workTable[firstTue+7*i-1]!=4 && p1.workTable[firstTue+7*i]==0 && p1.workTable[firstTue+7*i+1]==0){
 						p1.weekend[i]=1;
 						p1.workTable[firstTue+7*i]=p1.workTable[firstTue+1+7*i]=4;
 					}
 					if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p1.workTable[firstTue+7*i+2]!=4
-							&&p1.workTable[firstTue+7*i-1]!=4){
+							&&p1.workTable[firstTue+7*i-1]!=4 && p1.workTable[firstTue+7*i]==0 && p1.workTable[firstTue+7*i+1]==0){
 						p1.weekend[i]=1;
 						p1.workTable[firstTue+7*i]=p1.workTable[firstTue+1+7*i]=4;
 					}
@@ -459,16 +459,16 @@ function createSchedule2(){
 					&&p2.doubleDay<3&&p2.doubleWeekend<2&&p1.workTable[firstTue+7*i]+p3.workTable[firstTue+7*i]+
 					p4.workTable[firstTue+7*i]+p5.workTable[firstTue+7*i]<8 && p1.workTable[firstTue+1+7*i]+
 					p3.workTable[firstTue+1+7*i]+p4.workTable[firstTue+1+7*i]+p5.workTable[firstTue+1+7*i]<8){
-				if((firstTue+7*i)==0&&p2.workTable[firstTue+7*i+2]!=4){
+				if((firstTue+7*i)==0&&p2.workTable[firstTue+7*i+2]!=4 && p2.workTable[firstTue+7*i]==0 && p2.workTable[firstTue+7*i+1]==0){
 					p2.weekend[i]=1;
 					p2.workTable[firstTue+7*i]=p2.workTable[firstTue+1+7*i]=4;
 				}
-				if((firstTue+7*i)==daysNumOfMonth-2&&p2.workTable[firstTue+7*i-1]!=4){
+				if((firstTue+7*i)==daysNumOfMonth-2&&p2.workTable[firstTue+7*i-1]!=4 && p2.workTable[firstTue+7*i]==0 && p2.workTable[firstTue+7*i+1]==0){
 					p2.weekend[i]=1;
 					p2.workTable[firstTue+7*i]=p2.workTable[firstTue+1+7*i]=4;
 				}
 				if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p2.workTable[firstTue+7*i+2]!=4
-						&&p2.workTable[firstTue+7*i-1]!=4){
+						&&p2.workTable[firstTue+7*i-1]!=4 && p2.workTable[firstTue+7*i]==0 && p2.workTable[firstTue+7*i+1]==0){
 					p2.weekend[i]=1;
 					p2.workTable[firstTue+7*i]=p2.workTable[firstTue+1+7*i]=4;
 				}
@@ -481,16 +481,16 @@ function createSchedule2(){
 						p1.workTable[firstTue+7*i]+p3.workTable[firstTue+7*i]+
 						p4.workTable[firstTue+7*i]+p5.workTable[firstTue+7*i]<8 && p1.workTable[firstTue+1+7*i]+
 						p3.workTable[firstTue+1+7*i]+p4.workTable[firstTue+1+7*i]+p5.workTable[firstTue+1+7*i]<8){
-					if((firstTue+7*i)==0&&p2.workTable[firstTue+7*i+2]!=4){
+					if((firstTue+7*i)==0&&p2.workTable[firstTue+7*i+2]!=4 && p2.workTable[firstTue+7*i]==0 && p2.workTable[firstTue+7*i+1]==0){
 						p2.weekend[i]=1;
 						p2.workTable[firstTue+7*i]=p2.workTable[firstTue+1+7*i]=4;
 					}
-					if((firstTue+7*i)==daysNumOfMonth-2&&p2.workTable[firstTue+7*i-1]!=4){
+					if((firstTue+7*i)==daysNumOfMonth-2&&p2.workTable[firstTue+7*i-1]!=4 && p2.workTable[firstTue+7*i]==0 && p2.workTable[firstTue+7*i+1]==0){
 						p2.weekend[i]=1;
 						p2.workTable[firstTue+7*i]=p2.workTable[firstTue+1+7*i]=4;
 					}
 					if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p2.workTable[firstTue+7*i+2]!=4
-							&&p2.workTable[firstTue+7*i-1]!=4){
+							&&p2.workTable[firstTue+7*i-1]!=4 && p2.workTable[firstTue+7*i]==0 && p2.workTable[firstTue+7*i+1]==0){
 						p2.weekend[i]=1;
 						p2.workTable[firstTue+7*i]=p2.workTable[firstTue+1+7*i]=4;
 					}
@@ -503,16 +503,16 @@ function createSchedule2(){
 					&&p3.doubleDay<3&&p3.doubleWeekend<2&&p1.workTable[firstTue+7*i]+p2.workTable[firstTue+7*i]+
 					p4.workTable[firstTue+7*i]+p5.workTable[firstTue+7*i]<8 && p1.workTable[firstTue+1+7*i]+
 					p2.workTable[firstTue+1+7*i]+p4.workTable[firstTue+1+7*i]+p5.workTable[firstTue+1+7*i]<8){
-				if((firstTue+7*i)==0&&p3.workTable[firstTue+7*i+2]!=4){
+				if((firstTue+7*i)==0&&p3.workTable[firstTue+7*i+2]!=4 && p3.workTable[firstTue+7*i]==0 && p3.workTable[firstTue+7*i+1]==0){
 					p3.weekend[i]=1;
 					p3.workTable[firstTue+7*i]=p3.workTable[firstTue+1+7*i]=4;
 				}
-				if((firstTue+7*i)==daysNumOfMonth-2&&p3.workTable[firstTue+7*i-1]!=4){
+				if((firstTue+7*i)==daysNumOfMonth-2&&p3.workTable[firstTue+7*i-1]!=4 && p3.workTable[firstTue+7*i]==0 && p3.workTable[firstTue+7*i+1]==0){
 					p3.weekend[i]=1;
 					p3.workTable[firstTue+7*i]=p3.workTable[firstTue+1+7*i]=4;
 				}
 				if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p3.workTable[firstTue+7*i+2]!=4
-						&&p3.workTable[firstTue+7*i-1]!=4){
+						&&p3.workTable[firstTue+7*i-1]!=4 && p3.workTable[firstTue+7*i]==0 && p3.workTable[firstTue+7*i+1]==0){
 					p3.weekend[i]=1;
 					p3.workTable[firstTue+7*i]=p3.workTable[firstTue+1+7*i]=4;
 				}
@@ -524,16 +524,16 @@ function createSchedule2(){
 						(p2.weekend[i]+p1.weekend[i]+p4.weekend[i]+p5.weekend[i])<2&&p1.workTable[firstTue+7*i]+p2.workTable[firstTue+7*i]+
 						p4.workTable[firstTue+7*i]+p5.workTable[firstTue+7*i]<8 && p1.workTable[firstTue+1+7*i]+
 						p2.workTable[firstTue+1+7*i]+p4.workTable[firstTue+1+7*i]+p5.workTable[firstTue+1+7*i]<8){
-					if((firstTue+7*i)==0&&p3.workTable[firstTue+7*i+2]!=4){
+					if((firstTue+7*i)==0&&p3.workTable[firstTue+7*i+2]!=4 && p3.workTable[firstTue+7*i]==0 && p3.workTable[firstTue+7*i+1]==0){
 						p3.weekend[i]=1;
 						p3.workTable[firstTue+7*i]=p3.workTable[firstTue+1+7*i]=4;
 					}
-					if((firstTue+7*i)==daysNumOfMonth-2&&p3.workTable[firstTue+7*i-1]!=4){
+					if((firstTue+7*i)==daysNumOfMonth-2&&p3.workTable[firstTue+7*i-1]!=4 && p3.workTable[firstTue+7*i]==0 && p3.workTable[firstTue+7*i+1]==0){
 						p3.weekend[i]=1;
 						p3.workTable[firstTue+7*i]=p3.workTable[firstTue+1+7*i]=4;
 					}
 					if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p3.workTable[firstTue+7*i+2]!=4
-							&&p3.workTable[firstTue+7*i-1]!=4){
+							&&p3.workTable[firstTue+7*i-1]!=4 && p3.workTable[firstTue+7*i]==0 && p3.workTable[firstTue+7*i+1]==0){
 						p3.weekend[i]=1;
 						p3.workTable[firstTue+7*i]=p3.workTable[firstTue+1+7*i]=4;
 					}
@@ -546,16 +546,16 @@ function createSchedule2(){
 					&&p4.doubleDay<3&&p4.doubleWeekend<2&&p1.workTable[firstTue+7*i]+p2.workTable[firstTue+7*i]+
 					p3.workTable[firstTue+7*i]+p5.workTable[firstTue+7*i]<8 && p1.workTable[firstTue+1+7*i]+
 					p2.workTable[firstTue+1+7*i]+p3.workTable[firstTue+1+7*i]+p5.workTable[firstTue+1+7*i]<8){
-				if((firstTue+7*i)==0&&p4.workTable[firstTue+7*i+2]!=4){
+				if((firstTue+7*i)==0&&p4.workTable[firstTue+7*i+2]!=4 && p4.workTable[firstTue+7*i]==0 && p4.workTable[firstTue+7*i+1]==0){
 					p4.weekend[i]=1;
 					p4.workTable[firstTue+7*i]=p4.workTable[firstTue+1+7*i]=4;
 				}
-				if((firstTue+7*i)==daysNumOfMonth-2&&p4.workTable[firstTue+7*i-1]!=4){
+				if((firstTue+7*i)==daysNumOfMonth-2&&p4.workTable[firstTue+7*i-1]!=4 && p4.workTable[firstTue+7*i]==0 && p4.workTable[firstTue+7*i+1]==0){
 					p4.weekend[i]=1;
 					p4.workTable[firstTue+7*i]=p4.workTable[firstTue+1+7*i]=4;
 				}
 				if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p4.workTable[firstTue+7*i+2]!=4
-						&&p4.workTable[firstTue+7*i-1]!=4){
+						&&p4.workTable[firstTue+7*i-1]!=4 && p4.workTable[firstTue+7*i]==0 && p4.workTable[firstTue+7*i+1]==0){
 					p4.weekend[i]=1;
 					p4.workTable[firstTue+7*i]=p4.workTable[firstTue+1+7*i]=4;
 				}
@@ -567,16 +567,16 @@ function createSchedule2(){
 						&&p1.weekend[i]+p2.weekend[i]+p3.weekend[i]+p5.weekend[i]<2&&p1.workTable[firstTue+7*i]+p2.workTable[firstTue+7*i]+
 						p3.workTable[firstTue+7*i]+p5.workTable[firstTue+7*i]<8 && p1.workTable[firstTue+1+7*i]+
 						p2.workTable[firstTue+1+7*i]+p3.workTable[firstTue+1+7*i]+p5.workTable[firstTue+1+7*i]<8){
-					if((firstTue+7*i)==0&&p4.workTable[firstTue+7*i+2]!=4){
+					if((firstTue+7*i)==0&&p4.workTable[firstTue+7*i+2]!=4 && p4.workTable[firstTue+7*i]==0 && p4.workTable[firstTue+7*i+1]==0){
 						p4.weekend[i]=1;
 						p4.workTable[firstTue+7*i]=p4.workTable[firstTue+1+7*i]=4;
 					}
-					if((firstTue+7*i)==daysNumOfMonth-2&&p4.workTable[firstTue+7*i-1]!=4){
+					if((firstTue+7*i)==daysNumOfMonth-2&&p4.workTable[firstTue+7*i-1]!=4 && p4.workTable[firstTue+7*i]==0 && p4.workTable[firstTue+7*i+1]==0){
 						p4.weekend[i]=1;
 						p4.workTable[firstTue+7*i]=p4.workTable[firstTue+1+7*i]=4;
 					}
 					if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p4.workTable[firstTue+7*i+2]!=4
-							&&p4.workTable[firstTue+7*i-1]!=4){
+							&&p4.workTable[firstTue+7*i-1]!=4 && p4.workTable[firstTue+7*i]==0 && p4.workTable[firstTue+7*i+1]==0){
 						p4.weekend[i]=1;
 						p4.workTable[firstTue+7*i]=p4.workTable[firstTue+1+7*i]=4;
 					}
@@ -589,16 +589,16 @@ function createSchedule2(){
 					&&p5.doubleDay<3&&p5.doubleWeekend<2&&p1.workTable[firstTue+7*i]+p2.workTable[firstTue+7*i]+
 					p3.workTable[firstTue+7*i]+p4.workTable[firstTue+7*i]<8 && p1.workTable[firstTue+1+7*i]+
 					p2.workTable[firstTue+1+7*i]+p3.workTable[firstTue+1+7*i]+p4.workTable[firstTue+1+7*i]<8){
-				if((firstTue+7*i)==0&&p5.workTable[firstTue+7*i+2]!=4){
+				if((firstTue+7*i)==0&&p5.workTable[firstTue+7*i+2]!=4 && p5.workTable[firstTue+7*i]==0 && p5.workTable[firstTue+7*i+1]==0){
 					p5.weekend[i]=1;
 					p5.workTable[firstTue+7*i]=p5.workTable[firstTue+1+7*i]=4;
 				}
-				if((firstTue+7*i)==daysNumOfMonth-2&&p5.workTable[firstTue+7*i-1]!=4){
+				if((firstTue+7*i)==daysNumOfMonth-2&&p5.workTable[firstTue+7*i-1]!=4 && p5.workTable[firstTue+7*i]==0 && p5.workTable[firstTue+7*i+1]==0){
 					p5.weekend[i]=1;
 					p5.workTable[firstTue+7*i]=p5.workTable[firstTue+1+7*i]=4;
 				}
 				if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p5.workTable[firstTue+7*i+2]!=4
-						&&p5.workTable[firstTue+7*i-1]!=4){
+						&&p5.workTable[firstTue+7*i-1]!=4 && p5.workTable[firstTue+7*i]==0 && p5.workTable[firstTue+7*i+1]==0){
 					p5.weekend[i]=1;
 					p5.workTable[firstTue+7*i]=p5.workTable[firstTue+1+7*i]=4;
 				}
@@ -609,16 +609,16 @@ function createSchedule2(){
 						&&p5.doubleDay<3&&p1.workTable[firstTue+7*i]+p2.workTable[firstTue+7*i]+
 						p3.workTable[firstTue+7*i]+p4.workTable[firstTue+7*i]<8 && p1.workTable[firstTue+1+7*i]+
 						p2.workTable[firstTue+1+7*i]+p3.workTable[firstTue+1+7*i]+p4.workTable[firstTue+1+7*i]<8){
-					if((firstTue+7*i)==0&&p5.workTable[firstTue+7*i+2]!=4){
+					if((firstTue+7*i)==0&&p5.workTable[firstTue+7*i+2]!=4 && p5.workTable[firstTue+7*i]==0 && p5.workTable[firstTue+7*i+1]==0){
 						p5.weekend[i]=1;
 						p5.workTable[firstTue+7*i]=p5.workTable[firstTue+1+7*i]=4;
 					}
-					if((firstTue+7*i)==daysNumOfMonth-2&&p5.workTable[firstTue+7*i-1]!=4){
+					if((firstTue+7*i)==daysNumOfMonth-2&&p5.workTable[firstTue+7*i-1]!=4 && p5.workTable[firstTue+7*i]==0 && p5.workTable[firstTue+7*i+1]==0){
 						p5.weekend[i]=1;
 						p5.workTable[firstTue+7*i]=p5.workTable[firstTue+1+7*i]=4;
 					}
 					if(firstTue+7*i>0&&(firstTue+7*i)<daysNumOfMonth-2&&p5.workTable[firstTue+7*i+2]!=4
-							&&p5.workTable[firstTue+7*i-1]!=4){
+							&&p5.workTable[firstTue+7*i-1]!=4 && p5.workTable[firstTue+7*i]==0 && p5.workTable[firstTue+7*i+1]==0){
 						p5.weekend[i]=1;
 						p5.workTable[firstTue+7*i]=p5.workTable[firstTue+1+7*i]=4;
 					}
@@ -652,7 +652,7 @@ function createSchedule2(){
 					&&(totalReat-rest1)>=rand.nextInt(daysNumOfMonth-15)&&i>0&&i<daysNumOfMonth-1&&
 					p1.workTable[i+1]!=4&&p1.workTable[i-1]!=4&&p1.rest<totalReat){
 				if(i<daysNumOfMonth-2&&i>3&&p1.workTable[i-1]!=4&&p1.workTable[i-2]!=4&&
-						p1.workTable[i+2]!=4&&p1.workTable[i+1]!=4){
+						p1.workTable[i+2]!=4&&p1.workTable[i+1]!=4 && p1.workTable[i]==0){
 					p1.workTable[i]=4;
 					p1.rest=sum(p1.workTable);
 				}
@@ -660,7 +660,7 @@ function createSchedule2(){
 			if(i>6&&p1.workTable[i]!=4&&p1.workTable[i-2]!=4&&p1.workTable[i-3]!=4&&
 					p1.workTable[i-4]!=4&&p1.workTable[i-5]!=4&&p1.workTable[i-6]!=4&&
 					(p2.workTable[i]+p3.workTable[i]+p4.workTable[i]+p5.workTable[i])<8&&p1.rest<totalReat){
-				if(i<daysNumOfMonth-2&&p1.workTable[i+2]!=4&&p1.workTable[i+1]!=4){
+				if(i<daysNumOfMonth-2&&p1.workTable[i+2]!=4&&p1.workTable[i+1]!=4 && p1.workTable[i]==0){
 					p1.workTable[i]=4;
 					p1.rest=sum(p1.workTable);
 				}
@@ -670,7 +670,7 @@ function createSchedule2(){
 					&&(totalReat-rest2)>=rand.nextInt(daysNumOfMonth-15)&&i>0&&i<daysNumOfMonth-1&&
 					p2.workTable[i+1]!=4&&p2.workTable[i-1]!=4&&p2.rest<totalReat){
 				if(i<daysNumOfMonth-2&&i>3&&p2.workTable[i-1]!=4&&p2.workTable[i-2]!=4&&
-						p2.workTable[i+2]!=4&&p2.workTable[i+1]!=4){
+						p2.workTable[i+2]!=4&&p2.workTable[i+1]!=4 && p2.workTable[i]==0){
 					p2.workTable[i]=4;
 					p2.rest=sum(p2.workTable);
 				}
@@ -678,7 +678,7 @@ function createSchedule2(){
 			if(i>6&&p2.workTable[i]!=4&&p2.workTable[i-2]!=4&&p2.workTable[i-3]!=4&&
 					p2.workTable[i-4]!=4&&p2.workTable[i-5]!=4&&p2.workTable[i-6]!=4&&
 					(p1.workTable[i]+p3.workTable[i]+p4.workTable[i]+p5.workTable[i])<8&&p2.rest<totalReat){
-				if(i<daysNumOfMonth-2&&p2.workTable[i+2]!=4&&p2.workTable[i+1]!=4){
+				if(i<daysNumOfMonth-2&&p2.workTable[i+2]!=4&&p2.workTable[i+1]!=4 && p2.workTable[i]==0){
 					p2.workTable[i]=4;
 					p2.rest=sum(p2.workTable);
 				}
@@ -688,7 +688,7 @@ function createSchedule2(){
 					&&(totalReat-rest3)>=rand.nextInt(daysNumOfMonth-15)&&i>0&&i<daysNumOfMonth-1&&
 					p3.workTable[i+1]!=4&&p3.workTable[i-1]!=4&&p3.rest<totalReat){
 				if(i<daysNumOfMonth-2&&i>3&&p3.workTable[i-1]!=4&&p3.workTable[i-2]!=4&&
-						p3.workTable[i+2]!=4&&p3.workTable[i+1]!=4){
+						p3.workTable[i+2]!=4&&p3.workTable[i+1]!=4 && p3.workTable[i]==0){
 					p3.workTable[i]=4;
 					p3.rest=sum(p3.workTable);
 				}
@@ -696,7 +696,7 @@ function createSchedule2(){
 			if(i>6&&p3.workTable[i]!=4&&p3.workTable[i-1]!=4&&p3.workTable[i-2]!=4&&p3.workTable[i-3]!=4&&
 					p3.workTable[i-4]!=4&&p3.workTable[i-5]!=4&&p3.workTable[i-6]!=4&&
 					(p2.workTable[i]+p1.workTable[i]+p4.workTable[i]+p5.workTable[i])<8&&p3.rest<totalReat){
-				if(i<daysNumOfMonth-2&&p3.workTable[i+2]!=4&&p3.workTable[i+1]!=4){
+				if(i<daysNumOfMonth-2&&p3.workTable[i+2]!=4&&p3.workTable[i+1]!=4 && p3.workTable[i]==0){
 					p3.workTable[i]=4;
 					p3.rest=sum(p3.workTable);
 				}
@@ -706,7 +706,7 @@ function createSchedule2(){
 					&&(totalReat-rest4)>=rand.nextInt(daysNumOfMonth-15)&&i>0&&i<daysNumOfMonth-1&&
 					p4.workTable[i+1]!=4&&p4.workTable[i-1]!=4&&p4.rest<totalReat){
 				if(i<daysNumOfMonth-2&&i>3&&p4.workTable[i-1]!=4&&p4.workTable[i-2]!=4&&
-						p4.workTable[i+2]!=4&&p4.workTable[i+1]!=4){
+						p4.workTable[i+2]!=4&&p4.workTable[i+1]!=4 && p4.workTable[i]==0){
 					p4.workTable[i]=4;
 					p4.rest=sum(p4.workTable);
 				}
@@ -714,7 +714,7 @@ function createSchedule2(){
 			if(i>6&&p4.workTable[i]!=4&&p4.workTable[i-1]!=4&&p4.workTable[i-2]!=4&&p4.workTable[i-3]!=4&&
 					p4.workTable[i-4]!=4&&p4.workTable[i-5]!=4&&p4.workTable[i-6]!=4&&
 					(p2.workTable[i]+p3.workTable[i]+p1.workTable[i]+p5.workTable[i])<8&&p4.rest<totalReat){
-				if(i<daysNumOfMonth-2&&p4.workTable[i+2]!=4&&p4.workTable[i+1]!=4){
+				if(i<daysNumOfMonth-2&&p4.workTable[i+2]!=4&&p4.workTable[i+1]!=4 && p4.workTable[i]==0){
 					p4.workTable[i]=4;
 					p4.rest=sum(p4.workTable);
 				}
@@ -724,7 +724,7 @@ function createSchedule2(){
 					&&(totalReat-rest5)>=rand.nextInt(daysNumOfMonth-15)&&i>0&&i<daysNumOfMonth-1&&
 					p5.workTable[i+1]!=4&&p5.workTable[i-1]!=4&&p5.rest<totalReat){
 				if(i<daysNumOfMonth-2&&i>3&&p5.workTable[i-1]!=4&&p5.workTable[i-2]!=4&&
-						p5.workTable[i+2]!=4&&p5.workTable[i+1]!=4){
+						p5.workTable[i+2]!=4&&p5.workTable[i+1]!=4 && p5.workTable[i]==0){
 					p5.workTable[i]=4;
 					p5.rest=sum(p5.workTable);
 				}
@@ -732,7 +732,7 @@ function createSchedule2(){
 			if(i>6&&p5.workTable[i]!=4&&p5.workTable[i-1]!=4&&p5.workTable[i-2]!=4&&p5.workTable[i-3]!=4&&
 					p5.workTable[i-4]!=4&&p5.workTable[i-5]!=4&&p5.workTable[i-6]!=4&&
 					(p2.workTable[i]+p3.workTable[i]+p4.workTable[i]+p1.workTable[i])<8&&p5.rest<totalReat){
-				if(i<daysNumOfMonth-2&&p5.workTable[i+2]!=4&&p5.workTable[i+1]!=4){
+				if(i<daysNumOfMonth-2&&p5.workTable[i+2]!=4&&p5.workTable[i+1]!=4 && p5.workTable[i]==0){
 					p5.workTable[i]=4;
 					p5.rest=sum(p5.workTable);
 				}
@@ -762,12 +762,12 @@ function createSchedule2(){
 						j=pos+n/2-i;k=pos+n/2+i;
 						if(j%7==firstTue) continue;
 						if(j>2&&p.workTable[j]!=4&&p2.workTable[j]+p3.workTable[j]+p4.workTable[j]+p5.workTable[j]<2
-								&&p.workTable[j-2]!=4&&p.workTable[j+2]!=4&&r>0){
+								&&p.workTable[j-2]!=4&&p.workTable[j+2]!=4&&r>0 && p.workTable[j]==0){
 							p.workTable[j]=4;r=r-1;p.rest=sum(p.workTable);
 						}
 						if(k%7==firstTue) continue;
 						if(k<daysNumOfMonth-2&&p.workTable[k]!=4&&p2.workTable[k]+p3.workTable[k]+p4.workTable[k]+p5.workTable[k]<2
-								&&p.workTable[k-2]!=4&&p.workTable[k+2]!=4&&r>0){
+								&&p.workTable[k-2]!=4&&p.workTable[k+2]!=4&&r>0 && p.workTable[k]==0){
 							p.workTable[k]=4;r=r-1;p.rest=sum(p.workTable);
 						}
 					}
@@ -788,12 +788,12 @@ function createSchedule2(){
 						j=pos+n/2-i;k=pos+n/2+i;
 						if(j%7==firstTue) continue;
 						if(j>2&&p.workTable[j]!=4&&p2.workTable[j]+p3.workTable[j]+p4.workTable[j]+p5.workTable[j]<2
-								&&p.workTable[j-2]!=4&&p.workTable[j+2]!=4&&r>0){
+								&&p.workTable[j-2]!=4&&p.workTable[j+2]!=4&&r>0 && p.workTable[j]==0){
 							p.workTable[j]=4;r=r-1;p.rest=sum(p.workTable);
 						}
 						if(k%7==firstTue) continue;
 						if(k<daysNumOfMonth-2&&p.workTable[k]!=4&&p2.workTable[k]+p3.workTable[k]+p4.workTable[k]+p5.workTable[k]<2
-								&&p.workTable[k-2]!=4&&p.workTable[k+2]!=4&&r>0){
+								&&p.workTable[k-2]!=4&&p.workTable[k+2]!=4&&r>0 && p.workTable[k]==0){
 							p.workTable[k]=4;r=r-1;p.rest=sum(p.workTable);
 						}
 					}
@@ -811,7 +811,7 @@ function createSchedule2(){
 							var j=rand.nextInt(daysNumOfMonth)%daysNumOfMonth;
 							if(j%7==firstTue) continue;
 							if(j>2&&j<daysNumOfMonth-2&&p.workTable[j]!=4&&p2.workTable[j]+p3.workTable[j]+p4.workTable[j]+p5.workTable[j]<8
-									&&p.workTable[j-2]!=4&&p.workTable[j+2]!=4&&r>0){
+									&&p.workTable[j-2]!=4&&p.workTable[j+2]!=4&&r>0 && p.workTable[j]==0){
 								p.workTable[j]=4;r=r-1;p.rest=sum(p.workTable);
 							}
 						}
@@ -822,7 +822,7 @@ function createSchedule2(){
 							var j=rand.nextInt(daysNumOfMonth)%daysNumOfMonth;
 							if(j%7==firstTue) continue;
 							if(j>2&&j<daysNumOfMonth-2&&p.workTable[j]!=4&&p2.workTable[j]+p3.workTable[j]+p4.workTable[j]+p5.workTable[j]<12
-									&&p.workTable[j-2]!=4&&p.workTable[j+2]!=4&&r>0){
+									&&p.workTable[j-2]!=4&&p.workTable[j+2]!=4&&r>0 && p.workTable[j]==0){
 								p.workTable[j]=4;r=r-1;p.rest=sum(p.workTable);
 							}
 						}
@@ -833,7 +833,7 @@ function createSchedule2(){
 							var j=rand.nextInt(daysNumOfMonth)%daysNumOfMonth;
 							if(j%7==firstTue) continue;
 							if(j>3&&j<daysNumOfMonth-3&&p.workTable[j]!=4&&p2.workTable[j]+p3.workTable[j]+p4.workTable[j]+p5.workTable[j]<12
-									&&((p.workTable[j-3]!=4&&p.workTable[j+1]!=4)||(p.workTable[j-1]!=4&&p.workTable[j+3]!=4))&&r>0){
+									&&((p.workTable[j-3]!=4&&p.workTable[j+1]!=4)||(p.workTable[j-1]!=4&&p.workTable[j+3]!=4))&&r>0 && p.workTable[j]==0){
 								p.workTable[j]=4;r=r-1;p.rest=sum(p.workTable);
 							}
 						}
@@ -876,6 +876,8 @@ function createSchedule2(){
 				arr[i] = 4;
 			}else if (arr[i] === 4){
 				arr[i] = 0;
+			} else if (arr[i] ===5){
+				arr[i] = 4;
 			}
 		}
 	}

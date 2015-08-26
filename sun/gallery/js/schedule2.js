@@ -214,7 +214,8 @@ document.getElementById('preSet').addEventListener('click',function(event){
 			if(i!==imployeeNum && preSet[i][day]===4){flag++}
 		}
 		if(flag>=3){ 
-			alert('每天至少有2个员工上班！')
+			alert('每天至少有2个员工上班！');
+			return;
 		}else{
 			preSet[imployeeNum][day] = Number(work);
 		}
@@ -422,8 +423,13 @@ btn1.addEventListener('click',function(event){
 //统计
 btn2.addEventListener('click',function(event){
 	var trs = document.getElementsByTagName('tr'); 
-	var ps = document.getElementsByTagName('p');
-	var names = ['戎超群：','吴&nbsp;&nbsp;&nbsp;艳：','吴丹丹：','叶佳莹：','张&nbsp;&nbsp;&nbsp;智：'];
+	var st = document.getElementsByClassName('statistic')[0];
+	st.innerHTML = '';
+	var table = document.createElement('talbe');
+	var th = document.createElement('thead');
+	th.innerHTML = '<th>统计</th><th>岗1</th><th>岗2</th><th>岗3</th><th>岗4</th><th>休</th><th>连休</th><th>连岗</th>';
+	table.appendChild(th);
+	var names = ['戎超群：','吴艳：','吴丹丹：','叶佳莹：','张智：'];
 	for (var i = 0 ; i < 5; i++){
 		var children = trs[i+11].childNodes;
 		var len = children.length-3;
@@ -464,11 +470,16 @@ btn2.addEventListener('click',function(event){
 					break;
 			}
 		}
-		ps[i+1].innerHTML = names[i]+'&nbsp;&nbsp;&nbsp;'+work1+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+work2+
+		var tr =document.createElement('tr');
+		tr.innerHTML = '<td>'+names[i]+'</td><td>'+work1+'</td><td>'+work2+'</td><td>'+
+			work3+'</td><td>'+work4+'</td><td>'+rest+'</td><td>'+dblrest+'</td><td>'+maxWork+'</td>';
+		table.appendChild(tr);
+		/*ps[i+1].innerHTML = names[i]+'&nbsp;&nbsp;&nbsp;'+work1+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+work2+
 				'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+work3+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
 				work4+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+rest+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+dblrest+
-				'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+maxWork
+				'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+maxWork*/
 	}
+	st.appendChild(table);
 },false)
 
 //触发统计按钮
