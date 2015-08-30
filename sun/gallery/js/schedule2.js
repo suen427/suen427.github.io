@@ -557,7 +557,7 @@ document.getElementById('setmonth').addEventListener('click',function(event){
 	setDayOption();
 },false);
 
-table.addEventListener('click',function(event){
+table.addEventListener('click',function (event){
 	var target = event.target;
 	var hovers =  table.getElementsByClassName('hover');
 	if (hovers.length>0){
@@ -570,3 +570,108 @@ table.addEventListener('click',function(event){
 },false)
 
 
+// 表格格式切换
+var newTableStyle = true;
+document.getElementById('switch').addEventListener('click', switchTable,false)
+function switchTable (event) {
+	if (newTableStyle) {
+		var table = document.getElementById('table');
+		table.setAttribute('id', 'table2');
+		var trs = table.getElementsByTagName('tr');
+		var len = trs.length;
+		for (var i = 1; i < len; i++) {
+			var tr = trs[i];
+			var tds = tr.getElementsByTagName('*');
+			var tdLen = tds.length;
+			for (var j = tdLen-1; j >= 0; j-- ) {
+				var td = tds[j];
+				td.setAttribute('colspan', '1');
+				switch( td.innerHTML ){
+					case '岗位':
+					case '-':
+						tr.removeChild(td);
+						break;
+					case '岗1':
+						td.previousElementSibling.innerHTML = '财';
+						tr.removeChild(td);
+						break;
+					case '岗2':
+						td.previousElementSibling.innerHTML = '接';
+						tr.removeChild(td);
+						break;
+					case '岗3':
+						td.previousElementSibling.innerHTML = '支';
+						tr.removeChild(td);
+						break;
+					case '岗4':
+						td.previousElementSibling.innerHTML = 'A';
+						tr.removeChild(td);
+						break;
+				}
+			}
+		}
+		newTableStyle = false;
+	} else {
+		var table = document.getElementById('table2');
+		table.setAttribute('id', 'table');
+		var tbody = table.tBodies[0];
+		var trs = table.getElementsByTagName('tr');
+		var len = trs.length;
+		var schedule = [];
+		for (var i = 0; i < 5; i++) {
+			schedule[i] = trs[i+11].innerText.replace(/^\s+|\s+$/,'');
+		}
+		
+		for (var i = len-1; i >= 0; i--) {
+			tbody.removeChild(trs[i]);
+		}
+		createTableHeader();
+
+		for (var i = 0; i < 5; i++) {
+			var tr = document.createElement('tr');
+			var sch = schedule[i].split(/\s+/);
+			var th1 = document.createElement('th');
+			th1.innerText = sch[0];
+			var th2 = document.createElement('th');
+			th2.innerText = sch[1];
+			tr.appendChild(th1);
+			tr.appendChild(th2);
+			var sch2 = [];
+			for (var j = 2; j<sch.length; j++) {
+				switch(sch[j]){
+					case '财':
+						sch[j] = '岗1'
+						sch2[j] = 'A'
+						break;
+					case '接':
+						sch[j] = '岗2'
+						sch2[j] = '早班'
+						break;
+					case '支':
+						sch[j] = '岗3'
+						sch2[j] = 'A'
+						break;
+					case 'A':
+						sch[j] = '岗4'
+						sch2[j] = 'A'
+						break;
+					case '休':
+						sch[j] = '-'
+						sch2[j] = '休'
+						break;
+				}
+				var td1 =document.createElement('td');
+				td1.innerText = sch2[j];
+				var td2 =document.createElement('td');
+				td2.innerText = sch[j];
+				tr.appendChild(td1);
+				tr.appendChild(td2);
+			}
+
+			var td = document.createElement('td');
+			tr.appendChild(td);
+			tbody.appendChild(tr);
+		}
+		newTableStyle = true;
+	}
+}
