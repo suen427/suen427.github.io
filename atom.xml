@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录学习成长的点点滴滴]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://suen427.github.io//"/>
-  <updated>2015-08-24T07:53:05.117Z</updated>
+  <updated>2015-09-10T02:50:02.269Z</updated>
   <id>http://suen427.github.io//</id>
   
   <author>
@@ -14,6 +14,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何实现浏览器兼容版的element.dataset]]></title>
+    <link href="http://suen427.github.io/2015/09/10/element-dataset/"/>
+    <id>http://suen427.github.io/2015/09/10/element-dataset/</id>
+    <published>2015-09-10T02:15:11.000Z</published>
+    <updated>2015-09-10T02:50:02.269Z</updated>
+    <content type="html"><![CDATA[<p>element.dataset能够获取元素的自定义属性，但是低版本的ie不支持，如何在低版本的ie上兼容类似的功能。<br>下面是我写的一个兼容IE的方法:</p>
+<p>html<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;div id=&#34;qwe&#34; data-my=&#34;123&#34;&#62;&#60;/div&#62;</span><br></pre></td></tr></table></figure></p>
+<p>javascript<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;div id=&#34;qwe&#34; data-my=&#34;123&#34;&#62;&#60;/div&#62;&#10;&#10;  function getDataSet(elem)&#123;&#10;    if(elem.dataset)&#123;&#10;      return elem.dataset;&#10;    &#125;&#10;    var datas = &#123;&#125;;&#10;    var attrs = elem.attributes;&#10;    var nodeName,nodeNames;&#10;    for(var i = 0,attr;attr = attrs[i];i++)&#123;&#10;      nodeName = attr.nodeName;&#10;      if(nodeName.indexOf(&#39;data-&#39;)!==-1)&#123;&#10;        nodeNames = nodeName.slice(5).split(&#34;-&#34;);&#10;        nodeName = nodeNames[0];&#10;      &#125; else&#123;&#10;        continue;&#10;      &#125;&#10;      for(var j=1;j&#60;nodeNames.length;j++)&#123;&#10;        nodeName += nodeNames[j].slice(0,1).toUpperCase + nodeNames[j].slice(1);&#10;      &#125;&#10;      datas[nodeName] = attr.nodeValue;&#10;      return datas;&#10;    &#125;&#10;  &#125;&#10;  document.write(getDataSet(document.getElementById(&#34;qwe&#34;)).my);&#10;  // &#36755;&#20986;&#65306;123</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[如何实现浏览器兼容版的element.dataset | Sun's Blog]]>
+    
+    </summary>
+    
+      <category term="DOM" scheme="http://suen427.github.io/tags/DOM/"/>
+    
+      <category term="兼容" scheme="http://suen427.github.io/tags/%E5%85%BC%E5%AE%B9/"/>
+    
+      <category term="WEB前端" scheme="http://suen427.github.io/categories/WEB%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[微前端大作业]]></title>
