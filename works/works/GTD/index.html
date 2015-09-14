@@ -1,0 +1,85 @@
+<!doctype html>
+<html class="no-js" lang="zh">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=9">
+	<title>GO TO DO</title>
+	<meta name="description" content="GO TO DO">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+	<!-- Place favicon.ico in the root directory -->
+
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/main.min.css">
+	<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 9]>
+  <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <!-- Add your site or application content here -->
+  <header class="banner" role="banner">
+  	<div class="brand">GTD Tools<span><a href="about.html">about</a></span></div>
+
+  </header>
+
+  <main class="main" role="main">
+    <div class="categories">
+      <div class="all-task">所有任务</div>
+      <div class="category-list">
+        <h3>分类列表</h3>
+        <ul class="category">
+        </ul>
+      </div>
+      <div class="add-class"><span class="fa fa-plus"></span> 新增分类</div>
+    </div><!-- 
+ --><div class="tasks">
+      <div class="task-header">
+        <span class="active" id='all-task'>所有</span> 
+        <span id="uncomplete">未完成</span> 
+        <span id="complete">已完成</span> 
+      </div>
+      <ul class="task-list">
+      </ul>
+      <div class="add-task"><span class="fa fa-plus"></span> 新增任务</div>
+    </div><!-- 
+ --><div class="details">
+      <h4 class="detail-header"></h4>
+      <span class="pull-right fa-lg fa fa-check-square-o" id="setcomplete"></span> <span class="pull-right fa-lg fa fa-pencil-square-o" id="edit"></span>
+      <div class="date"></div>
+      <div class="detail">
+      </div>
+    </div>
+  </main>
+  
+  <div class="add-dialog">
+    <div class="center">
+      <form id="formAddTask" action="">
+        <input type="date" name="date" placeholder="日期">
+        <input type="text" name="task" placeholder="任务">
+        <button id="save">保存</button>
+        <button id="cancel">取消</button>
+      </form>
+    </div>
+  </div>
+  <div class="edit-dialog">
+    <div class="center">
+      <form id="formAddTask" action="">
+        <input type="date" name="date" placeholder="日期">
+        <input type="text" name="task" placeholder="任务">
+        <button id="edit-save">保存</button>
+        <button id="edit-cancel">取消</button><br>
+        <textarea name="detail" id="edit-detail" cols="30" rows="10"></textarea>
+      </form>
+    </div>
+  </div>
+
+<!-- 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+  <script src="js/plugins.min.js"></script> -->
+  <script src="js/main.min.js"></script>
+</body>
+</html>
