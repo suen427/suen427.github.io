@@ -6,7 +6,7 @@
 
 	if (!tasks) {
 		// 活动json数据
-		var url = 'http://suen427.github.io/works/GTD/gtd.json';
+		var url = 'http://suen427.github.io/works/works/GTD/gtd.json';
 		var xhr = new XMLHttpRequest();
 		
 		xhr.open('get', url);
