@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录学习成长的点点滴滴]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://suen427.github.io//"/>
-  <updated>2015-09-10T02:50:02.269Z</updated>
+  <updated>2015-09-28T13:51:05.327Z</updated>
   <id>http://suen427.github.io//</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[求字母序列的按字母排序的位置]]></title>
+    <link href="http://suen427.github.io/2015/09/28/baidu-fe-test/"/>
+    <id>http://suen427.github.io/2015/09/28/baidu-fe-test/</id>
+    <published>2015-09-28T13:25:11.000Z</published>
+    <updated>2015-09-28T13:51:05.327Z</updated>
+    <content type="html"><![CDATA[<p>这是一道百度校招的面试题</p>
+<p>有由abcdefghijkl组成的字符串（不重复出现），求字符串按字母排列的位次：</p>
+<p>如输入<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;hgebkflacdji&#34;</span><br></pre></td></tr></table></figure></p>
+<p>则输出为：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">302715242</span><br></pre></td></tr></table></figure></p>
+<p>如输入<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;abcdefghijlk&#34;</span><br></pre></td></tr></table></figure></p>
+<p>则输出为：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure></p>
+<p>我的求解方法：<br>思路：求字符串的第一个字母在数组temp中的位置（indexOf()求得）第一个位置确定后，后面的11位字符串可以由11!中排法，所以第一个字母为b则结果result加1<em>11!，并将其从数组中移除。然后继续第二个位置，求第二个位置的字母在temp数组中的位置（index），result加上index</em>10！。。。依次类推到最后一个字符。最后的结果还要加上1。JavaScript程序如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var line = &#34;hgebkflacdji&#34;;&#10;&#10;var arr = line.split(&#39;&#39;);&#10;result = 0;&#10;var temp = &#39;abcdefghijkl&#39;.split(&#34;&#34;);&#10;&#10;// step&#20869;&#23384;&#25918;&#30340;&#26159;&#38454;&#20056;&#65292;&#20998;&#21035;&#26159;11!&#12289;10!...1!&#12289;0!&#10;var step = [39916800, 3628800, 362880, 40320,5040,720, 120,24,6,2,1,1];&#10;for ( var i = 0; i &#60; arr.length; i++ ) &#123;&#10;&#9;var a = arr[i];&#10;&#9;var index = temp.indexOf(a);&#10;&#9;result += index * step[i];&#10;&#9;temp.splice(index,1);&#10;&#125;&#10;result = result+1&#65307;&#10;console.log(result);</span><br></pre></td></tr></table></figure>
+<p>可惜在笔试时参考数值中字母顺序弄错了，就差一点，估计过不了百度的笔试了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[求字母序列的按字母排序的位置 | Sun's Blog]]>
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://suen427.github.io/tags/JavaScript/"/>
+    
+      <category term="笔试" scheme="http://suen427.github.io/tags/%E7%AC%94%E8%AF%95/"/>
+    
+      <category term="WEB前端" scheme="http://suen427.github.io/categories/WEB%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何实现浏览器兼容版的element.dataset]]></title>

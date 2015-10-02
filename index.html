@@ -81,6 +81,77 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/09/28/baidu-fe-test/" title="求字母序列的按字母排序的位置" itemprop="url">求字母序列的按字母排序的位置</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-28T13:25:11.000Z" itemprop="datePublished"> 发表于 2015-09-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>这是一道百度校招的面试题</p>
+<p>有由abcdefghijkl组成的字符串（不重复出现），求字符串按字母排列的位次：</p>
+<p>如输入<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;hgebkflacdji&#34;</span><br></pre></td></tr></table></figure></p>
+<p>则输出为：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">302715242</span><br></pre></td></tr></table></figure></p>
+<p>如输入<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;abcdefghijlk&#34;</span><br></pre></td></tr></table></figure></p>
+<p>则输出为：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure></p>
+<p>我的求解方法：<br>思路：求字符串的第一个字母在数组temp中的位置（indexOf()求得）第一个位置确定后，后面的11位字符串可以由11!中排法，所以第一个字母为b则结果result加1<em>11!，并将其从数组中移除。然后继续第二个位置，求第二个位置的字母在temp数组中的位置（index），result加上index</em>10！。。。依次类推到最后一个字符。最后的结果还要加上1。JavaScript程序如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var line = &#34;hgebkflacdji&#34;;&#10;&#10;var arr = line.split(&#39;&#39;);&#10;result = 0;&#10;var temp = &#39;abcdefghijkl&#39;.split(&#34;&#34;);&#10;&#10;// step&#20869;&#23384;&#25918;&#30340;&#26159;&#38454;&#20056;&#65292;&#20998;&#21035;&#26159;11!&#12289;10!...1!&#12289;0!&#10;var step = [39916800, 3628800, 362880, 40320,5040,720, 120,24,6,2,1,1];&#10;for ( var i = 0; i &#60; arr.length; i++ ) &#123;&#10;&#9;var a = arr[i];&#10;&#9;var index = temp.indexOf(a);&#10;&#9;result += index * step[i];&#10;&#9;temp.splice(index,1);&#10;&#125;&#10;result = result+1&#65307;&#10;console.log(result);</span><br></pre></td></tr></table></figure>
+<p>可惜在笔试时参考数值中字母顺序弄错了，就差一点，估计过不了百度的笔试了。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/WEB前端/">WEB前端</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/笔试/">笔试</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/09/28/baidu-fe-test/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/09/28/baidu-fe-test/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/09/10/element-dataset/" title="如何实现浏览器兼容版的element.dataset" itemprop="url">如何实现浏览器兼容版的element.dataset</a>
   </h1>
   <p class="article-author">By
@@ -370,102 +441,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/05/JavaScript-closure2/" title="JavaScript闭包（closure）学习笔记（2）" itemprop="url">JavaScript闭包（closure）学习笔记（2）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-04T16:52:38.000Z" itemprop="datePublished"> 发表于 2015-08-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="闭包的三种实现">闭包的三种实现</h2><ul>
-<li><p>with语句</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with(obj)&#123;</span><br><span class="line">    //这里是对象闭包</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>函数体</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">	//函数闭包</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>catch语句</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">//...</span><br><span class="line">&#125; catch(e) &#123;</span><br><span class="line">//catch闭包 但IE里不行</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>一个例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> User( properties ) &#123;    </span><br><span class="line">    //这里一定要声明一个变量来指向当前的instance    </span><br><span class="line">    var objthis = this;    </span><br><span class="line">    <span class="keyword">for</span> ( var i <span class="keyword">in</span> properties ) &#123;    </span><br><span class="line">        (<span class="function"><span class="title">function</span></span>()&#123;    </span><br><span class="line">                //在闭包内，t每次都是新的，而 properties[i] 的值是<span class="keyword">for</span>里面的    </span><br><span class="line">                var t = properties[i];    </span><br><span class="line">                objthis[ <span class="string">"get"</span> + i ] = <span class="function"><span class="title">function</span></span>() &#123;<span class="built_in">return</span> t;&#125;;    </span><br><span class="line">                objthis[ <span class="string">"set"</span> + i ] = <span class="keyword">function</span>(val) &#123;t = val;&#125;;    </span><br><span class="line">        &#125;)();     </span><br><span class="line">    &#125;    </span><br><span class="line">&#125;    </span><br><span class="line">     </span><br><span class="line">//测试代码    </span><br><span class="line">var user = new User(&#123;    </span><br><span class="line">    name: <span class="string">"Bob"</span>,    </span><br><span class="line">    age: <span class="number">44</span>    </span><br><span class="line">&#125;);    </span><br><span class="line">     </span><br><span class="line">alert( user.getname());//BOb</span><br><span class="line">alert( user.getage());//<span class="number">44</span></span><br><span class="line">     </span><br><span class="line">user.setname(<span class="string">"Mike"</span>);    </span><br><span class="line">alert( user.getname());  //Mike  </span><br><span class="line">alert( user.getage());  //<span class="number">44</span></span><br><span class="line">     </span><br><span class="line">user.setage( <span class="number">22</span> );    </span><br><span class="line">alert( user.getname()); //Mike   </span><br><span class="line">alert( user.getage());  //<span class="number">22</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="闭包使用案例">闭包使用案例</h2><p>让下面这三个节点的Onclick事件都能正确的弹出相应的参数。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">   &lt;li id=<span class="string">"a1"</span>&gt;aa&lt;/li&gt;</span><br><span class="line">   &lt;li id=<span class="string">"a2"</span>&gt;aa&lt;/li&gt;</span><br><span class="line">   &lt;li id=<span class="string">"a3"</span>&gt;aa&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"> </span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">1</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">   var id = document.getElementById(<span class="string">"a"</span> + i);</span><br><span class="line">   id.onclick = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        alert(i);//现在都是返回<span class="number">4</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
-<p>在上面这段代码中，通过for循环为三个<code>li</code>元素注册了<code>click</code>事件。在循环结束后<code>i</code>的值<code>4</code>，这个值是个全局变量。当触发<code>click</code>事件时，处理函数返回的是全局对象<code>i</code>，这个值与事件注册时的<code>i</code>值比已经发生了改变，所以实际返回值都是<code>4</code>.</p>
-<p>解决方法：</p>
-<ol>
-<li>使用闭包函数<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var lists = document.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">0</span>,l=lists.length; i &lt; l; i++)&#123;</span><br><span class="line">  lists[i].onclick = (<span class="keyword">function</span>(i)&#123;//保存于外部函函数</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">      alert(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>或<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var lists = document.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">0</span>,l=lists.length; i &lt; l; i++)&#123;</span><br><span class="line">  lists[i].onclick = new <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    var t = i;</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">      alert(t+<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>利用事件代理</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var ul = document.getElementsByTagName(<span class="string">"ul"</span>)[<span class="number">0</span>];</span><br><span class="line">ul.onclick = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  var e = arguments[<span class="number">0</span>] || window.event,</span><br><span class="line">  target = e.srcElement ? e.srcElement : e.target;</span><br><span class="line">  <span class="keyword">if</span>(target.nodeName.toLowerCase() == <span class="string">"li"</span>)&#123;</span><br><span class="line">    alert(target.id.slice(-<span class="number">1</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将暂时变量保留于元素节点上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var lists = document.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">0</span>,t=<span class="number">0</span>,el; el = list[i++];)&#123;</span><br><span class="line">  el.i = t++</span><br><span class="line">  el.onclick = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    alert(this.i)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用with语句造成的对象闭包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var els = document.getElementsByTagName(<span class="string">"li"</span>)</span><br><span class="line">	 <span class="keyword">for</span>(var i=<span class="number">0</span>,n=els.length;i&lt;n;i++)&#123;</span><br><span class="line">	   with (&#123;i:i&#125;)</span><br><span class="line">	   els[i].onclick = <span class="function"><span class="title">function</span></span>() &#123; alert(this.innerHTML+i) &#125;;</span><br><span class="line">	 &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用try…catch语句构造的异常闭包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var lists = document.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">for</span>(var i=<span class="number">0</span>,l=lists.length; i &lt; l; i++)&#123;</span><br><span class="line">  try&#123;</span><br><span class="line">    throw i;</span><br><span class="line">  &#125;catch(i)&#123;</span><br><span class="line">    lists[i].onclick =  <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">      alert(i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/WEB前端/">WEB前端</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/闭包/">闭包</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/08/05/JavaScript-closure2/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/08/05/JavaScript-closure2/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -484,7 +459,7 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/WEB前端/" title="WEB前端">WEB前端<sup>6</sup></a></li>
+			<li><a href="/categories/WEB前端/" title="WEB前端">WEB前端<sup>7</sup></a></li>
 		  
 		
 		  
@@ -509,7 +484,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>7</sup></a></li>
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>8</sup></a></li>
 			
 		
 			
@@ -558,6 +533,10 @@
 		
 			
 				<li><a href="/tags/兼容/" title="兼容">兼容<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>1</sup></a></li>
 			
 		
 			
