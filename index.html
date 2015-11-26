@@ -81,6 +81,80 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/11/18/pdf.js/" title="pdf.js的使用方法" itemprop="url">pdf.js的使用方法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-18T09:52:23.000Z" itemprop="datePublished"> 发表于 2015-11-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>mozilla为我们提供了一个基于html5的pdf插件pdf.js。通过这个插件，可以在网页上直接打开pdf文本，不需要本地支持。Firefox浏览器就是用的这个插件。</p>
+<p>pdf.js在github上的地址为<a href="https://github.com/mozilla/pdf.js" target="_blank" rel="external">https://github.com/mozilla/pdf.js</a></p>
+<p>在github上的源码并不能直接使用，需要先进行构建。<br>首先打开git，clone到本地：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/mozilla/pdf.js.git</span><br><span class="line">$ <span class="keyword">cd</span> pdf.js</span><br></pre></td></tr></table></figure>
+<p>然后安装需要支持的包：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<p>最后启动本地文本服务器：</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node make <span class="keyword">server</span></span><br></pre></td></tr></table></figure>
+<p>然我们打开<a href="http://localhost:8888/web/viewer.html" target="_blank" rel="external">http://localhost:8888/web/viewer.html</a>，可以看到：<br><img src="http://www.linuxidc.com/upload/2015_06/150612094867572.png" alt=""></p>
+<p>可以从构建的文件中提取pdf.js的包，下面是我提取的一个包:</p>
+<p><a href="http://pan.baidu.com/s/1unEP4" target="_blank" rel="external">百度云</a></p>
+<p>其中包含两个文件夹build和web。在web文件夹内有一个viewer.html的html文件，这个文件主要负责pdf阅读器的结构样式，还有一个js文件viewer.js用于配置参数。在viewer.js中一个DEFAULT_URL常量，用于设置缺省的打开的pdf值。原文件中的默认值为compressed.tracemonkey-pldi-09.pdf。我们也可以通过地址栏参数传递参数来设置要代开的pdf文件，如…/web/viewer.html?file=12.pdf。参数file就是要打开文件的地址。在实际使用中可以通过在html文档中嵌入’<iframe>‘<code>标</code>签实现，通过file来传递参数，如下：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe <span class="variable">src=</span><span class="string">"js/pdfJS/web/viewer.html?file=public/嵌入式系统课程教学大纲.pdf"</span> <span class="variable">frameborder=</span><span class="string">"0"</span> <span class="variable">width=</span><span class="string">"100%"</span> <span class="variable">height=</span><span class="string">"500"</span>&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure></iframe></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/插件/">插件</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/pdf-js/">pdf.js</a><a href="/tags/插件/">插件</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/18/pdf.js/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/11/18/pdf.js/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/09/28/baidu-fe-test/" title="求字母序列的按字母排序的位置" itemprop="url">求字母序列的按字母排序的位置</a>
   </h1>
   <p class="article-author">By
@@ -374,73 +448,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/12/video/" title="在低版本浏览器中兼容&lt;video&gt;标签" itemprop="url">在低版本浏览器中兼容&lt;video&gt;标签</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-11T16:52:38.000Z" itemprop="datePublished"> 发表于 2015-08-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="vedio标签">vedio标签</h2><p>在html5中加入了许多新的标签，<code>video</code>就是其中的一个。这个标签使我们可以像插入图片一样的插入视频。下面是一个插入视频的简单代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;video src=<span class="string">"movie.mp4"</span> controls=<span class="string">"controls"</span>&gt;</span><br><span class="line">	您的浏览器不支持 video 标签。</span><br><span class="line">&lt;/video&gt;</span><br></pre></td></tr></table></figure></p>
-<p>虽然主流浏览器都已经支持了video标签，但是很多情况为了兼容低版本的浏览器还是很麻烦。</p>
-<h2 id="兼容地板本浏览器">兼容地板本浏览器</h2><p>etianen开发了一个兼容video标签的js插件。插件地址：<a href="https://github.com/etianen/html5media。" target="_blank" rel="external">https://github.com/etianen/html5media。</a><br>使用该插件很简单，只需要在<code>head</code>中插入下面的代码就可以使用video标签了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"http://api.html5media.info/1.1.8/html5media.min.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
-<p>我们可以像下面这样插入一个视频：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;video src=<span class="string">"video.mp4"</span> width=<span class="string">"320"</span> height=<span class="string">"200"</span> controls preload&gt;&lt;/video&gt;</span><br></pre></td></tr></table></figure></p>
-<p>该插件也支持<code>audio</code>标签：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;audio src=<span class="string">"audio.mp3"</span> controls preload&gt;&lt;/audio&gt;</span><br></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/WEB前端/">WEB前端</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/html/">html</a><a href="/tags/video/">video</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/08/12/video/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/08/12/video/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -464,6 +471,10 @@
 		
 		  
 			<li><a href="/categories/建站/" title="建站">建站<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/插件/" title="插件">插件<sup>1</sup></a></li>
 		  
 		
 		  
@@ -512,11 +523,19 @@
 			
 		
 			
-				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+				<li><a href="/tags/pdf-js/" title="pdf.js">pdf.js<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 			
 		
 			
@@ -548,7 +567,7 @@
 			
 		
 			
-				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
 			
 		
 		</ul>

@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录学习成长的点点滴滴]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://suen427.github.io//"/>
-  <updated>2015-09-28T13:51:05.327Z</updated>
+  <updated>2015-11-26T13:13:53.415Z</updated>
   <id>http://suen427.github.io//</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[pdf.js的使用方法]]></title>
+    <link href="http://suen427.github.io/2015/11/18/pdf.js/"/>
+    <id>http://suen427.github.io/2015/11/18/pdf.js/</id>
+    <published>2015-11-18T09:52:23.000Z</published>
+    <updated>2015-11-26T13:13:53.415Z</updated>
+    <content type="html"><![CDATA[<p>mozilla为我们提供了一个基于html5的pdf插件pdf.js。通过这个插件，可以在网页上直接打开pdf文本，不需要本地支持。Firefox浏览器就是用的这个插件。</p>
+<p>pdf.js在github上的地址为<a href="https://github.com/mozilla/pdf.js" target="_blank" rel="external">https://github.com/mozilla/pdf.js</a></p>
+<p>在github上的源码并不能直接使用，需要先进行构建。<br>首先打开git，clone到本地：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/mozilla/pdf.js.git</span><br><span class="line">$ <span class="keyword">cd</span> pdf.js</span><br></pre></td></tr></table></figure>
+<p>然后安装需要支持的包：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<p>最后启动本地文本服务器：</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node make <span class="keyword">server</span></span><br></pre></td></tr></table></figure>
+<p>然我们打开<a href="http://localhost:8888/web/viewer.html" target="_blank" rel="external">http://localhost:8888/web/viewer.html</a>，可以看到：<br><img src="http://www.linuxidc.com/upload/2015_06/150612094867572.png" alt=""></p>
+<p>可以从构建的文件中提取pdf.js的包，下面是我提取的一个包:</p>
+<p><a href="http://pan.baidu.com/s/1unEP4" target="_blank" rel="external">百度云</a></p>
+<p>其中包含两个文件夹build和web。在web文件夹内有一个viewer.html的html文件，这个文件主要负责pdf阅读器的结构样式，还有一个js文件viewer.js用于配置参数。在viewer.js中一个DEFAULT_URL常量，用于设置缺省的打开的pdf值。原文件中的默认值为compressed.tracemonkey-pldi-09.pdf。我们也可以通过地址栏参数传递参数来设置要代开的pdf文件，如…/web/viewer.html?file=12.pdf。参数file就是要打开文件的地址。在实际使用中可以通过在html文档中嵌入’<iframe>‘<code>标</code>签实现，通过file来传递参数，如下：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe <span class="variable">src=</span><span class="string">"js/pdfJS/web/viewer.html?file=public/嵌入式系统课程教学大纲.pdf"</span> <span class="variable">frameborder=</span><span class="string">"0"</span> <span class="variable">width=</span><span class="string">"100%"</span> <span class="variable">height=</span><span class="string">"500"</span>&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure></iframe></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[pdf.js的使用方法 | Sun's Blog]]>
+    
+    </summary>
+    
+      <category term="pdf.js" scheme="http://suen427.github.io/tags/pdf-js/"/>
+    
+      <category term="插件" scheme="http://suen427.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="插件" scheme="http://suen427.github.io/categories/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[求字母序列的按字母排序的位置]]></title>

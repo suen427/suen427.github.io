@@ -81,6 +81,73 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/08/12/video/" title="在低版本浏览器中兼容&lt;video&gt;标签" itemprop="url">在低版本浏览器中兼容&lt;video&gt;标签</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-11T16:52:38.000Z" itemprop="datePublished"> 发表于 2015-08-12</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="vedio标签">vedio标签</h2><p>在html5中加入了许多新的标签，<code>video</code>就是其中的一个。这个标签使我们可以像插入图片一样的插入视频。下面是一个插入视频的简单代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;video src=<span class="string">"movie.mp4"</span> controls=<span class="string">"controls"</span>&gt;</span><br><span class="line">	您的浏览器不支持 video 标签。</span><br><span class="line">&lt;/video&gt;</span><br></pre></td></tr></table></figure></p>
+<p>虽然主流浏览器都已经支持了video标签，但是很多情况为了兼容低版本的浏览器还是很麻烦。</p>
+<h2 id="兼容地板本浏览器">兼容地板本浏览器</h2><p>etianen开发了一个兼容video标签的js插件。插件地址：<a href="https://github.com/etianen/html5media。" target="_blank" rel="external">https://github.com/etianen/html5media。</a><br>使用该插件很简单，只需要在<code>head</code>中插入下面的代码就可以使用video标签了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"http://api.html5media.info/1.1.8/html5media.min.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以像下面这样插入一个视频：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;video src=<span class="string">"video.mp4"</span> width=<span class="string">"320"</span> height=<span class="string">"200"</span> controls preload&gt;&lt;/video&gt;</span><br></pre></td></tr></table></figure></p>
+<p>该插件也支持<code>audio</code>标签：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;audio src=<span class="string">"audio.mp3"</span> controls preload&gt;&lt;/audio&gt;</span><br></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/WEB前端/">WEB前端</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/html/">html</a><a href="/tags/video/">video</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/08/12/video/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/08/12/video/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/08/05/JavaScript-closure2/" title="JavaScript闭包（closure）学习笔记（2）" itemprop="url">JavaScript闭包（closure）学习笔记（2）</a>
   </h1>
   <p class="article-author">By
@@ -424,108 +491,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/07/26/JavaScript作用域和作用域链/" title="JavaScript作用域和作用域链" itemprop="url">JavaScript作用域和作用域链</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-26T12:52:38.000Z" itemprop="datePublished"> 发表于 2015-07-26</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>作用域（scope）是JavaScript最重要的概念之一，想要学好JavaScript就需要理解JavaScript作用域和作用域链的工作原理。</p>
-<h2 id="作用域">作用域</h2><p>所有编程语言都有作用域的概念。简单的说，作用域就是变量与函数的可访问范围，即作用域控制着变量与函数的可见性和生命周期。在程序设计语言中一般分几种作用域：全局作用域、局部作用域和块作用域。在JavaScript中没有块作用域。</p>
-<h3 id="全局作用域(Global_Scope)">全局作用域(Global Scope)</h3><p>在程序中的任何位置都能够访问到的对象具有全局作用域。</p>
-<ol>
-<li><p>一般在最外层函数外定义的变量具有全局作用域：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var a=<span class="string">"a"</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">doSomething</span></span>()&#123;</span><br><span class="line">    var b=<span class="string">"b"</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">innerSay</span></span>()&#123;</span><br><span class="line">        alert(b);</span><br><span class="line">    &#125;</span><br><span class="line">    innerSay();</span><br><span class="line">&#125;</span><br><span class="line">alert(a); // a</span><br><span class="line">alert(b); // undefinde</span><br><span class="line"><span class="keyword">do</span>Something(); //b</span><br><span class="line">innerSay() //脚本错误</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在JavaScript中未声明直接赋值的变量具有全局作用域：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">doSomething</span></span>()&#123;</span><br><span class="line">    var a=<span class="string">"a"</span>;</span><br><span class="line">    b= =<span class="string">"b"</span>;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">do</span>Something(); // a</span><br><span class="line">alert(b); // b</span><br><span class="line">alert(a); // 脚本错误</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在JavaScript中，window对象的属性也拥有全局作用域。</p>
-</li>
-</ol>
-<h3 id="局部作用域">局部作用域</h3><p>具有局部作用域的对象一般只能在一段代码内访问到，在JavaScript中通常是函数内部。如上面的例子，在函数内部定义的变量不能在函数外面访问到。</p>
-<h2 id="作用域链（Scope_Chain）">作用域链（Scope Chain）</h2><blockquote>
-<p>在JavaScript中，函数也是对象，实际上，JavaScript里一切都是对象。函数对象和其它对象一样，拥有可以通过代码访问的属性和一系列仅供JavaScript引擎访问的内部属性。其中一个内部属性是[[Scope]]，由ECMA-262标准第三版定义，该内部属性包含了函数被创建的作用域中对象的集合，这个集合被称为函数的作用域链，它决定了哪些数据能被函数访问。</p>
-</blockquote>
-<p>JavaScript的作用域和C语言的作用域有些不同。在JavaScript中，函数的作用域在函数定义的时候就已经确定了，和函数调用的位置没有关系。</p>
-<blockquote>
-<p>JavaScript中的函数运行在它们被定义的作用域里,而不是它们被执行的作用域里</p>
-</blockquote>
-<p>任何执行上下文时刻的作用域, 都是由作用域链(scope chain)来实现.在一个函数被定义的时候, 会将它定义时刻的scope chain链接到这个函数对象的[[scope]]属性.在一个函数对象被调用的时候，会创建一个活动对象(也就是一个对象), 然后对于每一个函数的形参，都命名为该活动对象的命名属性, 然后将这个活动对象做为此时的作用域链(scope chain)最前端, 并将这个函数对象的[[scope]]加入到scope chain中.</p>
-<p>在函数执行过程中，没遇到一个变量，都会经历一次标识符解析过程以决定从哪里获取和存储数据。该过程从作用域链头部，也就是从活动对象开始搜索，查找同名的标识符，如果找到了就使用这个标识符对应的变量，如果没找到继续搜索作用域链中的下一个对象，如果搜索完所有对象都未找到，则认为该标识符未定义。函数执行过程中，每个标识符都要经历这样的搜索过程。<br><img src="http://7xkn13.com1.z0.glb.clouddn.com/7-26-scope-chain.jpg" alt=""></p>
-<h3 id="作用域链和代码优化">作用域链和代码优化</h3><p>从作用域链的结构可以看出，在运行期上下文的作用域链中，标识符所在的位置越深，读写速度就会越慢。如上图所示，因为全局变量总是存在于运行期上下文作用域链的最末端，因此在标识符解析的时候，查找全局变量是最慢的。所以，在编写代码的时候应尽量少使用全局变量，尽可能使用局部变量。一个好的经验法则是：如果一个跨作用域的对象被引用了一次以上，则先把它存储到局部变量里再使用。例如下面的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">changeColor</span></span>()&#123;</span><br><span class="line">    document.getElementById(<span class="string">"btnChange"</span>).onclick=<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        document.getElementById(<span class="string">"targetCanvas"</span>).style.backgroundColor=<span class="string">"red"</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这个函数引用了两次全局变量document，查找该变量必须遍历整个作用域链，直到最后在全局对象中才能找到。这段代码可以重写如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">changeColor</span></span>()&#123;</span><br><span class="line">    var doc=document;</span><br><span class="line">    doc.getElementById(<span class="string">"btnChange"</span>).onclick=<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        doc.getElementById(<span class="string">"targetCanvas"</span>).style.backgroundColor=<span class="string">"red"</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段代码比较简单，重写后不会显示出巨大的性能提升，但是如果程序中有大量的全局变量被从反复访问，那么重写后的代码性能会有显著改善</p>
-<h3 id="改变作用域链">改变作用域链</h3><p>函数每次执行时对应的运行期上下文都是独一无二的，所以多次调用同一个函数就会导致创建多个运行期上下文，当函数执行完毕，执行上下文会被销毁。每一个运行期上下文都和一个作用域链关联。一般情况下，在运行期上下文运行的过程中，其作用域链只会被 with 语句和 catch 语句影响。</p>
-<p>with会降低代码执行效率。</p>
-<p>另外一个会改变作用域链的是try-catch语句中的catch语句。当try代码块中发生错误时，执行过程会跳转到catch语句，然后把异常对象推入一个可变对象并置于作用域的头部。在catch代码块内部，函数的所有局部变量将会被放在第二个作用域链对象中。</p>
-<p>请注意，一旦catch语句执行完毕，作用域链机会返回到之前的状态。try-catch语句在代码调试和异常处理中非常有用，因此不建议完全避免。你可以通过优化代码来减少catch语句对性能的影响。一个很好的模式是将错误委托给一个函数处理。</p>
-<h2 id="Javascript的预编译">Javascript的预编译</h2><p>JavaScript是一种脚本语言，JavaScript执行过程是一种翻译执行的过程，那么JavaScript的执行中, 有没有类似编译的过程呢?其实JavaScript是有预编译过程的。看下面的例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">alert(typeof eve); //<span class="keyword">function</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">eve</span></span>() &#123;</span><br><span class="line">   alert(<span class="string">'I am Laruence'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>在eve声明前调用它是有意义的。JavaScript在执行每一段JavaScript代码之前, 都会首先处理var关键字和function定义式(函数定义式和函数表达式)。在调用函数执行之前, 会首先创建一个活动对象, 然后搜寻这个函数中的局部变量定义,和函数定义, 将变量名和函数名都做为这个活动对象的同名属性; 对于局部变量定义,变量的值会在真正执行的时候才计算, 此时只是简单的赋为undefined。</p>
-<p><strong>对于函数的定义需要注意</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">alert(typeof eve); //结果:<span class="keyword">function</span></span><br><span class="line">alert(typeof walle); //结果:undefined</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">eve</span></span>() &#123; //函数定义式</span><br><span class="line">	alert(<span class="string">'I am Laruence'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">var walle = <span class="function"><span class="title">function</span></span>() &#123; //函数表达式</span><br><span class="line">&#125;</span><br><span class="line">alert(typeof walle); //结果:<span class="keyword">function</span></span><br></pre></td></tr></table></figure></p>
-<p>函数定义式和函数表达式是不同, 对于函数定义式, 会将函数定义提前，而函数表达式, 会在执行过程中才计算</p>
-<p>JavaScript在执行<strong>每一段</strong>代码JavaScript时会进行预编译，看下面的例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    alert(typeof eve); //结果:undefined</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">eve</span></span>() &#123;</span><br><span class="line">        alert(<span class="string">'I am Laruence'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
-<p>一个问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var name = <span class="string">'laruence'</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">echo</span></span>() &#123;</span><br><span class="line">    alert(name);</span><br><span class="line">    var name = <span class="string">'eve'</span>;</span><br><span class="line">    alert(name);</span><br><span class="line">    alert(age);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">echo</span>();</span><br></pre></td></tr></table></figure></p>
-<p>三次alert()输出的内容分别是什么？</p>
-<p>很多人可能马上给出的答案是这样的：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">laruence</span><br><span class="line">eve</span><br><span class="line">[脚本出错]</span><br></pre></td></tr></table></figure></p>
-<p>但其实, 运行结果应该是:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">undefined</span><br><span class="line">eve</span><br><span class="line">[脚本出错]</span><br></pre></td></tr></table></figure></p>
-<p>因为会以为在echo中, 第一次alert的时候, 会取到全局变量name的值, 而第二次值被局部变量name覆盖, 所以第二次alert是’eve’. 而age属性没有定义, 所以脚本会出错。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/WEB前端/">WEB前端</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/作用域/">作用域</a><a href="/tags/作用域链/">作用域链</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/07/26/JavaScript作用域和作用域链/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/26/JavaScript作用域和作用域链/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -549,6 +514,10 @@
 		
 		  
 			<li><a href="/categories/建站/" title="建站">建站<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/插件/" title="插件">插件<sup>1</sup></a></li>
 		  
 		
 		  
@@ -597,11 +566,19 @@
 			
 		
 			
-				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+				<li><a href="/tags/pdf-js/" title="pdf.js">pdf.js<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 			
 		
 			
@@ -633,7 +610,7 @@
 			
 		
 			
-				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
 			
 		
 		</ul>

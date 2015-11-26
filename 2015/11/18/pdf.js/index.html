@@ -4,23 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>求字母序列的按字母排序的位置 | Sun&#39;s Blog</title>
+    <title>pdf.js的使用方法 | Sun&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Sun">
     
 
     
-    <meta name="description" content="求字母序列的按字母排序的位置 | Sun&apos;s Blog">
+    <meta name="description" content="pdf.js的使用方法 | Sun&apos;s Blog">
 <meta property="og:type" content="article">
-<meta property="og:title" content="求字母序列的按字母排序的位置">
-<meta property="og:url" content="http://suen427.github.io/2015/09/28/baidu-fe-test/index.html">
+<meta property="og:title" content="pdf.js的使用方法">
+<meta property="og:url" content="http://suen427.github.io/2015/11/18/pdf.js/index.html">
 <meta property="og:site_name" content="Sun's Blog">
-<meta property="og:description" content="求字母序列的按字母排序的位置 | Sun&apos;s Blog">
-<meta property="og:updated_time" content="2015-09-28T13:51:05.327Z">
+<meta property="og:description" content="pdf.js的使用方法 | Sun&apos;s Blog">
+<meta property="og:image" content="http://www.linuxidc.com/upload/2015_06/150612094867572.png">
+<meta property="og:updated_time" content="2015-11-26T13:13:53.415Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="求字母序列的按字母排序的位置">
-<meta name="twitter:description" content="求字母序列的按字母排序的位置 | Sun&apos;s Blog">
+<meta name="twitter:title" content="pdf.js的使用方法">
+<meta name="twitter:description" content="pdf.js的使用方法 | Sun&apos;s Blog">
 
     
     
@@ -80,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/09/28/baidu-fe-test/" title="求字母序列的按字母排序的位置" itemprop="url">求字母序列的按字母排序的位置</a>
+      <a href="/2015/11/18/pdf.js/" title="pdf.js的使用方法" itemprop="url">pdf.js的使用方法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
 		
   <p class="article-time">
-    <time datetime="2015-09-28T13:25:11.000Z" itemprop="datePublished"> 发表于 2015-09-28</time>
+    <time datetime="2015-11-18T09:52:23.000Z" itemprop="datePublished"> 发表于 2015-11-18</time>
     
   </p>
 </header>
@@ -100,15 +101,18 @@
 		
 		</div>
 		
-		<p>这是一道百度校招的面试题</p>
-<p>有由abcdefghijkl组成的字符串（不重复出现），求字符串按字母排列的位次：</p>
-<p>如输入<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;hgebkflacdji&#34;</span><br></pre></td></tr></table></figure></p>
-<p>则输出为：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">302715242</span><br></pre></td></tr></table></figure></p>
-<p>如输入<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;abcdefghijlk&#34;</span><br></pre></td></tr></table></figure></p>
-<p>则输出为：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure></p>
-<p>我的求解方法：<br>思路：求字符串的第一个字母在数组temp中的位置（indexOf()求得）第一个位置确定后，后面的11位字符串可以由11!中排法，所以第一个字母为b则结果result加1<em>11!，并将其从数组中移除。然后继续第二个位置，求第二个位置的字母在temp数组中的位置（index），result加上index</em>10！。。。依次类推到最后一个字符。最后的结果还要加上1。JavaScript程序如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var line = &#34;hgebkflacdji&#34;;&#10;&#10;var arr = line.split(&#39;&#39;);&#10;result = 0;&#10;var temp = &#39;abcdefghijkl&#39;.split(&#34;&#34;);&#10;&#10;// step&#20869;&#23384;&#25918;&#30340;&#26159;&#38454;&#20056;&#65292;&#20998;&#21035;&#26159;11!&#12289;10!...1!&#12289;0!&#10;var step = [39916800, 3628800, 362880, 40320,5040,720, 120,24,6,2,1,1];&#10;for ( var i = 0; i &#60; arr.length; i++ ) &#123;&#10;&#9;var a = arr[i];&#10;&#9;var index = temp.indexOf(a);&#10;&#9;result += index * step[i];&#10;&#9;temp.splice(index,1);&#10;&#125;&#10;result = result+1&#65307;&#10;console.log(result);</span><br></pre></td></tr></table></figure>
-<p>可惜在笔试时参考数值中字母顺序弄错了，就差一点，估计过不了百度的笔试了。</p>
+		<p>mozilla为我们提供了一个基于html5的pdf插件pdf.js。通过这个插件，可以在网页上直接打开pdf文本，不需要本地支持。Firefox浏览器就是用的这个插件。</p>
+<p>pdf.js在github上的地址为<a href="https://github.com/mozilla/pdf.js" target="_blank" rel="external">https://github.com/mozilla/pdf.js</a></p>
+<p>在github上的源码并不能直接使用，需要先进行构建。<br>首先打开git，clone到本地：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/mozilla/pdf.js.git</span><br><span class="line">$ <span class="keyword">cd</span> pdf.js</span><br></pre></td></tr></table></figure>
+<p>然后安装需要支持的包：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<p>最后启动本地文本服务器：</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node make <span class="keyword">server</span></span><br></pre></td></tr></table></figure>
+<p>然我们打开<a href="http://localhost:8888/web/viewer.html" target="_blank" rel="external">http://localhost:8888/web/viewer.html</a>，可以看到：<br><img src="http://www.linuxidc.com/upload/2015_06/150612094867572.png" alt=""></p>
+<p>可以从构建的文件中提取pdf.js的包，下面是我提取的一个包:</p>
+<p><a href="http://pan.baidu.com/s/1unEP4" target="_blank" rel="external">百度云</a></p>
+<p>其中包含两个文件夹build和web。在web文件夹内有一个viewer.html的html文件，这个文件主要负责pdf阅读器的结构样式，还有一个js文件viewer.js用于配置参数。在viewer.js中一个DEFAULT_URL常量，用于设置缺省的打开的pdf值。原文件中的默认值为compressed.tracemonkey-pldi-09.pdf。我们也可以通过地址栏参数传递参数来设置要代开的pdf文件，如…/web/viewer.html?file=12.pdf。参数file就是要打开文件的地址。在实际使用中可以通过在html文档中嵌入’<iframe>‘<code>标</code>签实现，通过file来传递参数，如下：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe <span class="variable">src=</span><span class="string">"js/pdfJS/web/viewer.html?file=public/嵌入式系统课程教学大纲.pdf"</span> <span class="variable">frameborder=</span><span class="string">"0"</span> <span class="variable">width=</span><span class="string">"100%"</span> <span class="variable">height=</span><span class="string">"500"</span>&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure></iframe></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -116,13 +120,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/WEB前端/">WEB前端</a>
+  <a class="article-category-link" href="/categories/插件/">插件</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/笔试/">笔试</a>
+  <span></span> <a href="/tags/pdf-js/">pdf.js</a><a href="/tags/插件/">插件</a>
   </div>
 
 </div>
@@ -131,7 +135,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://suen427.github.io/2015/09/28/baidu-fe-test/" data-title="求字母序列的按字母排序的位置 | Sun&#39;s Blog" data-tsina="1875227863" class="share clearfix">
+	  <div data-url="http://suen427.github.io/2015/11/18/pdf.js/" data-title="pdf.js的使用方法 | Sun&#39;s Blog" data-tsina="1875227863" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -144,19 +148,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/11/18/pdf.js/" title="pdf.js的使用方法">
-  <strong>上一篇：</strong><br/>
-  <span>
-  pdf.js的使用方法</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/09/10/element-dataset/"  title="如何实现浏览器兼容版的element.dataset">
+<a href="/2015/09/28/baidu-fe-test/"  title="求字母序列的按字母排序的位置">
  <strong>下一篇：</strong><br/> 
- <span>如何实现浏览器兼容版的element.dataset
+ <span>求字母序列的按字母排序的位置
 </span>
 </a>
 </div>
@@ -165,7 +161,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/09/28/baidu-fe-test/" data-title="求字母序列的按字母排序的位置" data-url="http://suen427.github.io/2015/09/28/baidu-fe-test/"></div>
+	<div class="ds-thread" data-thread-key="2015/11/18/pdf.js/" data-title="pdf.js的使用方法" data-url="http://suen427.github.io/2015/11/18/pdf.js/"></div>
 </section>
 
 
