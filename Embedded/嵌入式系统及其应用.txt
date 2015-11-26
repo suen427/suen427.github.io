@@ -1,0 +1,33 @@
+课程名称: 嵌入式系统及应用 | Embedded System and Application
+课程时间:
+ 第一周 至 第八周
+总学时: 40学时(理论学时：32，实验学时：16)
+学分: 2分
+
+先修课程: 微机原理及接口技术A
+
+教学目的: 通过本课程的学习，使学生从控制工程需要出发，通过PLC（Programmable Logic Controller：可编程控制器）及电梯一体化控制器、工业机器人控制器、电动机变频调速控制器等实例总体设计，在理论和实践上掌握控制装置或系统的总体设计概念及方法；学会ARM微控制器的选型方法；掌握微控制器外围电路的设计方法；了解实时操作系统的基本原理；熟悉WindowsCE实时操作系统及其配置方法；学会BSP（Board Support Package：板级支持包）的开发；学会应用C语言进行控制装置或系统的应用程序设计与开发的方法。
+参考书目:
+[1] 桑楠, 等. 嵌入式系统原理及应用开发技术(第2 版). 高等教育出版社，2008 年.
+[2]傅曦.WindowsCE嵌入式开发入门—基于Xscale架构[M].北京：人民邮电出版社，2006年
+[3] 刘尚军.ARM嵌入式技术原理与应用—基于XScale处理器及WxWorks操作系统[M]，北京： 北京航空航天大学出版社， 2007
+[4] 罗蕾.嵌入式实时操作系统及应用开发（第3版）[M].北京：北京航空航天大学出版社，2011
+[5] 张大波.新编嵌入式系统原理•设计与应用[M].北京：北京航空航天大学出版社，2010
+考核打分:
+实验项目         		    25%
+设计项目           		    20%
+期末考试						55%
+
+1.	Chapter 1: Introduction to Embedded Systems  (4学时) 
+2.	Chapter 2: Introduction to Embedded System I/O Architectures (6学时)
+3.	Chapter 3: I/O Interfacing Standards for External Devices(4学时)
+4.	Chapter 4: Network Interface Standards (4学时)
+
+              5. Chapter 5: The PXA270 Embedded Computer System  (4学时)
+6. Chapter 6: Architecture of a Real-Time  Embedded OS  – Windows CE 6.0 R2 (4学时)
+7. Chapter 7: Building a customized CE Kernel(4学时)
+
+8. Chapter 8: Applications Programming in CE(2学时)
+
+
+

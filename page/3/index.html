@@ -81,6 +81,115 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/07/27/JavaScript原型及原型链/" title="JavaScript原型及原型链" itemprop="url">JavaScript原型及原型链</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
+		
+  <p class="article-time">
+    <time datetime="2015-07-26T16:52:38.000Z" itemprop="datePublished"> 发表于 2015-07-27</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>JavaScript 不包含传统的类继承模型，而是使用 prototypal 原型模型。虽然这经常被当作是 JavaScript 的缺点被提及，其实基于原型的继承模型比传统的类继承还要强大。实现传统的类继承模型是很简单，但是实现 JavaScript 中的原型继承则要困难的多。</p>
+<p>由于 JavaScript 是唯一一个被广泛使用的基于原型继承的语言，所以理解两种继承模式的差异是需要一定时间的，今天我们就来了解一下原型和原型链。</p>
+<h2 id="原型">原型</h2><p>我刚学习JavaScript的时候，一般都是用如下方式来写代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var decimalDigits = <span class="number">2</span>,</span><br><span class="line">	tax = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> add(x, y) &#123;</span><br><span class="line">    <span class="built_in">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> subtract(x, y) &#123;</span><br><span class="line">    <span class="built_in">return</span> x - y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//alert(add(<span class="number">1</span>, <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+<p>通过执行各个function来得到结果，学习了原型之后，我们可以使用如下方式来美化一下代码。</p>
+<h3 id="原型使用方式1">原型使用方式1</h3><p>在使用原型之前，我们需要先将代码做一下小修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var Calculator = <span class="keyword">function</span> (decimalDigits, tax) &#123;</span><br><span class="line">    this.decimalDigits = decimalDigits;</span><br><span class="line">    this.tax = tax;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>然后，通过给Calculator对象的prototype属性赋值对象字面量来设定Calculator对象的原型。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Calculator.prototype = &#123;</span><br><span class="line">    add: <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">        <span class="built_in">return</span> x + y;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    subtract: <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">        <span class="built_in">return</span> x - y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">//alert((new Calculator()).add(<span class="number">1</span>, <span class="number">3</span>));</span><br></pre></td></tr></table></figure></p>
+<p>这样，我们就可以new Calculator对象以后，就可以调用add方法来计算结果了。</p>
+<h3 id="原型使用方式2">原型使用方式2</h3><p>第二种方式是，在赋值原型prototype的时候使用function立即执行的表达式来赋值，即如下格式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Calculator.prototype = <span class="function"><span class="title">function</span></span> () &#123; &#125; ();</span><br></pre></td></tr></table></figure></p>
+<p>它的好处在前面的帖子里已经知道了，就是可以封装私有的function，通过return的形式暴露出简单的使用名称，以达到public/private的效果，修改后的代码如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Calculator.prototype = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    add = <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">        <span class="built_in">return</span> x + y;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    subtract = <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">        <span class="built_in">return</span> x - y;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">        add: add,</span><br><span class="line">        subtract: subtract</span><br><span class="line">    &#125;</span><br><span class="line">&#125; ();</span><br><span class="line"></span><br><span class="line">//alert((new Calculator()).add(<span class="number">11</span>, <span class="number">3</span>));</span><br></pre></td></tr></table></figure></p>
+<p>同样的方式，我们可以new Calculator对象以后调用add方法来计算结果了。</p>
+<h3 id="分步声明">分步声明</h3><p>上述使用原型的时候，有一个限制就是一次性设置了原型对象，我们再来说一下如何分来设置原型的每个属性吧。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var BaseCalculator = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    //为每个实例都声明一个小数位数</span><br><span class="line">    this.decimalDigits = <span class="number">2</span>;</span><br><span class="line">&#125;;</span><br><span class="line">        </span><br><span class="line">//使用原型给BaseCalculator扩展<span class="number">2</span>个对象方法</span><br><span class="line">BaseCalculator.prototype.add = <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">    <span class="built_in">return</span> x + y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">BaseCalculator.prototype.subtract = <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">    <span class="built_in">return</span> x - y;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>首先，声明了一个BaseCalculator对象，构造函数里会初始化一个小数位数的属性decimalDigits，然后通过原型属性设置2个function，分别是add(x,y)和subtract(x,y)，当然你也可以使用前面提到的2种方式的任何一种，我们的主要目的是看如何将BaseCalculator对象设置到真正的Calculator的原型上。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var BaseCalculator = <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">    this.decimalDigits = <span class="number">2</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">BaseCalculator.prototype = &#123;</span><br><span class="line">    add: <span class="keyword">function</span>(x, y) &#123;</span><br><span class="line">        <span class="built_in">return</span> x + y;</span><br><span class="line">    &#125;,</span><br><span class="line">    subtract: <span class="keyword">function</span>(x, y) &#123;</span><br><span class="line">        <span class="built_in">return</span> x - y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>创建完上述代码以后，我们来开始：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var Calculator = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    //为每个实例都声明一个税收数字</span><br><span class="line">    this.tax = <span class="number">5</span>;</span><br><span class="line">&#125;;</span><br><span class="line">        </span><br><span class="line">Calculator.prototype = new BaseCalculator();</span><br></pre></td></tr></table></figure>
+<p>我们可以看到Calculator的原型是指向到BaseCalculator的一个实例上，目的是让Calculator集成它的add(x,y)和subtract(x,y)这2个function，还有一点要说的是，由于它的原型是BaseCalculator的一个实例，所以不管你创建多少个Calculator对象实例，他们的原型指向的都是同一个实例。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var calc = new Calculator();</span><br><span class="line">alert(calc.add(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">//BaseCalculator 里声明的decimalDigits属性，在 Calculator里是可以访问到的</span><br><span class="line">alert(calc.decimalDigits);</span><br></pre></td></tr></table></figure>
+<p>上面的代码，运行以后，我们可以看到因为Calculator的原型是指向BaseCalculator的实例上的，所以可以访问他的decimalDigits属性值，那如果我不想让Calculator访问BaseCalculator的构造函数里声明的属性值，那怎么办呢？这么办：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var Calculator = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    this.tax= <span class="number">5</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Calculator.prototype = BaseCalculator.prototype;</span><br></pre></td></tr></table></figure>
+<p>通过将BaseCalculator的原型赋给Calculator的原型，这样你在Calculator的实例上就访问不到那个decimalDigits值了，如果你访问如下代码，那将会提升出错。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var calc = new Calculator();</span><br><span class="line">alert(calc.add(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">alert(calc.decimalDigits);</span><br></pre></td></tr></table></figure>
+<h3 id="重写原型">重写原型</h3><p>在使用第三方JS类库的时候，往往有时候他们定义的原型方法是不能满足我们的需要，但是又离不开这个类库，所以这时候我们就需要重写他们的原型中的一个或者多个属性或function，我们可以通过继续声明的同样的add代码的形式来达到覆盖重写前面的add功能，代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//覆盖前面Calculator的add() <span class="keyword">function</span> </span><br><span class="line">Calculator.prototype.add = <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">    <span class="built_in">return</span> x + y + this.tax;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var calc = new Calculator();</span><br><span class="line">alert(calc.add(<span class="number">1</span>, <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+<p>这样，我们计算得出的结果就比原来多出了一个tax的值，但是有一点需要注意：那就是重写的代码需要放在最后，这样才能覆盖前面的代码。</p>
+<h2 id="原型链">原型链</h2><p>在将原型链之前，我们先上一段代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Foo</span></span>() &#123;</span><br><span class="line">    this.value = <span class="number">42</span>;</span><br><span class="line">&#125;</span><br><span class="line">Foo.prototype = &#123;</span><br><span class="line">    method: <span class="function"><span class="title">function</span></span>() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Bar</span></span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">// 设置Bar的prototype属性为Foo的实例对象</span><br><span class="line">Bar.prototype = new Foo();</span><br><span class="line">Bar.prototype.foo = <span class="string">'Hello World'</span>;</span><br><span class="line"></span><br><span class="line">// 修正Bar.prototype.constructor为Bar本身</span><br><span class="line">Bar.prototype.constructor = Bar;</span><br><span class="line"></span><br><span class="line">var <span class="built_in">test</span> = new Bar() // 创建Bar的一个新实例</span><br><span class="line"></span><br><span class="line">// 原型链</span><br><span class="line"><span class="built_in">test</span> [Bar的实例]</span><br><span class="line">    Bar.prototype [Foo的实例] </span><br><span class="line">        &#123; foo: <span class="string">'Hello World'</span> &#125;</span><br><span class="line">        Foo.prototype</span><br><span class="line">            &#123;method: ...&#125;;</span><br><span class="line">            Object.prototype</span><br><span class="line">                &#123;toString: ... /* etc. */&#125;;</span><br></pre></td></tr></table></figure>
+<p>上面的例子中，test 对象从 Bar.prototype 和 Foo.prototype 继承下来；因此，它能访问 Foo 的原型方法 method。同时，它也能够访问那个定义在原型上的 Foo 实例属性 value。需要注意的是 new Bar() 不会创造出一个新的 Foo 实例，而是重复使用它原型上的那个实例；因此，所有的 Bar 实例都会共享相同的 value 属性。</p>
+<h3 id="属性查找">属性查找</h3><p>当查找一个对象的属性时，JavaScript 会向上遍历原型链，直到找到给定名称的属性为止，到查找到达原型链的顶部 - 也就是 Object.prototype - 但是仍然没有找到指定的属性，就会返回 undefined，我们来看一个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">foo</span></span>() &#123;</span><br><span class="line">    this.add = <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">        <span class="built_in">return</span> x + y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo.prototype.add = <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">    <span class="built_in">return</span> x + y + <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Object.prototype.subtract = <span class="keyword">function</span> (x, y) &#123;</span><br><span class="line">    <span class="built_in">return</span> x - y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var f = new foo();</span><br><span class="line">alert(f.add(<span class="number">1</span>, <span class="number">2</span>)); //结果是<span class="number">3</span>，而不是<span class="number">13</span></span><br><span class="line">alert(f.subtract(<span class="number">1</span>, <span class="number">2</span>)); //结果是-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>通过代码运行，我们发现subtract是安装我们所说的向上查找来得到结果的，但是add方式有点小不同，这也是我想强调的，就是属性在查找的时候是先查找自身的属性，如果没有再查找原型，再没有，再往上走，一直插到Object的原型上，所以在某种层面上说，用 for in语句遍历属性的时候，效率也是个问题。</p>
+<p>还有一点我们需要注意的是，我们可以赋值任何类型的对象到原型上，但是不能赋值原子类型的值，比如如下代码是无效的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Foo</span></span>() &#123;&#125;</span><br><span class="line">Foo.prototype = <span class="number">1</span>; // 无效</span><br></pre></td></tr></table></figure>
+<h3 id="hasOwnProperty函数">hasOwnProperty函数</h3><p>hasOwnProperty是Object.prototype的一个方法，它可是个好东西，他能判断一个对象是否包含自定义属性而不是原型链上的属性，因为hasOwnProperty 是 JavaScript 中唯一一个处理属性但是不查找原型链的函数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 修改Object.prototype</span><br><span class="line">Object.prototype.bar = <span class="number">1</span>; </span><br><span class="line">var foo = &#123;goo: undefined&#125;;</span><br><span class="line"></span><br><span class="line">foo.bar; // <span class="number">1</span></span><br><span class="line"><span class="string">'bar'</span> <span class="keyword">in</span> foo; // <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">foo.hasOwnProperty(<span class="string">'bar'</span>); // <span class="literal">false</span></span><br><span class="line">foo.hasOwnProperty(<span class="string">'goo'</span>); // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>只有 hasOwnProperty 可以给出正确和期望的结果，这在遍历对象的属性时会很有用。 没有其它方法可以用来排除原型链上的属性，而不是定义在对象自身上的属性。</p>
+<p>但有个恶心的地方是：JavaScript 不会保护 hasOwnProperty 被非法占用，因此如果一个对象碰巧存在这个属性，就需要使用外部的 hasOwnProperty 函数来获取正确的结果。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var foo = &#123;</span><br><span class="line">    hasOwnProperty: <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    bar: <span class="string">'Here be dragons'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">foo.hasOwnProperty(<span class="string">'bar'</span>); // 总是返回 <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">// 使用&#123;&#125;对象的 hasOwnProperty，并将其上下为设置为foo</span><br><span class="line">&#123;&#125;.hasOwnProperty.call(foo, <span class="string">'bar'</span>); // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>当检查对象上某个属性是否存在时，hasOwnProperty 是唯一可用的方法。同时在使用 for in loop 遍历对象时，推荐总是使用 hasOwnProperty 方法，这将会避免原型对象扩展带来的干扰，我们来看一下例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 修改 Object.prototype</span><br><span class="line">Object.prototype.bar = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">var foo = &#123;moo: <span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(var i <span class="keyword">in</span> foo) &#123;</span><br><span class="line">    console.log(i); // 输出两个属性：bar 和 moo</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们没办法改变for in语句的行为，所以想过滤结果就只能使用hasOwnProperty 方法，代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// foo 变量是上例中的</span><br><span class="line"><span class="keyword">for</span>(var i <span class="keyword">in</span> foo) &#123;</span><br><span class="line">    <span class="keyword">if</span> (foo.hasOwnProperty(i)) &#123;</span><br><span class="line">        console.log(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个版本的代码是唯一正确的写法。由于我们使用了 hasOwnProperty，所以这次只输出 moo。如果不使用 hasOwnProperty，则这段代码在原生对象原型（比如 Object.prototype）被扩展时可能会出错。</p>
+<p>总结：推荐使用 hasOwnProperty，不要对代码运行的环境做任何假设，不要假设原生对象是否已经被扩展了。</p>
+<h2 id="总结">总结</h2><p>原型极大地丰富了我们的开发代码，但是在平时使用的过程中一定要注意上述提到的一些注意事项。</p>
+<p>原文链接：<a href="http://www.nowamagic.net/librarys/veda/detail/1648" target="_blank" rel="external">JavaScript探秘：强大的原型和原型链</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/WEB前端/">WEB前端</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/原型/">原型</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/07/27/JavaScript原型及原型链/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/27/JavaScript原型及原型链/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/07/26/JavaScript作用域和作用域链/" title="JavaScript作用域和作用域链" itemprop="url">JavaScript作用域和作用域链</a>
   </h1>
   <p class="article-author">By
@@ -491,6 +600,10 @@
 			<li><a href="/categories/综合/" title="综合">综合<sup>1</sup></a></li>
 		  
 		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>1</sup></a></li>
+		  
+		
 		</ul>
 </div>
 
@@ -537,11 +650,11 @@
 			
 		
 			
-				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+				<li><a href="/tags/算法、数据结构/" title="算法、数据结构">算法、数据结构<sup>1</sup></a></li>
 			
 		
 			
@@ -573,7 +686,11 @@
 			
 		
 			
-				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 			
 		
 		</ul>

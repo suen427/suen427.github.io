@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>界面拖拽交互</title>
+	<style>
+		.decription{
+			width: 800px;
+			margin: 0 auto;
+		}
+		img{
+			width: 300px;
+		}
+		.main{
+			overflow: hidden;
+			width: 800px;
+			height: 500px;
+			position: relative;
+			margin: 0 auto;
+			border: 1px solid #000;
+			background-color: #ddd;
+		}
+		.container{
+			width: 150px;
+			height: 300px;
+			position: absolute;
+			border: 1px solid #000;
+			background-color: #fff;
+		}
+		.container-1{
+			top: 100px;
+			left: 200px;
+		}
+		.container-2{
+			top:100px;
+			left: 450px;
+		}
+		.group{
+			height: 30px;
+			border-bottom: 1px solid #000;
+			z-index: 10;
+		}
+		#color-1{
+			background-color: #82D038;
+		}
+		#color-2{
+			background-color: #3F70E4;
+		}
+		#color-3{
+			background-color: #E956AF
+		}
+		#color-4{
+			background-color: #BEBCD3
+		}
+		#color-5{
+			background-color: #032F35
+		}
+		#color-6{
+			background-color: #31D70A
+		}
+		#color-7{
+			background-color: #FE7772
+		}
+		#color-8{
+			background-color: #5FACDD
+		}
+		.active{
+			position: absolute;
+			height: 30px;
+			width: 150px;
+			border: 1px solid #000;
+			opacity:0.8;
+		}
+		.hidden{
+			display: none;
+		}
+		.tip{
+			position: absolute;
+			width: 100px;
+			height: 20px;
+			padding: 3px;
+			background-color: #0f0;
+			color: #333;
+			line-height: 1.2;
+			font-size: 12px;
+			opacity:0.8;
+		}
+		.tip:after{
+			content: " ";
+			position: absolute;
+			left: 70px;
+			top: 100%;
+			border-top: 10px solid #0f0;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+		}
+	</style>
+</head>
+<body>
+	<div class="decription">
+		<h2>说明：</h2>
+		<ul>
+			<li>实现一个可拖拽交互的界面</li>
+			<li>如示例图，左右两侧各有一个容器，里面的选项可以通过拖拽来左右移动</li>
+			<li>被选择拖拽的容器在拖拽过程后，在原容器中消失，跟随鼠标移动</li>
+			<li>注意拖拽释放后，要添加到准确的位置</li>
+			<li>拖拽到什么位置认为是可以添加到新容器的规则自己定</li>
+			<li>注意交互中良好的用户体验和使用引导</li>
+		</ul>
+		<img src="img/task0002_drag.png">
+	</div>
+	
+	<div class="main">
+		<div class="container-1 container">
+			<div class="group" id='color-1'></div>
+			<div class="group" id='color-2'></div>
+			<div class="group" id='color-3'></div>
+			<div class="group" id='color-4'></div>
+		</div>
+		<div class="container-2 container">
+			<div class="group" id='color-5'></div>
+			<div class="group" id='color-6'></div>
+			<div class="group" id='color-7'></div>
+			<div class="group" id='color-8'></div>
+		</div>
+		<p class = 'tip hidden'>tips:已经被捕获！</p>
+	</div>
+	
+
+	<script src="drag.js"></script>
+</body>
+</html>

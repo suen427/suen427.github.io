@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>排班表</title>
+	<link href="css/print.css" media="print" rel="stylesheet" />
+	<style>
+		body{
+			min-height: 540px;
+			font-size: 12px;
+			text-align: center;
+			background-color: #ccc;
+		}
+		table{
+			width:1900px;
+			border: 1px solid #000;
+			border-collapse: collapse;
+			background-color: rgba(131,201,227,0.8);
+		}
+		td{
+			border: 1px solid #000;
+			width: 25px;
+			position: relative;
+			font-weight: bold;
+			background-clip: padding-box;
+		}
+		th{
+			position: relative;
+			border: 1px solid #000;
+			font-weight: normal;
+			width: 25px;
+			background-clip: padding-box;
+		}
+
+		/* 背景色间隔 */
+		td:nth-child(4n+3) ,td:nth-child(4n+4),tr:nth-child(n+5)>th:nth-child(4n+3) ,tr:nth-child(n+5)>th:nth-child(4n+4),tr:nth-child(4)>th:nth-child(4n+2) ,tr:nth-child(4)>th:nth-child(4n+3),tr:nth-child(2)>th:nth-child(2n+3) ,tr:nth-child(3)>th:nth-child(odd){
+			background-color: #0af;
+		}
+		tr:nth-child(n+5):hover th,tr:nth-child(n+5):hover td{
+			background-color: #0ff;
+		}
+		tr:nth-child(n+5).hover th,tr:nth-child(n+5).hover td{
+			background-color: #ff0;
+		}
+		.drops{
+			position: absolute;
+			top:20px;
+			left: -10px;
+			width: 48px;
+			z-index: 10;
+		}
+		.drop{
+			border: 1px solid #000;
+			height: 20px;
+			background-color: #ddd;
+		}
+		tr>th:nth-child(1){
+			width: 60px;
+		}
+		.ctrl{
+			position: fixed;
+			left: 20px;
+			top: 340px;
+			text-align: left;
+			padding: 20px 20px 5px 0;
+		}
+		tr:first-child{
+			text-align: left;
+		}
+		.hidden{
+			display: none;
+		}
+		.statistic{
+			position: fixed;
+			left:600px;
+			top: 350px;
+			font-weight: bold;
+			font-size: 16px;
+		}
+		#statistic td,#statistic th{
+			border: none;
+			width: 40px;
+			text-align: center;
+			background-color: #ccc;
+		}
+		#statistic td:first-child{
+			width: 70px;
+			text-align: right;
+		}
+		#statistic tr:nth-child(2n) td{
+			background-color: #0af;
+		}
+		.input{
+			position: absolute;
+			top: 20px;
+			left: -20px;
+			z-index: 10;
+		}
+		#selected{
+			background-color: #96F600;
+		}
+		.description{
+			position: fixed;
+			width: 400px;
+			left: 20px;
+			top: 480px;
+			text-align: left;
+		}
+		#table2{
+			width: 1100px;
+		}
+		#table2:nth-child(n) td,#table2:nth-child(n) th{
+			background-color: rgba(131,201,227,0.8);
+			width: 30px;
+		}
+		#table2 tr:nth-child(n+4) th:nth-child(1){
+			width: 60px;
+		}
+		#table2 td:nth-child(2n+3),#table2 tr:nth-child(n+1) th:nth-child(2n+3),#table2 tr:nth-child(3) th:nth-child(1){
+			background-color: #0af;
+		}
+		#table2 tr:nth-child(4) th:nth-child(2n){
+			background-color: #0af;
+		}
+		#table2 tr:nth-child(4) th:nth-child(2n+1),#table2 tr:nth-child(1) th:nth-child(n){
+			background-color: rgba(131,201,227,0.8);
+		}
+
+	</style>
+</head>
+<body>
+	<caption>排班表</caption>
+	<table id='table' contentEditable>
+		<tbody></tbody>
+	</table>
+	<div class='ctrl'>
+		<div>
+			<select name="name" id="name">
+				<option value=''>请选择员工</option>
+				<option value="0">戎超群</option>
+				<option value="1">吴艳</option>
+				<option value="2">吴丹丹</option>
+				<option value="3">叶佳莹</option>
+				<option value="4">张智</option>
+			</select>
+			<select name="day" id="day">
+				<option value=''>请选择日期</option>
+			</select>
+			<select name="work" id="work">
+				<option value=''>请选择岗位</option>
+				<option value="1">岗1</option>
+				<option value="2">岗2</option>
+				<option value="3">岗3</option>
+				<option value="5">岗4</option>
+				<option value="4">休息</option>
+			</select>
+			<button id="preSet">设置</button>
+			<button id="claerPreSet">清除设置</button>
+		</div>
+		<div style="margin-top: 10px">
+			<b>设置休息天数：</b>
+			<select name="restDay" id="restDay">
+				<option value="5">5天</option>s
+				<option value="6">6天</option>
+				<option value="7">7天</option>
+				<option value="8">8天</option>
+				<option value="9">9天</option>
+				<option value="10">10天</option>
+			</select>
+			<button id="setRestDay">设置休息天数</button>
+			<button id='switch' style="float: right">切换表格</button>
+		</div><br>		
+		<button id="edit">编辑1</button>
+		<button id="edit2">编辑2</button>
+		<button id="hide">隐藏1-7行</button>
+		<button id="statistic">统计</button>
+		<button id="select">选中表格</button>
+		<button id="reset">重排</button>
+		<button id="print" onClick="window.print()">打印</button><br><br>
+		<b>设置排班月份：</b>
+		<select name="year" id="year">
+			<option value="0">今年</option>
+			<option value="1">明年</option>
+		</select>
+		<select name="month" id="month">
+			<option value="0">一月</option>
+			<option value="1">二月</option>
+			<option value="2">三月</option>
+			<option value="3">四月</option>
+			<option value="4">五月</option>
+			<option value="5">六月</option>
+			<option value="6">七月</option>
+			<option value="7">八月</option>
+			<option value="8">九月</option>
+			<option value="9">十月</option>
+			<option value="10">十一月</option>
+			<option value="11">十二月</option>
+		</select>
+		<button id="setmonth">设置月份</button>
+	</div>
+	<div class="statistic" id='statistic'></div>
+	<div class="description">
+		<h3>使用说明：</h3>
+		<p>编辑1：点击按钮后，再点击黑体部分的表格会出现下拉选项，可以选择选项修改表格内容；</p>
+		<p>编辑2：点击按钮后，再点击表格任何位置会出现输入框，在输入框输入修改内容后回车就会修改对应的表格；</p>
+	</div>
+	<script src="js/createSchedule.js"></script>
+	<script src="js/schedule2.js"></script>
+</body>
+</html>

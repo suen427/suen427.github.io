@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>animation实现3维立方体旋转</title>
+	<style>
+		.main{
+			position:absolute;
+			top:50%;
+			left:50%;
+			width:400px;
+			height:400px;
+			margin:-200px;
+			perspective:1000px;
+			cursor:default;
+		}
+		.body{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			animation: main 5s linear 20s both infinite;
+		}
+		.body>div{
+			position: absolute;
+			box-sizing:border-box;
+			width: 100%;
+			height: 100%;
+			border: 2px solid #000;
+			transition:2s;
+			text-align:center;
+			line-height:400px;
+			font-size:50px;
+		}
+		.body:hover div{border-color: rgba(0,0,0,0);color: #fff;}
+		.body:hover .top{background-color: rgba(255,255,0,0.8);}
+		.body:hover .bottom{background-color: rgba(0,255,0,0.8);}
+		.body:hover .left{background-color: rgba(0,255,255,0.8);}
+		.body:hover .right{background-color: rgba(0,0,255,0.8);}
+		.body:hover .back{background-color: rgba(255,0,0,0.8);}
+		.body:hover .front{background-color: rgba(255,0,255,0.8);}
+		.top {
+			z-index: 6;
+			animation: start-top 3s ease 1s both;
+		}
+		.bottom {
+			z-index: 5;
+			animation: start-bottom 3s ease 4s both;
+		}
+		.left {
+			z-index: 4;
+			animation: start-left 3s ease 7s both;
+		}
+		.right {
+			z-index: 3;
+			animation: start-right 3s ease 10s both;
+		}
+		.back{
+			z-index: 2;
+			animation: start-back 3s ease 13s both;
+		}
+		.front {
+			z-index: 1;
+			animation: start-front 3s ease 16s both;
+		}
+
+		@keyframes start-top{
+			0%{transform:rotateX(0deg) translate3d(0,0,0);}
+			100%{transform:rotateX(90deg) translate3d(0,0,200px);}
+		}
+		@keyframes start-bottom{
+			0%{transform:rotateX(0deg) translate3d(0,0,0);}
+			100%{transform:rotateX(-90deg) translate3d(0,0,200px);}
+		}
+		@keyframes start-left{
+			0%{transform:rotateY(0deg) translate3d(0,0,0);}
+			100%{transform:rotateY(-90deg) translate3d(0,0,200px);}
+		}
+		@keyframes start-right{
+			0%{transform:rotateY(0deg) translate3d(0,0,0);}
+			100%{transform:rotateY(90deg) translate3d(0,0,200px);}
+		}
+		@keyframes start-back{
+			0%{transform:rotateY(0deg) translate3d(0,0,0);}
+			100%{transform:rotateY(180deg) translate3d(0,0,200px);}
+		}
+		@keyframes start-front{
+			0%{transform: translate3d(0,0,0);}
+			100%{transform: translate3d(0,0,200px);}
+		}
+		@keyframes main{
+			100%{transform:rotate3d(1,1,1,360deg);}
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div class="body">
+			<div class="top">top</div>
+			<div class="bottom">bottom</div>
+			<div class="left">left</div>
+			<div class="right">right</div>
+			<div class="back">back</div>
+			<div class="front">front</div>
+		</div>
+	</div>
+</body>
+</html>

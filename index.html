@@ -94,18 +94,19 @@
 </header>
     <div class="article-content">
         
-        <p>mozilla为我们提供了一个基于html5的pdf插件pdf.js。通过这个插件，可以在网页上直接打开pdf文本，不需要本地支持。Firefox浏览器就是用的这个插件。</p>
-<p>pdf.js在github上的地址为<a href="https://github.com/mozilla/pdf.js" target="_blank" rel="external">https://github.com/mozilla/pdf.js</a></p>
-<p>在github上的源码并不能直接使用，需要先进行构建。<br>首先打开git，clone到本地：</p>
+        <p>mozilla为我们提供了一个基于html5的pdf插件<code>pdf.js</code>。通过这个插件，可以在网页上直接打开pdf文本，不需要本地支持。<code>Firefox</code>浏览器就是用的这个插件。</p>
+<p><code>pdf.js</code>在github上的地址为<a href="https://github.com/mozilla/pdf.js" target="_blank" rel="external">https://github.com/mozilla/pdf.js</a></p>
+<p>在github上的源码并不能直接使用，需要先进行构建。<br>首先打开<code>git</code>，clone到本地：</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/mozilla/pdf.js.git</span><br><span class="line">$ <span class="keyword">cd</span> pdf.js</span><br></pre></td></tr></table></figure>
 <p>然后安装需要支持的包：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
 <p>最后启动本地文本服务器：</p>
 <figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node make <span class="keyword">server</span></span><br></pre></td></tr></table></figure>
 <p>然我们打开<a href="http://localhost:8888/web/viewer.html" target="_blank" rel="external">http://localhost:8888/web/viewer.html</a>，可以看到：<br><img src="http://www.linuxidc.com/upload/2015_06/150612094867572.png" alt=""></p>
-<p>可以从构建的文件中提取pdf.js的包，下面是我提取的一个包:</p>
+<p>可以从构建的文件中提取<code>pdf.js</code>的包，下面是我提取的一个包:</p>
 <p><a href="http://pan.baidu.com/s/1unEP4" target="_blank" rel="external">百度云</a></p>
-<p>其中包含两个文件夹build和web。在web文件夹内有一个viewer.html的html文件，这个文件主要负责pdf阅读器的结构样式，还有一个js文件viewer.js用于配置参数。在viewer.js中一个DEFAULT_URL常量，用于设置缺省的打开的pdf值。原文件中的默认值为compressed.tracemonkey-pldi-09.pdf。我们也可以通过地址栏参数传递参数来设置要代开的pdf文件，如…/web/viewer.html?file=12.pdf。参数file就是要打开文件的地址。在实际使用中可以通过在html文档中嵌入’<iframe>‘<code>标</code>签实现，通过file来传递参数，如下：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe <span class="variable">src=</span><span class="string">"js/pdfJS/web/viewer.html?file=public/嵌入式系统课程教学大纲.pdf"</span> <span class="variable">frameborder=</span><span class="string">"0"</span> <span class="variable">width=</span><span class="string">"100%"</span> <span class="variable">height=</span><span class="string">"500"</span>&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure></iframe></p>
+<p>其中包含两个文件夹<code>build</code>和<code>web</code>。在web文件夹内有一个<code>viewer.html</code>的html文件，这个文件主要负责pdf阅读器的结构样式，还有一个js文件<code>viewer.js</code>用于配置参数。在<code>viewer.js</code>中一个<code>DEFAULT_URL</code>常量，用于设置缺省的打开的pdf值。原文件中的默认值为compressed.tracemonkey-pldi-09.pdf。我们也可以通过地址栏参数传递参数来设置要代开的pdf文件，如…/web/viewer.html?file=12.pdf。参数file就是要打开文件的地址。在实际使用中可以通过在html文档中嵌入<code>&amp;lt;iframe&amp;gt;</code>标签实现，通过file来传递参数，如下：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe <span class="variable">src=</span><span class="string">"js/pdfJS/web/viewer.html?file=public/嵌入式系统课程教学大纲.pdf"</span> <span class="variable">frameborder=</span><span class="string">"0"</span> <span class="variable">width=</span><span class="string">"100%"</span> <span class="variable">height=</span><span class="string">"500"</span>&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
 
         
         
@@ -136,6 +137,75 @@
 	
 	  	<span></span>
 		<a href="/2015/11/18/pdf.js/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/11/18/pdf.js/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/18/a-view-test/" title="一道断词面试题" itemprop="url">一道断词面试题</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-18T11:23:50.000Z" itemprop="datePublished"> 发表于 2015-10-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>这是面试时遇到的一道题，与大家分享。</p>
+<p><strong>题目是这样的：</strong></p>
+<pre><code>提供一个借口<span class="escape">`d</span>ictionary(str)<span class="escape">`：</span>这个借口可以判断<span class="escape">`s</span>tr<span class="escape">`是</span>否为一个单词，如果是一个单词这返回<span class="escape">`t</span>rue<span class="escape">`，</span>否则返回<span class="escape">`f</span>alse<span class="escape">`。</span>
+现在需要借助这个借口写一个函数<span class="escape">`f</span>(longStr)<span class="escape">`：</span>判断这个<span class="escape">`l</span>ongStr<span class="escape">`是</span>否可以被完整地分割成单词，即<span class="escape">`l</span>ongStr<span class="escape">`由</span><span class="escape">`d</span>ictionary(str)<span class="escape">`判</span>断为<span class="escape">`t</span>rue<span class="escape">`的</span>单词组成，且最后没有多余的字符。
+</code></pre><p><strong>下面给出我的思路：</strong></p>
+<pre><code>我们可以递归调用这个函数<span class="escape">`f</span><span class="escape">`，</span>如果第<span class="escape">`l</span>ongStr<span class="escape">`的</span>前<span class="escape">`n</span><span class="escape">`个</span>字符被<span class="escape">`d</span>ictionary()<span class="escape">`判</span>断为单词，则用<span class="escape">`l</span>ongStr<span class="escape">`的</span>剩余字符串调用接口<span class="escape">`d</span>ictionary()<span class="escape">`，</span>直到剩余的字符串长度为<span class="number">0</span>，其中<span class="escape">`n</span><span class="escape">`从</span><span class="number">1</span>开始递增。
+</code></pre><p><strong>给出我的程序：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> f ( longStr) &#123;</span><br><span class="line">	var n = <span class="number">1</span>;</span><br><span class="line">	var flag = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">while</span> ( ! flag &amp;&amp; n &lt; longStr.length )&#123;</span><br><span class="line">		<span class="keyword">if</span> ( dictionary ( longStr.substring(<span class="number">0</span>,n) )) &#123;</span><br><span class="line">		// 如果前n个字符是个单词则递归调用函数f</span><br><span class="line">			flag = f( substring(n) );</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		// 否则n自增</span><br><span class="line">			n++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> ( flag || dictionary( longStr.substring(<span class="number">0</span>,n) ) &#123;</span><br><span class="line">	// dictionary ( longStr.substring(<span class="number">0</span>,n) 判断整个longStr是否是个单词</span><br><span class="line">		<span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/面试/">面试</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法、数据结构/">算法、数据结构</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/10/18/a-view-test/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/10/18/a-view-test/" data-count-type="comments">&nbsp;</a>
 	
 </div>
 
@@ -359,95 +429,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/18/written-test-of-Ali/" title="阿里前端网络笔试" itemprop="url">阿里前端网络笔试</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Sun" target="_blank" itemprop="author">Sun</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-18T09:52:23.000Z" itemprop="datePublished"> 发表于 2015-08-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>今天在网上做了阿里的前端笔试题，题不多也不是很难，但是没有做完，还是不够熟练啊！下面来回顾一下题目。</p>
-<h2 id="选择题">选择题</h2><ul>
-<li><p>第一题问哪个单位不是CSS里的长度单位。选项中出现了 mm、pt、px、pc、%、rem等，其中rem应该不是CSS里的长度单位。</p>
-</li>
-<li><p>第二题问考的是CSS，margin简写的顺序，已知：margin：5px 15px 25px 10px; 问左边距是多少。</p>
-</li>
-<li><p>第三题问是关于事件的，主要靠mouseenter、mouseover的区别，我记得mouseenter是不冒泡的，且当鼠标从元素只有用的子元素进入元素不会触发mouseenter事件；而mouseover是会冒泡的，且鼠标从元素只有用的子元素进入元素不会触发mouseover事件。</p>
-</li>
-<li><p>有一题考的是HTML5语义化，这个平时不是很注意。问time、date、mark、figure标签哪个不是H5的语义化标签。网上看了一下除了第二个date其余都是HTML5语义化标签。</p>
-</li>
-</ul>
-<p>选择就记得这么几个，另外记得两个填空题。</p>
-<h2 id="填空题">填空题</h2><p>第一题是数组排序有关的，第二题是将两个字符串合并，并且颠倒顺序。</p>
-<ul>
-<li><p>第一个填空题：<br>请将下面的数组从小到大排列</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="number">6</span>,<span class="number">2</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">5</span>];</span><br><span class="line">arr.sort(________);</span><br><span class="line">//我的答案：</span><br><span class="line"><span class="keyword">function</span> ( a, b ) &#123; <span class="built_in">return</span> a - b; &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>第二个填空题：<br>将两个字符串合并，并且颠倒顺序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">'abcd'</span>;</span><br><span class="line">str2 = <span class="string">'jjhhgg'</span>;</span><br><span class="line">str3 = str1.______(str2);</span><br><span class="line">str4 = str3.______(<span class="string">''</span>).reverse().concat(<span class="string">''</span>);</span><br><span class="line">//我的答案：</span><br><span class="line">concat和split	//但是这个得到的结果是一个顺序颠倒的数组。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>第三题是考的是构造函数，题具体记不清了，记得这个题答错了。</p>
-</li>
-</ul>
-<h2 id="编程题">编程题</h2><p>一共记得三个编程题，最后一题比较简单，实现一个表格，要求表格奇数行背景为白色，偶数行背景为灰色，hover效果背景为黄色。下面是我的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//css</span><br><span class="line">	tr:nth-child(odd)&#123;</span><br><span class="line">		background-color: <span class="comment">#fff;</span></span><br><span class="line">	&#125;</span><br><span class="line">	tr:nth-child(even)&#123;</span><br><span class="line">		background-color: <span class="comment">#999;</span></span><br><span class="line">	&#125;</span><br><span class="line">	tr:hover&#123;</span><br><span class="line">		background-color: <span class="comment">#ffff00;</span></span><br><span class="line">	&#125;</span><br><span class="line">//html</span><br><span class="line">	&lt;table&gt;</span><br><span class="line">		&lt;tbody&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">11</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">12</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">13</span>&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">21</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">22</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">23</span>&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">31</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">32</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">33</span>&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">41</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">42</span>&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;<span class="number">43</span>&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">		&lt;/tbody&gt;</span><br><span class="line">	&lt;/table&gt;</span><br></pre></td></tr></table></figure></p>
-<p>另外一个大题是考JavaScript的，要求写一个 shuffle 程序，一开始不知道是个什么东西，其实就是将一个数组打乱。<br>可惜最后有了思路，就差一分钟没写完。我的思路是每次产生一个在数组长度内的随机正整数，然后从数组中取出这个随机数对应位置的元素存到一个临时数据中，最后将取出的元素从原数组中删除。下面是我实现的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>, <span class="string">'g'</span>];</span><br><span class="line"><span class="keyword">function</span> shuffle (arr) &#123;</span><br><span class="line">	var temp = [];</span><br><span class="line">	var len = arr.length;</span><br><span class="line">	<span class="keyword">for</span> ( var i = <span class="number">0</span>; i &lt; len; i++ ) &#123;</span><br><span class="line">		temp[temp.length] = arr.splice( Math.floor(Math.random()*arr.length), <span class="number">1</span> )[<span class="number">0</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line">console.log( shuffle(arr) );</span><br></pre></td></tr></table></figure></p>
-<p>倒数第三道大题，问click时间在移动端和桌面端有什么区别，并给出解决方案。这个题完全不会啊！因为根本没有看过移动端的内容。希望知道答案的留个言，谢谢。</p>
-<p>一共11个题，记住了9个。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/笔试/">笔试</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/CSS/">CSS</a><a href="/tags/JavaScript/">JavaScript</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/08/18/written-test-of-Ali/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/08/18/written-test-of-Ali/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -483,6 +464,10 @@
 		
 		  
 			<li><a href="/categories/综合/" title="综合">综合<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>1</sup></a></li>
 		  
 		
 		</ul>
@@ -531,11 +516,11 @@
 			
 		
 			
-				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+				<li><a href="/tags/算法、数据结构/" title="算法、数据结构">算法、数据结构<sup>1</sup></a></li>
 			
 		
 			
@@ -567,7 +552,11 @@
 			
 		
 			
-				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+				<li><a href="/tags/作用域链/" title="作用域链">作用域链<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 			
 		
 		</ul>
