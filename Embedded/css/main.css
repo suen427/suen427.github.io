@@ -4473,9 +4473,9 @@ body {
   }
 }
 .jumbotron {
-  background: #e5dfdf url("../img/embedded.jpg") no-repeat center;
+  background: #ffffff url("../img/1.jpg") no-repeat center;
   background-size: cover;
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/embedded.jpg',sizingMethod='scale')";
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/1.jpg',sizingMethod='scale')";
   height: 300px;
   margin: 50px 0 0;
 }
