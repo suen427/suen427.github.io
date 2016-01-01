@@ -25,11 +25,12 @@
     <p><label for="clock">考勤文件：</label><input type="file" id="clock" onchange="read1();"></p>
     <p><label for="schedule">班表文本：</label><input type="file" id="schedule" onchange="read2();"></p>
     <button id="btn">统计考勤1</button>&nbsp;<label>用于新班表</label>&nbsp;&nbsp;&nbsp;&nbsp;
-    <button id="btn3">统计考勤2</button>&nbsp;<label>用于新班表(无早班)</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button id="btn3">统计考勤(夏令)</button>&nbsp;<label></label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button id="btn4">统计考勤(冬令)</button>&nbsp;<label></label>&nbsp;&nbsp;&nbsp;&nbsp;
     <button id="btn1">选中表1</button>
     <button id="btn2">选中表2</button>
     <div id="input" style="display:none;"></div>
-    <table id = 'output'>
+    <table id="output">
         <thead>
             <tr><th>考勤异常人员姓名</th>
             <th>岗位</th>
@@ -269,6 +270,7 @@
         }
         document.getElementById('btn').addEventListener('click',deal,false);
         document.getElementById('btn3').addEventListener('click',deal2,false);
+        document.getElementById('btn4').addEventListener('click',deal3,false);
         document.getElementById('btn1').addEventListener('click',function(event){
             window.getSelection().selectAllChildren(output);
         },false);
@@ -384,6 +386,119 @@
                     forget2[i]++;
                     var tr = document.createElement('tr');
                     tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日下午17:30</td><td>未打卡下班</td><td></td><td></td>';
+                    output.appendChild(tr);
+                }
+            }
+        }
+
+        function deal3(event) {
+            for (var i = 0; i<tables.length; i++){
+                late[i]=0;
+                leaveearly[i]=0;
+                forget2[i]=0;
+                forget1[i]=0;
+            }
+            output.innerHTML = '<thead><tr><th>考勤异常人员姓名</th><th>岗位</th><th>异常时间段</th><th>异常事件</th><th>异常缘由</th><th>直接上级签核</th></tr></thead>';
+            state.innerHTML = '<thead><tr><th>姓名</th><th>迟到</th><th>早退</th><th>早上未打卡</th><th>晚上未打卡</th></tr></thead>'
+            var num = tables.length;
+            var len = schedules.length;
+            for(var i = 0; i<num; i++){
+                var table = tables[i];
+                var trs = table.getElementsByTagName('tr');
+                var name = trs[0].getElementsByTagName('p')[1].innerHTML;
+                name = name.match(/姓名:(\S+?)\&/)[1];
+                for( var j = 0; j < len; j++){
+                    if(schedules[j][1].indexOf(name)>-1){
+                        var tds1 = trs[2].getElementsByTagName('td');
+                        var tds2 = trs[4].getElementsByTagName('td');
+                        var days = (schedules[j].length-2)/2;
+                        for(var k = 0; k < 16; k++){
+                            statistic3(i,j,k,tds1[k+1].innerHTML);
+                        }
+                        for(var k = 0; k < days-16; k++){
+                            statistic3(i,j,k+16,tds2[k+1].innerHTML);
+                        }
+                        
+                            var tr = document.createElement('tr');
+                            tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+late[i]+'</td><td>'+leaveearly[i]+'</td><td>'+forget1[i]+'</td><td>'+forget2[i]+'</td>';
+                            state.appendChild(tr);
+                    }
+                }
+            }
+        }
+        function statistic3(i,j,k,times){
+            flag0 = /0[567]:\d\d/.test(times);//8点之前
+            flag1 = /08:[012]\d/.test(times);//8点-8点半
+            flag2 = /08:[345]\d/.test(times);//8点半-9点
+            flag3 = /09:\d\d/.test(times);//早上9点-10点
+            flag4 = /1[01]:\d\d/.test(times);//10点之后
+
+            flag5 = /1[45]:\d\d/.test(times);//下午2点-4点
+            flag6 = /16:[123]\d/.test(times);//下午4点-4点半
+            flag7 = /16:[345]\d/.test(times);//下午4点半-5点
+            flag8 = /17:[012]\d/.test(times);//下午5点-5点半
+            flag9 = /17:[345]\d/.test(times);//下午5点半-6点
+            flag10 = /1[89]:\d\d/.test(times);//下午6点-晚上8点
+            flag11 = /2[0123]:\d\d/.test(times);//晚上8点-晚上12点
+
+            if(schedules[j][2*k+2].indexOf('B')>-1){
+                if(flag0){
+                    'ok';
+                }else if( flag1 || flag2 || flag3 || flag4 ){
+                    late[i]++;
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日上午8:00</td><td>打卡迟到</td><td></td><td></td>';
+                    output.appendChild(tr);
+                }else{
+                    forget1[i]++;
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日上午8:30</td><td>未打卡上班</td><td></td><td></td>';
+                    output.appendChild(tr);
+                }
+
+                if( flag8 || flag9 || flag10 || flag11 ){
+                    'ok';
+                }else if( flag5 || flag6 || flag7 ){
+                    leaveearly[i]++;
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日下午17:00</td><td>提早打卡下班</td><td></td><td></td>';
+                    output.appendChild(tr);
+                }else{
+                    forget2[i]++;
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日下午17:00</td><td>未打卡下班</td><td></td><td></td>';
+                    output.appendChild(tr);
+                }
+
+            }else if((schedules[j][2*k+2].indexOf('休')>-1) || (schedules[j][2*k+2].indexOf('年假')>-1) ){
+                'ok';
+
+            } else{
+                if(flag0 || flag1 ){
+                    'ok';
+                }else if( flag2 || flag3 || flag4 ){
+                    late[i]++;
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日上午8:30</td><td>打卡迟到</td><td></td><td></td>';
+                    output.appendChild(tr);
+                }else{
+                    forget1[i]++;
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日上午8:30</td><td>未打卡上班</td><td></td><td></td>';
+                    output.appendChild(tr);
+                }
+
+                if( flag8 || flag9 || flag10 || flag11 ){
+                    'ok';
+                }else if( flag5 || flag6 || flag7 ){
+                    leaveearly[i]++;
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日下午17:00</td><td>提早打卡下班</td><td></td><td></td>';
+                    output.appendChild(tr);
+                }else{
+                    forget2[i]++;
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+schedules[j][1]+'</td><td>'+job[schedules[j][1].trim()]+'</td><td>'+month+'月'+(k+1)+'日下午17:00</td><td>未打卡下班</td><td></td><td></td>';
                     output.appendChild(tr);
                 }
             }
