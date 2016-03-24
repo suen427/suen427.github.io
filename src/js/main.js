@@ -354,6 +354,9 @@ function Team(settings){
     $('#saveTable').on('click', function () {
         that.setPreSetting('table');
     });
+    $('#singleDouble').on('click', function () {
+        that.singleDouble('table');
+    });
     var jobs = this.jobs;
     document.addEventListener('click', function (e) {
         var target = e.target;
@@ -597,28 +600,6 @@ Team.prototype = {
         table.innerHTML = html;
     },
     setPreSetting: function (id) {
-        /*var jobs = this.jobs;
-        var menbers = this.menbers;
-        var table = document.getElementById(id);
-        var trs = table.getElementsByTagName('tr');
-        if( trs.length < 2  ){return}
-        var names = [];
-        var name = '';
-        for( var i = 2; i < trs.length; ++i ){
-            name = trs[i].getElementsByTagName('th')[0].innerHTML;
-            names.push(name);
-        }
-        var person = null;
-        var tds = null;
-        for ( i = 0; i < menbers.length; ++i ){
-            person = menbers[i];
-            tds = trs[names.indexOf(person.name)+2].getElementsByTagName('td');
-            for ( var j = 0; j < person.table.length; ++j ){
-                if( jobs.indexOf(tds[j+1].innerHTML)>-1){
-                    person.table[j] = jobs.indexOf( tds[j+1].innerHTML );
-                }
-            }
-        }*/
         var jobs = this.jobs;
         var settings = this.settings;
         var table = document.getElementById(id);
@@ -657,6 +638,105 @@ Team.prototype = {
     },
     saveHoliday: function () {
         var settings = this.settings;
+    },
+    singleDouble: function (id) {
+        var settings = this.settings,
+            monthUtil = this.monthUtil,
+            holiday = monthUtil.holiday,
+            monthLength = monthUtil.monthLength,
+            firstDay = monthUtil.firstDay,
+            jobs = this.jobs;
+        var tables = [
+            [
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,-1,0
+            ],
+            [
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,0
+            ],
+            [
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,0,0
+            ],
+            [
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,0,-1
+            ],
+            [
+                -1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,0,0
+            ],
+            [
+                -1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,0,-1
+            ],
+            [
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,-1,
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,-1,0
+            ],
+            [
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,-1,-1
+            ],
+            [
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,0,0,
+                -1,-1,-1,-1,-1,-1,0,
+                -1,-1,-1,-1,-1,0,-1
+            ]
+
+        ];
+        var menbers = this.menbersC;
+        var trs = document.getElementById(id).getElementsByTagName('tr');
+        var tds = null, i = 0, j = 0, table = [], n=0;
+
+        var names = [];
+        var name = '';
+        for( i = 0 ; i < trs.length; ++i ){
+            name = trs[i].getElementsByTagName('th')[0].innerHTML;
+            names.push(name);
+        }
+        for (  i = 0; i < menbers.length; ++i ){
+            if( tables.length < 1 ){ return }
+            n = names.indexOf(menbers[i].name);
+            if( n === -1 ){ break }
+            tds = trs[n].getElementsByTagName('td');
+            table = tables.splice(Math.floor(Math.random()*100)%tables.length,1)[0];
+            table = table.slice(firstDay-1,firstDay+monthLength-1);
+            for( j = 0; j < monthLength; ++j ){
+                if( table[j] === 0 ){
+                    tds[j].innerHTML = jobs[0];
+                }else {
+                    tds[j].innerHTML = '';
+                }
+            }
+        }
     }
 };
 
