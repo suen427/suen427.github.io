@@ -357,6 +357,9 @@ function Team(settings){
     $('#singleDouble').on('click', function () {
         that.singleDouble('table');
     });
+    $('#advanced').on('click', function () {
+        //todo
+    });
     var jobs = this.jobs;
     document.addEventListener('click', function (e) {
         var target = e.target;
@@ -454,7 +457,6 @@ Team.prototype = {
             }
         }
         function setFirtJob2(menbers,i) {
-            //todo must arrange a job1
             var j = 0, job1Menbers = [];
             for( j = 0; j < menbers.length; j++ ){
                 if( menbers[j].table[i] == -1 ){
