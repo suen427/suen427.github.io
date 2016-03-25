@@ -424,24 +424,28 @@ Team.prototype = {
         var joblen = jobs.length;
         /*设置job1*/
         function setFirstJob(menbers,i){
-            var job1Menbers = [];
+            var job1Menbers = [], j=0;
             if(setFirstJob.times == 0){
-                for( var j = 0; j < menbers.length; j++ ){
+                for( j = 0; j < menbers.length; j++ ){
                     if(menbers[j].table[i] == 1){
                         setFirstJob.times = 0;
                         return j;
                     }
-                    if( (menbers[j].stat[jobs[1]]||0) < (monthUtil.monthLength/ menbers.length ) ){
-                        job1Menbers.push(menbers[j]);
-                    }
                 }
             }
-            if(job1Menbers.length == 0 ) { setFirstJob.times = 0;return -1 }
+            for( j = 0; j < menbers.length; j++ ){
+                if( (menbers[j].stat[jobs[1]]||0) < (monthUtil.monthLength/ menbers.length ) && menbers[j].table[i] === -1 ){
+                    job1Menbers.push(menbers[j]);
+                }
+            }
+            if(job1Menbers.length == 0 ) {
+                setFirstJob.times = 0;return -1;
+            }
             setFirstJob.times++;
             if(setFirstJob.times>10){setFirstJob.times = 0;return -1;}
             var random = Math.floor(Math.random()*1000)%job1Menbers.length;
             if(job1Menbers[random].table[i]!=-1&&job1Menbers[random].table[i]!=1){
-                setFirstJob(job1Menbers,i);
+                return setFirstJob(job1Menbers,i);
             }else{
                 job1Menbers[random].table[i] = 1;
                 job1Menbers[random].computeStat();
@@ -449,10 +453,29 @@ Team.prototype = {
                 return random;
             }
         }
+        function setFirtJob2(menbers,i) {
+            //todo must arrange a job1
+            var j = 0, job1Menbers = [];
+            for( j = 0; j < menbers.length; j++ ){
+                if( menbers[j].table[i] == -1 ){
+                    job1Menbers.push(menbers[j]);
+                }
+            }
+            if ( job1Menbers.length < 1 ){
+                alert('排班失败！请重试！');
+                onsole.log('arrange firstJob2 fail!');
+            } else {
+                var random = Math.floor(Math.random()*1000)%job1Menbers.length;
+                job1Menbers[random].table[i] = 1;
+                job1Menbers[random].computeStat();
+                return random;
+            }
+        }
         setFirstJob.times = 0;
         for( i = 0; i < monthUtil.monthLength; i++){
             if(setFirstJob(menbers,i) == -1){
-                console.log('arrange job1 fail!');
+                console.log('arrange firstJob1 fail!');
+                setFirtJob2(menbers,i);
             }
         }
         this.updateStat();//更新每个人的岗位信息
@@ -501,7 +524,7 @@ Team.prototype = {
                         restPersons.push(menbers[k]);
                     }
                 }
-                if(flag || restPersons.length == 0){break}
+                if(flag || restPersons.length == 0){continue}
                 restPersons.sort(function(a,b){
                     return a.stat[jobs[j]] - b.stat[jobs[j]];
                 });
@@ -513,7 +536,7 @@ Team.prototype = {
             setRestDay(menbers,i);
             this.updateStat();//更新每个人的岗位信息
         }
-        /*设置剩余岗位*/
+        /*设置剩余空岗位*/
         function setBlankDay(menbers){
             for(var i = 0; i < menbers.length; i++){
                 var person = menbers[i];

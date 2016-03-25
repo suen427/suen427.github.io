@@ -225,6 +225,9 @@ ul.tab li.active, ul.tab li:hover {
 .btn-cancel, .btn-reset {
     background-color: #ccc;
 }
+.btn-edit {
+    background-color: #1c94bc;
+}
 .btn-2-chars {
     text-indent: 1em;
     letter-spacing: 1em;
@@ -306,6 +309,10 @@ input {
     text-align: center;
 }
 
+
+#advanced {
+    margin-left: 4em;
+}
 
 
 
