@@ -358,7 +358,7 @@ function Team(settings){
         that.singleDouble('table');
     });
     $('#advanced').on('click', function () {
-        //todo
+        //
     });
     var jobs = this.jobs;
     document.addEventListener('click', function (e) {
