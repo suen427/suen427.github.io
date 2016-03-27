@@ -36,6 +36,7 @@
                 <button class="btn-base btn-confirm btn-gt3-chars" id="saveTable">保存当前</button>
                 <button class="btn-base btn-confirm btn-2-chars" id="setSchedule">排班</button>
                 <button class="btn-base btn-cancel btn-2-chars" id="reset">重置</button>
+                <button class="btn-base btn-edit btn-gt3-chars" id="convert">转换表格</button>
                 <button class="btn-base btn-edit btn-2-chars" id="advanced">高级</button>
 
                 <button class="icon-btn r m5" onclick="doit();"><span class="icon-16-16 icon-download"></span>导出EXCEL</button>
@@ -45,6 +46,33 @@
         </div>
         <div id="tab2" class="content dn">
 
+        </div>
+
+        <div id="advanceDailog" class="dailog dn">
+            <div class="pannel">
+                <div class="help">?
+                    <div class="decription dn">
+                        <p>
+                            1."psersons"下每个{}括号内是一个人，"type"为"A"是双休，"type"为"B"是单休，"type"为"C"是客服单双休他；"name"是姓名。<br/>
+                            2."jobs"是岗位，"type"为"C"的人具有所有的岗位，"type"为"A"或者"B"的只有前两个岗位。<br/>
+                            3."monthSetting"用来设置排班的年月和本月休息天数，如：
+<pre>
+"monthSetting": {
+    "yearNum":2016,
+    "monthNum":4,
+    "workDayNum": 24
+}
+</pre>
+                        其中"yearNum"和"monthNum"可以省略，"workDayNum"为本月休息天数，不可缺省。且"monthNum"值是实际月份值减1，即"monthNum":4代表5月份。
+                        </p>
+                    </div>
+                </div>
+                <div class="close cancel">x</div>
+                <textarea name="settingEdit" id="settingEdit" cols="90" rows="20"></textarea>
+                <button class="btn-base btn-cancel btn-2-chars mr15 cancel" id="cancel">取消</button>
+                <button class="btn-base btn-confirm btn-2-chars mr15" id="svaeSetting">保存</button>
+                <button class="btn-base btn-edit btn-gt3-chars" id="default">恢复默认</button>
+            </div>
         </div>
 
 

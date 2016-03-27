@@ -11,7 +11,7 @@ function tabClickHandler(e){
         $(thisTarget).show();
     }
 }
-// 需要在捕获阶段就执行,避免echarts在tab的click事件中执行时依然无法获取元素高宽
+
 document.body.addEventListener('click', tabClickHandler, true);
 
 /*MonthUtil*/
@@ -50,8 +50,10 @@ MonthUtil.prototype = {
                 0,1,1,1,1,1,0,
                 0,1,1,1,1,1,0,
                 0,1,1,1,1,1,0,
+                0,1,1,1,1,1,0,
                 0,1,1,1,1,1,0],
             tableB = [0,1,1,1,1,1,1,
+                0,1,1,1,1,1,1,
                 0,1,1,1,1,1,1,
                 0,1,1,1,1,1,1,
                 0,1,1,1,1,1,1,
@@ -96,13 +98,6 @@ MonthUtil.prototype = {
         }
     }
 };
-/*var settings = {
-    //monthNum:1,// 获得下月日期对象，monthNum是月份数字0、1、2...11
-    workDayNum:24 // 一个月中的工作天数
-};
-var monthUtil = new MonthUtil(settings);
-console.log(monthUtil);*/
-/*MonthUtil end*/
 /*Person*/
 -function () {
     function Person(settings,monthUtil){
@@ -335,6 +330,7 @@ console.log(monthUtil);*/
 /*Person end*/
 /*Team*/
 function Team(settings){
+    settings = settings || clone(this.defaultSettings);
     this.originSettings = clone(settings);
     this.init(settings);
     var that = this;
@@ -342,11 +338,15 @@ function Team(settings){
         that.settings = clone(that.originSettings);
         that.init(that.settings);
         that.printBlankTable('table');
+        that.editable = true;
+        that.isLongTable = false;
     });
     $('#setSchedule').on('click', function () {
         that.init(that.settings);
         that.setSchedule();
         that.print('table');
+        that.editable = true;
+        that.isLongTable = false;
     });
     $('#setting').on('click', function () {
         that.setSettings();
@@ -355,13 +355,42 @@ function Team(settings){
         that.setPreSetting('table');
     });
     $('#singleDouble').on('click', function () {
+        that.printBlankTable('table');
         that.singleDouble('table');
+        that.editable = true;
+        that.isLongTable = false;
     });
     $('#advanced').on('click', function () {
-        //
+        $('#advanceDailog').removeClass('dn');
+        $('#settingEdit').html(JSON.stringify(that.settings,null,4));
     });
-    var jobs = this.jobs;
+    $('.dailog .cancel').on('click', function () {
+        $('#advanceDailog').addClass('dn');
+    });
+    $('#svaeSetting').on('click', function () {
+        var settings = $('#settingEdit').val();
+        localStorage.setItem('teamSetting', settings );
+        settings =  JSON.parse( settings );
+        that.init(settings);
+        that.originSettings = clone(settings);
+        $('#advanceDailog').addClass('dn');
+        that.printBlankTable('table');
+    });
+    $('#default').on('click', function () {
+        localStorage.removeItem('teamSetting' );
+        settings =  clone(that.defaultSettings);
+        that.init(settings);
+        that.originSettings = clone(settings);
+        $('#advanceDailog').addClass('dn');
+        that.printBlankTable('table');
+    });
+    $('#convert').on('click', function () {
+        that.toLongTable('table');
+        that.editable = false;
+    });
     document.addEventListener('click', function (e) {
+        if(!that.editable){return}
+        var jobs = that.jobs;
         var target = e.target;
         if(target.nodeName.toLowerCase() === 'li' ){
             var p = target.parentNode;
@@ -389,15 +418,18 @@ function Team(settings){
                 }
                 html += '<li>空</li></ul>';
             } else {
-                var html = '<ul class="select-down"><li>休</li><li>岗1</li></ul>';
+                var html = '<ul class="select-down"><li>'+jobs[0]+'</li><li>'+jobs[1]+'</li></ul>';
             }
             target.innerHTML = target.innerHTML+html;
         }
     });
 }
 Team.prototype = {
+    tableType: "short", // "short" or "long"
+    editable: true,
+    isLongTable: false,
     init: function(settings){
-        this.settings = settings;
+        this.settings = settings || this.settings;
         this.monthUtil = new MonthUtil(settings.monthSetting);
         this.jobs = settings.jobs;
         var persons = settings.persons;
@@ -465,7 +497,7 @@ Team.prototype = {
             }
             if ( job1Menbers.length < 1 ){
                 alert('排班失败！请重试！');
-                onsole.log('arrange firstJob2 fail!');
+                console.log('arrange firstJob2 fail!'+i);
             } else {
                 var random = Math.floor(Math.random()*1000)%job1Menbers.length;
                 job1Menbers[random].table[i] = 1;
@@ -476,7 +508,7 @@ Team.prototype = {
         setFirstJob.times = 0;
         for( i = 0; i < monthUtil.monthLength; i++){
             if(setFirstJob(menbers,i) == -1){
-                console.log('arrange firstJob1 fail!');
+                console.log('arrange firstJob1 fail!'+i);
                 setFirtJob2(menbers,i);
             }
         }
@@ -565,21 +597,28 @@ Team.prototype = {
     print: function (id) {
         var monthUtil = this.monthUtil;
         var jobs = this.jobs;
-        var html = '<thead><tr><th>日 期</th>',
-            str = '<tr><th>星期</th>',
+        var html = '<thead><tr><th colspan="5">项目：香醍漫步</th><th colspan="5">部门：客服中心</th>' +
+                '<th colspan="5">所属月份：' +
+                (monthUtil.month.getMonth()+1) +
+                '月</th><th colspan="5">制表人：</th><th colspan="5">部门负责人：</th>' +
+                '<th colspan="'+ (this.monthUtil.monthLength -23 + jobs.length) +'"></th></tr>' +
+                '<tr><th rowspan="3">序号</th><th  rowspan="2">日 期</th>',
+            str = '<tr>',
+            str2 = '<tr><th>姓名</th>',
             weeks = ['日','一','二','三','四','五','六'];
 
         for(var i = 0; i < this.monthUtil.monthLength; i++){
             html += '<th>'+ (i+1) +'日</th>';
             str += '<th>周'+ weeks[(i + monthUtil.firstDay)%7] +'</th>';
+            str2 += '<th>岗位</th>';
         }
         for( i = 0; i < jobs.length; i++ ){
-            html += '<th rowspan="2">'+ jobs[i] +'</th>';
+            html += '<th rowspan="3">'+ jobs[i] +'</th>';
         }
-        html += '</tr>'+ str+ '</tr></thead>';
+        html += '</tr>'+ str+ '</tr>'+str2+'</tr></thead>';
         for(i = 0; i < this.menbers.length; i++ ){
             var person = this.menbers[i];
-            str = '<tr class="'+ person.type +'"><th>'+person.name+'</th>';
+            str = '<tr class="'+ person.type +'"><th>'+(i+1)+'</th><th>'+person.name+'</th>';
             for( var j = 0; j < person.table.length; j++ ){
                 if( person.table[j]==0 ){
                     str += '<td class="rest">'+(jobs[person.table[j]]||'')+'</td>'
@@ -598,20 +637,28 @@ Team.prototype = {
     printBlankTable: function (id) {
         var monthUtil = this.monthUtil;
         var jobs = this.jobs;
-        var html = '<thead><tr><th>日 期</th>',
-            str = '<tr><th>星期</th>',
+        var html = '<thead><tr><th colspan="5">项目：香醍漫步</th><th colspan="5">部门：客服中心</th>' +
+                '<th colspan="5">所属月份：' +
+                (monthUtil.month.getMonth()+1) +
+                '月</th><th colspan="5">制表人：</th><th colspan="5">部门负责人：</th>' +
+                '<th colspan="'+ (this.monthUtil.monthLength -23 + jobs.length) +'"></th></tr>' +
+                '<tr><th rowspan="3">序号</th><th  rowspan="2">日 期</th>',
+            str = '<tr>',
+            str2 = '<tr><th>姓名</th>',
             weeks = ['日','一','二','三','四','五','六'];
+
         for(var i = 0; i < this.monthUtil.monthLength; i++){
             html += '<th>'+ (i+1) +'日</th>';
             str += '<th>周'+ weeks[(i + monthUtil.firstDay)%7] +'</th>';
+            str2 += '<th>岗位</th>';
         }
         for( i = 0; i < jobs.length; i++ ){
-            html += '<th rowspan="2">'+ jobs[i] +'</th>';
+            html += '<th rowspan="3">'+ jobs[i] +'</th>';
         }
-        html += '</tr>'+ str+ '</tr></thead>';
+        html += '</tr>'+ str+ '</tr>'+str2+'</tr></thead>';
         for(i = 0; i < this.menbers.length; i++ ){
             var person = this.menbers[i];
-            str = '<tr class="'+ person.type +'"><th>'+person.name+'</th>';
+            str = '<tr class="'+ person.type +'"><th>'+(i+1)+'</th><th>'+person.name+'</th>';
             for( var j = 0; j < person.table.length; j++ ){
                 str += '<td></td>'
             }
@@ -633,7 +680,7 @@ Team.prototype = {
         var names = [];
         var name = '';
         for( var i = 2; i < trs.length; ++i ){
-            name = trs[i].getElementsByTagName('th')[0].innerHTML;
+            name = trs[i].getElementsByTagName('th')[1].innerHTML;
             names.push(name);
         }
 
@@ -651,18 +698,17 @@ Team.prototype = {
         }
     },
     setSettings: function (settings) {
+        this.settings = clone(this.originSettings);
         if(settings){
-            this.settings = Object.extend(this.settings,settings);
+            $.extend(this.settings,settings);
         }else{
-            var settings = this.settings;
+            settings = this.settings;
             var monthSetting = settings.monthSetting;
-            monthSetting.yearNum = $('#year').val();
-            monthSetting.monthNum = $('#month').val()-1;
-            monthSetting.workDayNum = $('#workday').val() || 24;
+            monthSetting.yearNum = $('#year').val() ||  monthSetting.yearNum;
+            monthSetting.monthNum = $('#month').val()-1 || monthSetting.monthNum;
+            monthSetting.workDayNum = $('#workday').val() || monthSetting.workDayNum;
         }
-    },
-    saveHoliday: function () {
-        var settings = this.settings;
+        this.init(this.settings);
     },
     singleDouble: function (id) {
         var settings = this.settings,
@@ -670,73 +716,161 @@ Team.prototype = {
             holiday = monthUtil.holiday,
             monthLength = monthUtil.monthLength,
             firstDay = monthUtil.firstDay,
-            jobs = this.jobs;
-        var tables = [
-            [
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,-1,0
-            ],
-            [
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,0
-            ],
-            [
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,0,0
-            ],
-            [
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,0,-1
-            ],
-            [
-                -1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,0,0
-            ],
-            [
-                -1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,0,-1
-            ],
-            [
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,-1,
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,-1,0
-            ],
-            [
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,-1,-1
-            ],
-            [
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,0,0,
-                -1,-1,-1,-1,-1,-1,0,
-                -1,-1,-1,-1,-1,0,-1
-            ]
-
-        ];
+            jobs = this.jobs,
+            tables;
+        if(holiday>6){
+            tables = [
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ]
+            ];
+        } else {
+            tables = [
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,-1,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ],
+                [
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,0,0,
+                    -1,-1,-1,-1,-1,-1,0,
+                    -1,-1,-1,-1,-1,0,-1,
+                    -1,-1,-1,-1,-1,-1,-1
+                ]
+            ];
+        }
         var menbers = this.menbersC;
         var trs = document.getElementById(id).getElementsByTagName('tr');
         var tds = null, i = 0, j = 0, table = [], n=0;
@@ -744,7 +878,7 @@ Team.prototype = {
         var names = [];
         var name = '';
         for( i = 0 ; i < trs.length; ++i ){
-            name = trs[i].getElementsByTagName('th')[0].innerHTML;
+            name = trs[i].getElementsByTagName('th')[1].innerHTML;
             names.push(name);
         }
         for (  i = 0; i < menbers.length; ++i ){
@@ -753,7 +887,7 @@ Team.prototype = {
             if( n === -1 ){ break }
             tds = trs[n].getElementsByTagName('td');
             table = tables.splice(Math.floor(Math.random()*100)%tables.length,1)[0];
-            table = table.slice(firstDay-1,firstDay+monthLength-1);
+            table = table.slice((firstDay+6)%7,(firstDay+6)%7+monthLength);
             for( j = 0; j < monthLength; ++j ){
                 if( table[j] === 0 ){
                     tds[j].innerHTML = jobs[0];
@@ -762,57 +896,78 @@ Team.prototype = {
                 }
             }
         }
+    },
+    toLongTable: function (id) {
+        if(this.isLongTable){
+            return;
+        }
+        var jobs = this.jobs;
+        var table = document.getElementById(id);
+        var tds = table.getElementsByTagName('td');
+        var job;
+        for ( var i = tds.length-1; i > -1; --i ){
+            job = jobs.indexOf( tds[i].innerHTML );
+            if( job == 0 ){
+                tds[i].outerHTML = '<td class="rest">'+jobs[job]+'</td><td class="rest">-</td>';
+            }else if ( job>-1){
+                if ( tds[i].parentNode.className.indexOf('C')>-1 ){
+                    tds[i].outerHTML = '<td>A</td><td>'+jobs[job]+'</td>';
+                } else if ( tds[i].parentNode.className.indexOf('A')>-1 ) {
+                    tds[i].outerHTML = '<td>A</td><td>-</td>';
+                } else if ( tds[i].parentNode.className.indexOf('B')>-1 ) {
+                    tds[i].outerHTML = '<td>B</td><td>-</td>';
+                }
+            }else if(tds[i].innerHTML == ""){
+                tds[i].outerHTML = '<td></td><td></td>';
+            }
+        }
+
+        var html = table.innerHTML;
+        var reg1 = /<th>(\d+)日/g,
+            reg2 = /<th>周(\W)/g,
+            reg3 = /<th>岗位/g;
+        html = html.replace( reg1, '<th colspan="2">$1日');
+        html = html.replace( reg2, '<th colspan="2">周$1');
+        html = html.replace( reg3, '<th>班次</th><th>岗位');
+        html = html.replace( /<th colspan="12"><\/th>/, '<th colspan="42"><\/th>');
+        html = html.replace( /<th colspan="13"><\/th>/, '<th colspan="44"><\/th>');
+        html = html.replace( /<th colspan="11"><\/th>/, '<th colspan="40"><\/th>');
+        html = html.replace( /<th colspan="10"><\/th>/, '<th colspan="38"><\/th>');
+
+        table.innerHTML = html;
+        this.isLongTable = true;
+    },
+    defaultSettings: {
+        jobs:["休","岗1","岗2","岗3","岗4"],
+        persons:[
+            {name:"戎超群",type:"C"},
+            {name:"吴艳",type:"C"},
+            {name:"吴丹丹",type:"C"},
+            {name:"叶佳莹",type:"C"},
+            {name:"张智",type:"C"},
+            {name:"夏雨",type:"C"},
+            {name:"谢素梅",type:"A"},
+            {name:"邬凯",type:"A"},
+            {name:"向前",type:"A"},
+            {name:"司超",type:"A"},
+            {name:"谢素梅",type:"A"},
+            {name:"沈桂玲",type:"B"},
+            {name:"宓雪玲",type:"B"},
+            {name:"谢少华",type:"B"}
+        ],
+        monthSetting:{
+            //yearNum:2016,
+            //monthNum:4,// 获得下月日期对象，monthNum是月份数字0、1、2...11
+            workDayNum:24 // 一个月中的工作天数
+        }
     }
 };
 
 
 
-var teamSetting = {
-    jobs:["休","岗1","岗2","岗3","岗4"],
-    persons:[
-        {name:"戎超群",type:"C"
-            //,
-            //preArr:[0,-1,-1,-1,-1,4,-1,
-            //    -1,-1,-1,-1,-1,-1,
-            //    -1,-1,-1,-1,-1,-1,
-            //    -1,-1,-1,-1,-1,-1,
-            //    -1,-1,-1,-1,-1,-1
-            //]
-        },
-        {name:"吴艳",type:"C"},
-        {name:"吴丹丹",type:"C"},
-        {name:"叶佳莹",type:"C"},
-        {name:"张智",type:"C"},
-        {name:"夏雨",type:"C"},
-        {name:"谢素梅",type:"A"},
-        {name:"邬凯",type:"A"},
-        {name:"向前",type:"A"},
-        {name:"司超",type:"A"},
-        {name:"谢素梅",type:"A"},
-        {name:"沈桂玲",type:"B"},
-        {name:"宓雪玲",type:"B"},
-        {name:"谢少华",type:"B"}
-    ],
-    monthSetting:{
-        //yearNum:2016,
-        //monthNum:4,// 获得下月日期对象，monthNum是月份数字0、1、2...11
-        workDayNum:24 // 一个月中的工作天数
-    }
-};
-
-$('#setting').on('click', function (e) {
-
-})
-/*test*/
-
+var teamSetting = JSON.parse( localStorage.getItem('teamSetting') );
 var team = new Team(teamSetting);
-
 team.printBlankTable('table');
-//team.setSchedule();
-//team.print('table');
-
-
-
 function clone(obj) {
     var copy;
 

@@ -24,7 +24,7 @@ function generateArray(table) {
             if (rowspan || colspan) {
                 rowspan = rowspan || 1;
                 colspan = colspan || 1;
-                ranges.push({s:{r:R, c:outRow.length},e:{r:R+rowspan-1, c:outRow.length+colspan-1}});
+                ranges.push({s:{r:R, c:outRow.length},e:{r:R+(rowspan-1), c:outRow.length+(colspan-1)}});
             };
 
             //Handle Value
@@ -92,7 +92,7 @@ var ranges = oo[1];
 
 /* original data */
 var data = oo[0];
-var ws_name = "SheetJS";
+var ws_name = "龙湖班表";
 console.log(data);
 
 var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
