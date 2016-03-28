@@ -221,6 +221,7 @@ ul.tab li.active, ul.tab li:hover {
     height: 30px;
     border: none;
     color: #fff;
+    font-weight: normal;
 }
 .btn-base:hover {
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
@@ -368,6 +369,17 @@ input {
     cursor: default;
 }
 
+.form-wrap {
+    margin: 20px;
+}
+.output-wrap {
+    width: 500px;
+    margin: 20px;
+}
+.statistic-wrap {
+    width: 400px;
+    margin: 20px;
+}
 
 
 

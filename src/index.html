@@ -22,11 +22,11 @@
         <!-- Add your site or application content here -->
         <div class="tab-wrapper tab-style">
             <ul class="tab">
-                <li class="active tab-head" data-tab-target="#tab1">排班<span class="active tab-line"></span></li>
-                <li class="tab-head" data-tab-target="#tab2">考勤<span class="tab-line"></span></li>
+                <li class="active tab-head" data-tab-target="#schedule">排班<span class="active tab-line"></span></li>
+                <li class="tab-head" data-tab-target="#attendance">考勤<span class="tab-line"></span></li>
             </ul>
         </div>
-        <div id="tab1" class="content">
+        <div id="schedule" class="content">
             <div class="m5">
                 <input type="number" name="year" id="year" style="width: 60px;" placeholder="年" value="2016"/>年
                 <input type="number" name="month" id="month" style="width: 50px;" placeholder="月" value="4"/>月的班表；
@@ -44,7 +44,39 @@
 
             <table id="table" class="table"></table>
         </div>
-        <div id="tab2" class="content dn">
+        <div id="attendance" class="content dn">
+            <div class="form-wrap">
+                <p><label for="clock">考勤文件：</label><input type="file" id="clock" onchange="read1();"></p>
+                <p><label for="schedule">班表文本：</label><input type="file" id="" onchange="read2();"></p>
+                <button class="btn-base btn-confirm btn-gt3-chars">统计考勤</button>
+            </div>
+            <div>
+                <div class="l output-wrap">
+                    <h2>表1：考勤异常事件<button class="btn-base btn-confirm btn-gt3-chars r">选中表1</button></h2>
+                    <table id="output" class="table">
+                        <thead>
+                        <tr><th>考勤异常人员姓名</th>
+                            <th>岗位</th>
+                            <th>异常时间段</th>
+                            <th>异常事件</th>
+                            <th>异常缘由</th>
+                            <th>直接上级签核</th></tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="l statistic-wrap">
+                    <h2>表2：异常数据统计<button class="btn-base btn-confirm btn-gt3-chars r">选中表2</button></h2>
+                    <table id = 'statistic'  class="table">
+                        <thead>
+                        <tr><th>姓名</th>
+                            <th>迟到</th>
+                            <th>早退</th>
+                            <th>早上未打卡</th>
+                            <th>晚上未打卡</th></tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
 
         </div>
 
