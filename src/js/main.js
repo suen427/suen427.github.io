@@ -1,3 +1,6 @@
+function changeURL(prama){
+    window.history.pushState({},0,'http://'+window.location.host + window.location.pathname +'?page='+prama);
+}
 // tab, data-tab-target直接使用css选择器
 function tabClickHandler(e){
     var $this = $(e.target);
@@ -9,11 +12,17 @@ function tabClickHandler(e){
         $(currentTarget).hide();
         $this.addClass('active');
         $(thisTarget).show();
+        changeURL( $this[0].dataset.tabTarget.split('#')[1] );
     }
 }
-
 document.body.addEventListener('click', tabClickHandler, true);
 
+var search = window.location.search;
+if(search == '?page=attendance'){
+    $('.tab-head[data-tab-target="#attendance"]').trigger('click');
+} else {
+    changeURL('schedule');
+}
 /*MonthUtil*/
 /*返回当前时刻的下个月*/
 function MonthUtil(settings){
