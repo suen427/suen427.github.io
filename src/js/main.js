@@ -972,8 +972,6 @@ Team.prototype = {
     }
 };
 
-
-
 var teamSetting = JSON.parse( localStorage.getItem('teamSetting') );
 var team = new Team(teamSetting);
 team.printBlankTable('table');
@@ -1010,3 +1008,64 @@ function clone(obj) {
 
     throw new Error("Unable to copy obj! Its type isn't supported.");
 }
+
+
+
+/* 考勤 */
+
++function () {
+    var month = 5,
+        monthZh = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+    //读取考勤记录
+    function readClock(e){
+        var file = document.getElementById('clock').files[0];
+        if (file) {
+            var fr = new FileReader();
+            fr.readAsText(file,'gb2312');
+            fr.onload = function(e){
+                document.getElementById('input').innerHTML = e.target.result;
+                tables = document.getElementById('input').getElementsByTagName('table');
+                month = document.getElementById('input').getElementsByTagName('p')[2].innerHTML.split(':')[1];
+                month = parseInt(month);
+                for (var i = 0; i<tables.length; i++){
+                    late[i]=0;
+                    leaveearly[i]=0;
+                    forget2[i]=0;
+                    forget1[i]=0;
+                }
+            }
+        }else{
+            alert('加载文件失败！');
+        }
+    }
+    $('#clock').on('change',readClock);
+    //读取班表
+    var workTables,
+        sheet,
+        sheetName,
+        personsOfWorkTable = [];
+    function readWorkTable(e) {
+        var files = e.target.files;
+        var i,f;
+        for (i = 0, f = files[i]; i != files.length; ++i) {
+            var reader = new FileReader();
+            var name = f.name;
+            reader.onload = function(e) {
+                var data = e.target.result;
+                workTables = XLSX.read(data, {type: 'binary'});
+                var sheets = workTables.Sheets;
+                var keys = Object.keys(sheets);
+                for( var v in keys ){
+                    if(v.indexOf(month)||v.indexOf(monthZh[month])){
+                        sheet = sheets[v];
+                        return;
+                    }
+                }
+                return sheets[workTables.SheetNames[0]];
+            };
+            reader.readAsBinaryString(f);
+        }
+    }
+    $('#workTable').on('change',readWorkTable);
+
+}();
