@@ -46,9 +46,16 @@
         </div>
         <div id="attendance" class="content dn">
             <div class="form-wrap">
-                <p><label for="clock">考勤文件：</label><input type="file" id="clock"></p>
-                <p><label for="workTable">班表文本：</label><input type="file" id="workTable"></p>
-                <button class="btn-base btn-confirm btn-gt3-chars">统计考勤</button>
+                <p><label for="clock">考勤文件：</label><input type="file" accept="text/html,text/htm" id="clock"></p>
+                <p><label for="workTable">班表文本：</label><input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="workTable"></p>
+                <button class="btn-base btn-confirm btn-gt3-chars mr15">统计考勤</button>
+                <!--<span class="switch-wrap">
+                    <span class="switch">
+                        <span class="open">开启</span><span class="switch-btn"></span><span class="close">关闭</span>
+                    </span>
+                </span>-->
+                <input type="radio" name="season" value="summer" id="summer" checked/><label for="summer" class="mr15">夏令时</label>
+                <input type="radio" name="season" value="winter" id="winter"/><label for="winter">冬令时</label>
             </div>
             <div>
                 <div class="l output-wrap">

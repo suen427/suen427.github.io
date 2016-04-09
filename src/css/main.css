@@ -369,8 +369,12 @@ input {
     cursor: default;
 }
 
+
 .form-wrap {
     margin: 20px;
+}
+.form-wrap input{
+    vertical-align: middle;
 }
 .output-wrap {
     width: 500px;

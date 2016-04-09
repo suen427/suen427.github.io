@@ -12,7 +12,9 @@ function tabClickHandler(e){
         $(currentTarget).hide();
         $this.addClass('active');
         $(thisTarget).show();
-        changeURL( $this[0].dataset.tabTarget.split('#')[1] );
+        var data = $this[0].dataset.tabTarget.split('#')[1]
+        changeURL( data );
+        document.title =  data === 'attendance'? '考勤':( data === 'schedule'? '排班' : 'I ❤ U !' );
     }
 }
 document.body.addEventListener('click', tabClickHandler, true);
@@ -20,8 +22,10 @@ document.body.addEventListener('click', tabClickHandler, true);
 var search = window.location.search;
 if(search == '?page=attendance'){
     $('.tab-head[data-tab-target="#attendance"]').trigger('click');
+    document.title = '考勤';
 } else {
     changeURL('schedule');
+    document.title = 'I ❤ U !';
 }
 /*MonthUtil*/
 /*返回当前时刻的下个月*/
@@ -402,7 +406,8 @@ MonthUtil.prototype = {
             that.toLongTable('table');
             that.editable = false;
         });
-        document.addEventListener('click', function (e) {
+        //document.addEventListener('click', function (e) {
+        $(document).on('click','.table',function (e) {
             if(!that.editable){return}
             var jobs = that.jobs;
             var target = e.target;
@@ -1063,7 +1068,10 @@ function clone(obj) {
 
 
 /* 考勤 */
-
+var workTables,
+    sheet,
+    sheetName,
+    personsOfWorkTable = [];
 +function () {
     var month = 5,
         monthZh = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
@@ -1091,32 +1099,31 @@ function clone(obj) {
     }
     $('#clock').on('change',readClock);
     //读取班表
-    var workTables,
-        sheet,
-        sheetName,
-        personsOfWorkTable = [];
+    //var workTables,
+    //    sheet,
+    //    sheetName,
+    //    personsOfWorkTable = [];
     function readWorkTable(e) {
-        var files = e.target.files;
-        var i,f;
-        for (i = 0, f = files[i]; i != files.length; ++i) {
-            var reader = new FileReader();
-            var name = f.name;
-            reader.onload = function(e) {
-                var data = e.target.result;
-                workTables = XLSX.read(data, {type: 'binary'});
-                var sheets = workTables.Sheets;
-                var keys = Object.keys(sheets);
-                for( var v in keys ){
-                    if(v.indexOf(month)||v.indexOf(monthZh[month])){
-                        sheet = sheets[v];
-                        return;
-                    }
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        var name = file.name;
+        var type = name.split('.');
+        type = type[type.length-1];
+        type = type === 'xlsx'?XLSX:XLS;
+        reader.onload = function(e) {
+            var data = e.target.result;
+            workTables = type.read(data, {type: 'binary'});
+            sheets = workTables.Sheets;
+            var keys = Object.keys(sheets);
+            for( var v in keys ){
+                if(v.indexOf(month)||v.indexOf(monthZh[month])){
+                    sheet = sheets[v];
+                    return;
                 }
-                return sheets[workTables.SheetNames[0]];
-            };
-            reader.readAsBinaryString(f);
-        }
+            }
+            return sheets[workTables.SheetNames[0]];
+        };
+        reader.readAsBinaryString(file);
     }
     $('#workTable').on('change',readWorkTable);
-
 }();
