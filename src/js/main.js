@@ -1070,11 +1070,12 @@ function clone(obj) {
 /* 考勤 */
 var workTables,
     sheet,
+    sheetNames,
     sheetName,
     personsOfWorkTable = [];
 +function () {
-    var month = 5,
-        monthZh = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+    var month = 3,
+        monthZh = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
     //读取考勤记录
     function readClock(e){
         var file = document.getElementById('clock').files[0];
@@ -1101,7 +1102,7 @@ var workTables,
     //读取班表
     //var workTables,
     //    sheet,
-    //    sheetName,
+    //    sheetNames,
     //    personsOfWorkTable = [];
     function readWorkTable(e) {
         var file = e.target.files[0];
@@ -1114,14 +1115,22 @@ var workTables,
             var data = e.target.result;
             workTables = type.read(data, {type: 'binary'});
             sheets = workTables.Sheets;
-            var keys = Object.keys(sheets);
-            for( var v in keys ){
-                if(v.indexOf(month)||v.indexOf(monthZh[month])){
-                    sheet = sheets[v];
-                    return;
+            sheetNames = workTables.SheetNames;
+            for( var i = 0; i < sheetNames.length; ++i ){
+                if( sheetNames[i].indexOf(month+'月')>-1 || sheetNames[i].indexOf(monthZh[month-1])>-1 ){
+                    if(month<3 && sheetNames[i].indexOf(month+10+'月') === -1 && sheetNames[i].indexOf(monthZh[month+9]) === -1){
+                        sheetName = sheetNames[i];
+                        sheets = sheets[sheetName];
+                        return
+                    } else if(month>2){
+                        sheetName = sheetNames[i];
+                        sheets = sheets[sheetName];
+                        return
+                    }
                 }
             }
-            return sheets[workTables.SheetNames[0]];
+            sheetName = sheetNames[sheetNames.length-1];
+            sheet = sheets[sheetName];
         };
         reader.readAsBinaryString(file);
     }
