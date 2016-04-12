@@ -1068,14 +1068,7 @@ function clone(obj) {
 
 
 /* 考勤 */
-var workTables,
-    sheet,
-    sheetNames,
-    sheetName,
-    personsOfWorkTable = [];
 +function () {
-    var month = 3,
-        monthZh = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
     //读取考勤记录
     function readClock(e){
         var file = document.getElementById('clock').files[0];
@@ -1084,37 +1077,28 @@ var workTables,
             fr.readAsText(file,'gb2312');
             fr.onload = function(e){
                 document.getElementById('input').innerHTML = e.target.result;
-                tables = document.getElementById('input').getElementsByTagName('table');
-                month = document.getElementById('input').getElementsByTagName('p')[2].innerHTML.split(':')[1];
-                month = parseInt(month);
-                for (var i = 0; i<tables.length; i++){
-                    late[i]=0;
-                    leaveearly[i]=0;
-                    forget2[i]=0;
-                    forget1[i]=0;
-                }
             }
         }else{
-            alert('加载文件失败！');
+            document.getElementById('input').innerHTML = '';
         }
     }
     $('#clock').on('change',readClock);
     //读取班表
-    //var workTables,
-    //    sheet,
-    //    sheetNames,
-    //    personsOfWorkTable = [];
     function readWorkTable(e) {
         var file = e.target.files[0];
         var reader = new FileReader();
+        if( !file ){
+            window.workTables = null;
+            return;
+        }
         var name = file.name;
         var type = name.split('.');
         type = type[type.length-1];
         type = type === 'xlsx'?XLSX:XLS;
         reader.onload = function(e) {
             var data = e.target.result;
-            workTables = type.read(data, {type: 'binary'});
-            sheets = workTables.Sheets;
+            window.workTables = type.read(data, {type: 'binary'});
+            /*sheets = workTables.Sheets;
             sheetNames = workTables.SheetNames;
             for( var i = 0; i < sheetNames.length; ++i ){
                 if( sheetNames[i].indexOf(month+'月')>-1 || sheetNames[i].indexOf(monthZh[month-1])>-1 ){
@@ -1130,9 +1114,198 @@ var workTables,
                 }
             }
             sheetName = sheetNames[sheetNames.length-1];
-            sheet = sheets[sheetName];
+            sheet = sheets[sheetName];*/
         };
         reader.readAsBinaryString(file);
     }
     $('#workTable').on('change',readWorkTable);
+
+    $('#analyze').on('click', analyze );
+    function analyze(){
+        var mode = $('#season').hasClass('opened')? 'summer':'winter',
+            monthZh = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+        var workTables = window.workTables,
+            clock = $('#input'),
+            clockTables = $('#input table');
+        if( clockTables.length < 1 ){
+            alert('请选择考勤文件！');
+            return;
+        }
+        if( !workTables ){
+            alert('请选排班表！');
+            return;
+        }
+        var month = parseInt( clock[0].innerHTML.split('月份')[1].substr(1,3));
+        var sheetNames = workTables.SheetNames,
+            sheetName = null,
+            sheet = null;
+        for( var i = 0; i < sheetNames.length; ++i ){
+            if( sheetNames[i].indexOf(month+'月') > -1 || sheetNames[i].indexOf(monthZh[month-1])>-1 ){
+                if( month < 3 && sheetNames[i].indexOf(month+10+'月') === -1 && sheetNames[i].indexOf(monthZh[month+9]) === -1 ){
+                    sheetName = sheetNames[i];
+                    sheet = workTables.Sheets[sheetName];
+                } else {
+                    sheetName = sheetNames[i];
+                    sheet = workTables.Sheets[sheetName];
+                }
+            }
+            if( !sheetName ) {
+                sheetName = sheetNames[sheetNames.length-1];
+                sheet = workTables.Sheets[sheetName];
+            }
+        }
+
+        // 考勤情况
+        function getTimeTable( tableElement ){
+            var e = $(tableElement),
+                r = {};
+            r.name = e.find('td')[1].innerHTML.split('姓名:')[1].split('&nbsp;')[0];
+            var tds = e.find('td');
+            r.timeFlags = [];
+            var am1,am2,am3,am4,am5,
+                pm1,pm2,pm3,pm4,pm5,pm6,pm7,
+                times;
+            for(var i = 20; i < 36; ++i){
+                times = tds[i].innerHTML;
+                r.timeFlags.push({
+                    am1 : /0[567]:\d\d/.test(times),
+                    am2 : /08:[012]\d/.test(times),//8点-8点半
+                    am3 : /08:[345]\d/.test(times),//8点半-9点
+                    am4 : /09:\d\d/.test(times),//早上9点-10点
+                    am5 : /1[01]:\d\d/.test(times),//10点之后
+                    pm1 : /1[45]:\d\d/.test(times),//下午2点-4点
+                    pm2 : /16:[123]\d/.test(times),//下午4点-4点半
+                    pm3 : /16:[345]\d/.test(times),//下午4点半-5点
+                    pm4 : /17:[012]\d/.test(times),//下午5点-5点半
+                    pm5 : /17:[345]\d/.test(times),//下午5点半-6点
+                    pm6 : /1[89]:\d\d/.test(times),//下午6点-晚上8点
+                    pm7 : /2[0123]:\d\d/.test(times)//晚上8点-晚上12点
+                })
+            }
+            for(var i = 54; i < 69; ++i){
+                times = tds[i].innerHTML;
+                r.timeFlags.push({
+                    am1 : /0[567]:\d\d/.test(times),
+                    am2 : /08:[012]\d/.test(times),//8点-8点半
+                    am3 : /08:[345]\d/.test(times),//8点半-9点
+                    am4 : /09:\d\d/.test(times),//早上9点-10点
+                    am5 : /1[01]:\d\d/.test(times),//10点之后
+                    pm1 : /1[45]:\d\d/.test(times),//下午2点-4点
+                    pm2 : /16:[123]\d/.test(times),//下午4点-4点半
+                    pm3 : /16:[345]\d/.test(times),//下午4点半-5点
+                    pm4 : /17:[012]\d/.test(times),//下午5点-5点半
+                    pm5 : /17:[345]\d/.test(times),//下午5点半-6点
+                    pm6 : /1[89]:\d\d/.test(times),//下午6点-晚上8点
+                    pm7 : /2[0123]:\d\d/.test(times)//晚上8点-晚上12点
+                })
+            }
+            return r;
+        }
+        var clockPersons = [];
+        for ( i = 0; i < clockTables.length; ++i ){
+            clockPersons.push(getTimeTable( clockTables[i] ));
+        }
+
+        function getNamePosition(sheet){
+            for(var v in sheet){
+                if(sheet[v].v && sheet[v].v.indexOf('姓名') > -1){
+                    return v;
+                }
+            }
+        }
+        var positionName = getNamePosition(sheet);
+        var names = [],
+            namesIndex = [],
+            v,
+            col,
+            row;
+        if(positionName){
+            col = positionName.match(/[A-Za-z]+/)[0].trim();
+            row = positionName.match(/\d+/)[0].trim();
+            for( i = 1; ; ++i ){
+                v = col+ (parseInt(row)+i);
+                if( sheet[v]){
+                    namesIndex.push(v);
+                    names.push(sheet[v].v)
+                } else{
+                    break;
+                }
+            }
+        } else {
+            alert("班表内未找到姓名");
+            return
+        }
+        var persons = [],
+            monthLength = new MonthUtil({
+                month:month-1
+            }).monthLength,
+            j= 0,
+            personWorkTable;
+        for( i = 0; i < names.length; ++i ){
+            personWorkTable = [];
+            col = namesIndex[i].match(/[A-Za-z]+/)[0].trim();
+            row = namesIndex[i].match(/\d+/)[0].trim();
+            for( j = 0; j < monthLength; ++j ){
+                col.charCodeAt(0);
+
+                personWorkTable[j] = {
+                    'type': sheet[ strPlus(col,1+2*j)+row ]?sheet[ strPlus(col,1+2*j)+row ].v : '',
+                    'work': sheet[ strPlus(col,2+2*j)+row ]?sheet[ strPlus(col,2+2*j)+row ].v : ''
+                }
+            }
+            persons.push({
+                'name': names[i],
+                'workTable': personWorkTable
+            })
+        }
+        function stat(mode, persons, clockPersons, names){
+            mode;
+            persons;
+            clockPersons;
+            names
+        }
+        stat(mode,persons,clockPersons,names);
+    }
 }();
+
+function strPlus(str,n){
+    /*
+    * 如 strPlus('AZ',1)  返回'BA'
+    * strPlus('Z',1)  返回'AA'
+    * */
+    var str = str.toUpperCase().split(''),
+        charCode,
+        carry,
+        current = n,
+        result = [];
+    for( var i = str.length-1; ; --i ){
+        if( i > -1 ){
+            charCode = str[i].charCodeAt(0);
+            if( charCode>90 || charCode < 65 ){
+                console.log('err:str out of code arrange A-Z!');
+                return
+            }
+        } else {
+            charCode = 64;
+        }
+        carry = Math.floor(current/26);
+        current = current%26;
+        if( charCode + current > 90 ){
+            carry++;
+            result.unshift( String.fromCharCode( charCode + current -26 ) );
+        } else {
+            result.unshift( String.fromCharCode( charCode + current ) );
+        }
+        if( !carry ){break}
+        current = carry;
+    }
+    if( str.length > result.length ){
+        str.splice( - result.length);
+        result = str.concat(result);
+    }
+    return result.join('');
+}
+
+$('body').on('click','.switch', function (e) {
+    $(this).toggleClass('opened');
+});

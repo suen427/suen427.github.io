@@ -48,16 +48,14 @@
             <div class="form-wrap">
                 <p><label for="clock">考勤文件：</label><input type="file" accept="text/html,text/htm" id="clock"></p>
                 <p><label for="workTable">班表文本：</label><input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="workTable"></p>
-                <button class="btn-base btn-confirm btn-gt3-chars mr15">统计考勤</button>
-                <!--<span class="switch-wrap">
-                    <span class="switch">
-                        <span class="open">开启</span><span class="switch-btn"></span><span class="close">关闭</span>
-                    </span>
-                </span>-->
-                <input type="radio" name="season" value="summer" id="summer" checked/><label for="summer" class="mr15">夏令时</label>
-                <input type="radio" name="season" value="winter" id="winter"/><label for="winter">冬令时</label>
+                <button id="analyze" class="btn-base btn-confirm btn-gt3-chars mr15">统计考勤</button>
+                <span class="switch-wrap">
+                    <sanp class="switch opened" id="season">
+                        <span>夏令时</span><span class="switch-btn"></span><span>冬令时</span>
+                    </sanp>
+                </span>
             </div>
-            <div>
+            <div class="clearfix">
                 <div class="l output-wrap">
                     <h2>表1：考勤异常事件<button class="btn-base btn-confirm btn-gt3-chars r">选中表1</button></h2>
                     <table id="output" class="table">
@@ -84,7 +82,7 @@
                     </table>
                 </div>
             </div>
-            <div id="input" style="display:none;"></div>
+            <div id="input" style="/*display:none;*/"></div>
         </div>
 
         <div id="advanceDailog" class="dailog dn">

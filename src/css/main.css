@@ -369,9 +369,47 @@ input {
     cursor: default;
 }
 
-
+/*switch*/
+.switch-wrap {
+    display: inline-block;
+    width: 60px;
+    overflow: hidden;
+    border: 1px solid #bbbbbb;
+    background: #dcdcdc;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.switch {
+    display: block;
+    width: 104px;
+    height: 18px;
+    margin-left: -42px;
+    transition: all 0.5s ease-in-out;
+}
+.switch > span {
+    display: inline-block;
+    width: 42px;
+    height: 16px;
+    vertical-align: middle;
+    text-align: center;
+}
+.switch > span.switch-btn {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background: #fff;
+}
+.switch.opened {
+    margin-left: 0;
+    color: #FFFFFF;
+    background: #1c94bc;
+}
+/*switch end*/
 .form-wrap {
     margin: 20px;
+}
+.form-wrap > * {
+    vertical-align: bottom;
 }
 .form-wrap input{
     vertical-align: middle;
