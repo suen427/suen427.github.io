@@ -1259,10 +1259,47 @@ function clone(obj) {
             })
         }
         function stat(mode, persons, clockPersons, names){
-            mode;
-            persons;
-            clockPersons;
-            names
+            function getClockTable(clockPersons,name ){
+                for( var i = 0; i < clockPersons.length; ++i ){
+                    if( name === clockPersons[i].name ){
+                        return clockPersons[i].timeFlags;
+                    }
+                }
+                return null
+            }
+            function statPerson(name,workTable,clockTable,mode){
+                var html,
+                    clockObj,
+                    workObj;
+                mode = mode || 'summer';
+                if(!clockTable){
+                    html = '<tr><td>'+ name +'</td><td></td><td></td><td class="warning">未找到这个月的打卡记录</td><td></td><td></td></tr>'
+                } else {
+                    for(var i = 0; i < workTable.length; ++i ){
+                        clockObj = clockTable[i];
+                        workObj = workTable[i];
+                        if( clockObj.am1 ){
+
+                        }
+                    }
+                }
+                $('#output').append($(html));
+            }
+
+
+
+            var person,
+                name,
+                clockTable,
+                workTable;
+            for( var i = 0; i < persons.length; ++i ){
+                person = persons[i];
+                name = person.name;
+                workTable = person.workTable;
+                clockTable = getClockTable(clockPersons,name );
+                if( name === '值夜' || name === '值班' ){continue}
+                statPerson(name,workTable,clockTable,mode);
+            }
         }
         stat(mode,persons,clockPersons,names);
     }

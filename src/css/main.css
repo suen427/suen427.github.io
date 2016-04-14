@@ -422,7 +422,10 @@ input {
     width: 400px;
     margin: 20px;
 }
-
+.warning {
+    color: #DC4F52;
+    font-weight: bold;
+}
 
 
 
