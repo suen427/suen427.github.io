@@ -407,7 +407,7 @@ MonthUtil.prototype = {
             that.editable = false;
         });
         //document.addEventListener('click', function (e) {
-        $(document).on('click','.table',function (e) {
+        $(document).on('click',function (e) {
             if(!that.editable){return}
             var jobs = that.jobs;
             var target = e.target;
@@ -443,7 +443,7 @@ MonthUtil.prototype = {
             for( var i = 0; i < selectDown.length; ++i ){
                 selectDown[i].parentNode.removeChild(selectDown[i]);
             }
-
+            if( $(target).parents('#table').length < 1){return}
             if(target.nodeName.toLowerCase() === 'td'){
                 if( target.parentNode.className.indexOf('C')>-1 ) {
                     var html = '<ul class="select-down">';
@@ -452,7 +452,7 @@ MonthUtil.prototype = {
                     }
                     html += '<li>空</li></ul>';
                 } else {
-                    var html = '<ul class="select-down"><li>'+jobs[0]+'</li><li>'+jobs[1]+'</li></ul>';
+                    var html = '<ul class="select-down"><li>'+jobs[0]+'</li><li>'+jobs[1]+'</li><li>空</li></ul>';
                 }
                 target.innerHTML = target.innerHTML+html;
             }
@@ -1268,37 +1268,119 @@ function clone(obj) {
                 return null
             }
             function statPerson(name,workTable,clockTable,mode){
-                var html,
+                var result = {messages:[],states: [0,0,0,0]},
+                    states = result.states,
+                    isSummer = mode == 'summer',
+                    isWinter = !isSummer,
+                    html,
                     clockObj,
-                    workObj;
+                    workObj,
+                    am1,am2,am3,am4,am5,
+                    pm1,pm2,pm3,pm4,pm5,pm6,pm7,
+                    morning,afternoon,isLate,isLeave,
+                    month = parseInt( $('#input')[0].innerHTML.split('月份')[1].substr(1,3)) || new Date().getMonth() ;
                 mode = mode || 'summer';
                 if(!clockTable){
-                    html = '<tr><td>'+ name +'</td><td></td><td></td><td class="warning">未找到这个月的打卡记录</td><td></td><td></td></tr>'
+                    result.err = '未找到这个月的打卡记录';
                 } else {
                     for(var i = 0; i < workTable.length; ++i ){
                         clockObj = clockTable[i];
                         workObj = workTable[i];
-                        if( clockObj.am1 ){
-
+                        am1 = clockObj.am1;
+                        am2 = clockObj.am2;
+                        am3 = clockObj.am3;
+                        am4 = clockObj.am4;
+                        am5 = clockObj.am5;
+                        pm1 = clockObj.pm1;
+                        pm2 = clockObj.pm2;
+                        pm3 = clockObj.pm3;
+                        pm4 = clockObj.pm4;
+                        pm5 = clockObj.pm5;
+                        pm6 = clockObj.pm6;
+                        pm7 = clockObj.pm7;
+                        if( workObj.type == '休' ){
+                            continue
+                        }
+                        morning =  (am1 || am2) || ( am3 && isSummer);
+                        isLate = (!morning) && (am3 || am4 || am5);
+                        afternoon = (pm7 || pm6 || pm5) || ( pm4 && isWinter);
+                        isLeave = (!afternoon) && (pm1 || pm2 || pm3 || pm4 || pm5);
+                        if( !( morning || afternoon )){
+                            result.messages.push([month+'月'+(i+1)+'日全天','未打卡',isLate,isLeave]);
+                            states[2] = states[2]+1;
+                            states[3] = states[3]+1;
+                            if(isLate){states[0] = states[0]+1;}
+                            if(isLeave){states[1] = states[1]+1;}
+                            continue
+                        }
+                        if( !morning ){
+                            result.messages.push([month+'月'+(i+1)+'日'+ (isSummer?'9:00':'8:30'),'未打卡上班',isLate,isLeave]);
+                            states[2] = states[2]+1;
+                            if(isLate){states[0] = states[0]+1;}
+                            continue
+                        }
+                        if( !afternoon ){
+                            result.messages.push([month+'月'+(i+1)+'日'+ (isSummer?'17:30':'17:00'),'未打卡下班',isLate,isLeave]);
+                            states[3] = states[3]+1;
+                            if(isLeave){states[1] = states[1]+1;}
+                            continue
                         }
                     }
                 }
-                $('#output').append($(html));
+                return result;
             }
-
-
-
+            function outputInfo(name,personInfo,infoTable,statisticTable){
+                var html = '',
+                    positions = {
+                        '戎超群':'物业客服专员',
+                        '吴丹丹':'物业客服专员',
+                        '叶佳莹':'物业客服专员',
+                        '张智':'物业客服专员',
+                        '夏雨':'物业客服专员',
+                        '司超':'物业秩序维护主管',
+                        '宓雪玲': '物业保洁班长',
+                        '吴艳': '物业客服经理',
+                        '物业库管员': '物业库管员',
+                        '邬凯': '物业项目经理',
+                        '向前': '物业工程主管',
+                        '谢井平': '物业保洁员'
+                    },
+                    temp = ['<tr><td>',name,'</td><td>',positions[name],'</td><td>','异常时间段','</td><td>','异常事件','</td><td></td><td></td><td>','','</td>'],
+                    mesags = personInfo.messages,
+                    mesag,
+                    states = personInfo.states;
+                if ( personInfo.err ){
+                    temp[5] = '';
+                    temp[7] = '<spam class="warning">'+personInfo.err+'</span>';
+                    html = temp.join('');
+                    $(infoTable).append(html);
+                } else{
+                    for(var i = 0; i < mesags.length; ++i ){
+                        mesag = mesags[i];
+                        temp[5] = mesag[0];
+                        temp[7] = mesag[1];
+                        temp[9] = (mesag[2]?'迟到':'') + (mesag[3]?'早退':'');
+                        html += temp.join('');
+                    }
+                    $(infoTable).append(html);
+                    $(statisticTable).append('<tr><td>'+name+'</td><td>'+states[0]+'</td><td>'+states[1]+'</td><td>'+states[2]+'</td><td>'+states[3]+'</td></tr>');
+                }
+            }
+            $('#output').html('<thead><tr><th>考勤异常人员姓名</th><th>岗位</th><th>异常时间段</th><th>异常事件</th><th>异常缘由</th><th>直接上级签核</th><th>备注</th></tr></thead>');
+            $('#statistic').html('<thead><tr><th>姓名</th><th>迟到</th><th>早退</th><th>早上未打卡</th><th>晚上未打卡</th></tr></thead>');
             var person,
                 name,
                 clockTable,
-                workTable;
+                workTable,
+                personInfo;
             for( var i = 0; i < persons.length; ++i ){
                 person = persons[i];
                 name = person.name;
                 workTable = person.workTable;
                 clockTable = getClockTable(clockPersons,name );
                 if( name === '值夜' || name === '值班' ){continue}
-                statPerson(name,workTable,clockTable,mode);
+                personInfo = statPerson(name,workTable,clockTable,mode);
+                outputInfo(name,personInfo,'#output','#statistic');
             }
         }
         stat(mode,persons,clockPersons,names);

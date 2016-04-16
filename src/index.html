@@ -57,7 +57,7 @@
             </div>
             <div class="clearfix">
                 <div class="l output-wrap">
-                    <h2>表1：考勤异常事件<button class="btn-base btn-confirm btn-gt3-chars r">选中表1</button></h2>
+                    <h2>表1：考勤异常事件<button class="btn-base btn-confirm btn-gt3-chars r" onclick="window.getSelection().selectAllChildren($('#output')[0]);">选中表1</button></h2>
                     <table id="output" class="table">
                         <thead>
                         <tr><th>考勤异常人员姓名</th>
@@ -65,12 +65,13 @@
                             <th>异常时间段</th>
                             <th>异常事件</th>
                             <th>异常缘由</th>
-                            <th>直接上级签核</th></tr>
+                            <th>直接上级签核</th>
+                            <th>备注</th></tr>
                         </thead>
                     </table>
                 </div>
                 <div class="l statistic-wrap">
-                    <h2>表2：异常数据统计<button class="btn-base btn-confirm btn-gt3-chars r">选中表2</button></h2>
+                    <h2>表2：异常数据统计<button class="btn-base btn-confirm btn-gt3-chars r"  onclick="window.getSelection().selectAllChildren($('#statistic')[0]);">选中表2</button></h2>
                     <table id = 'statistic'  class="table">
                         <thead>
                         <tr><th>姓名</th>
@@ -82,7 +83,7 @@
                     </table>
                 </div>
             </div>
-            <div id="input" style="/*display:none;*/"></div>
+            <div id="input" style="display:none;"></div>
         </div>
 
         <div id="advanceDailog" class="dailog dn">
