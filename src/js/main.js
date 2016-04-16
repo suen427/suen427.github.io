@@ -1237,7 +1237,7 @@ function clone(obj) {
         }
         var persons = [],
             monthLength = new MonthUtil({
-                month:month-1
+                monthNum:month-1
             }).monthLength,
             j= 0,
             personWorkTable;
