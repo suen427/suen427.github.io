@@ -92,13 +92,31 @@ var ranges = oo[1];
 
 /* original data */
 var data = oo[0];
-var ws_name = "龙湖班表";
-console.log(data);
+var ws_name = id == "table" ?"龙湖班表":"考勤异常统计表";
+//console.log(data);
 
 var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
 
 /* add ranges to worksheet */
 ws['!merges'] = ranges;
+var wscols1 = [
+	{wch:5},
+	{wch:7}
+],
+wscols2 = [
+	{wch:20},
+	{wch:20},
+	{wch:16},
+	{wch:20},
+	{wch:20},
+	{wch:15},
+	{wch:12}
+];
+for(var i = 0; i < 35;++i) {
+	wscols1.push({wch:4});
+	wscols1.push({wch:4});
+}
+ws['!cols'] = id == "table" ? wscols1:wscols2;
 
 /* add worksheet to workbook */
 wb.SheetNames.push(ws_name);
@@ -106,5 +124,5 @@ wb.Sheets[ws_name] = ws;
 
 var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary',cellStyles: true});
 
-saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), "2016年龙湖香醍漫步物业中心排班表.xlsx")
+saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}),id == "table" ? "2016年龙湖香醍漫步物业中心排班表.xlsx":"香醍漫步项目考勤异常统计表.xlsx")
 }

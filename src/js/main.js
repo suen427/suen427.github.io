@@ -484,7 +484,8 @@ MonthUtil.prototype = {
             this.menbersC = menbersC;
             this.haveScheduled = false;
         },
-        setSchedule: function(){ // 设置type为C的员工的班表
+        setSchedule: function(){
+            // 设置type为C的员工的班表
             //this.getPreSetting('table');
             for(var i = 0; i < this.menbers.length; i++){
                 this.menbers[i].setSchedule();
@@ -639,7 +640,8 @@ MonthUtil.prototype = {
         print: function (id) {
             var monthUtil = this.monthUtil;
             var jobs = this.jobs;
-            var html = '<thead><tr><th colspan="5">项目：香醍漫步</th><th colspan="5">部门：客服中心</th>' +
+            var html = '<thead><tr><th colspan="'+ (this.monthUtil.monthLength + 3) +'" class="header">排班表</th></tr>' +
+                    '<tr><th colspan="5">项目：香醍漫步</th><th colspan="5">部门：客服中心</th>' +
                     '<th colspan="5">所属月份：' +
                     (monthUtil.month.getMonth()+1) +
                     '月</th><th colspan="5">制表人：</th><th colspan="5">部门负责人：</th>' +
@@ -679,7 +681,8 @@ MonthUtil.prototype = {
         printBlankTable: function (id) {
             var monthUtil = this.monthUtil;
             var jobs = this.jobs;
-            var html = '<thead><tr><th colspan="5">项目：香醍漫步</th><th colspan="5">部门：客服中心</th>' +
+            var html = '<thead><tr><th colspan="'+ (this.monthUtil.monthLength + 3 + jobs.length) +'" class="header">排班表</th></tr>' +
+                    '<tr><th colspan="5">项目：香醍漫步</th><th colspan="5">部门：客服中心</th>' +
                     '<th colspan="5">所属月份：' +
                     (monthUtil.month.getMonth()+1) +
                     '月</th><th colspan="5">制表人：</th><th colspan="5">部门负责人：</th>' +
@@ -961,7 +964,9 @@ MonthUtil.prototype = {
                         tds[i].outerHTML = '<td>B</td><td>-</td>';
                     }
                 }else if(tds[i].innerHTML == ""){
-                    tds[i].outerHTML = '<td></td><td></td>';
+                    if(tds[i].parentNode.className.indexOf('zhiye')  == -1){
+                        tds[i].outerHTML = '<td></td><td></td>';
+                    }
                 }
             }
 
@@ -972,10 +977,14 @@ MonthUtil.prototype = {
             html = html.replace( reg1, '<th colspan="2">$1日');
             html = html.replace( reg2, '<th colspan="2">周$1');
             html = html.replace( reg3, '<th>班次</th><th>岗位');
-            html = html.replace( /<th colspan="12"><\/th>/, '<th colspan="42"><\/th>');
-            html = html.replace( /<th colspan="13"><\/th>/, '<th colspan="44"><\/th>');
-            html = html.replace( /<th colspan="11"><\/th>/, '<th colspan="40"><\/th>');
-            html = html.replace( /<th colspan="10"><\/th>/, '<th colspan="38"><\/th>');
+            html = html.replace( /<th colspan="34"/, '<th colspan="65"');
+            html = html.replace( /<th colspan="33"/, '<th colspan="63"');
+            html = html.replace( /<th colspan="39"/, '<th colspan="65"');
+            html = html.replace( /<th colspan="38"/, '<th colspan="63"');
+            html = html.replace( /<th colspan="12"><\/th>/, '<th colspan="38"><\/th>');
+            html = html.replace( /<th colspan="13"><\/th>/, '<th colspan="40"><\/th>');
+            html = html.replace( /<th colspan="11"><\/th>/, '<th colspan="36"><\/th>');
+            html = html.replace( /<th colspan="10"><\/th>/, '<th colspan="34"><\/th>');
 
             table.innerHTML = html;
             this.isLongTable = true;
@@ -1098,23 +1107,6 @@ function clone(obj) {
         reader.onload = function(e) {
             var data = e.target.result;
             window.workTables = type.read(data, {type: 'binary'});
-            /*sheets = workTables.Sheets;
-            sheetNames = workTables.SheetNames;
-            for( var i = 0; i < sheetNames.length; ++i ){
-                if( sheetNames[i].indexOf(month+'月')>-1 || sheetNames[i].indexOf(monthZh[month-1])>-1 ){
-                    if(month<3 && sheetNames[i].indexOf(month+10+'月') === -1 && sheetNames[i].indexOf(monthZh[month+9]) === -1){
-                        sheetName = sheetNames[i];
-                        sheets = sheets[sheetName];
-                        return
-                    } else if(month>2){
-                        sheetName = sheetNames[i];
-                        sheets = sheets[sheetName];
-                        return
-                    }
-                }
-            }
-            sheetName = sheetNames[sheetNames.length-1];
-            sheet = sheets[sheetName];*/
         };
         reader.readAsBinaryString(file);
     }
@@ -1236,9 +1228,10 @@ function clone(obj) {
             return
         }
         var persons = [],
-            monthLength = new MonthUtil({
+            monthUtil = new MonthUtil({
                 monthNum:month-1
-            }).monthLength,
+            }),
+            monthLength = monthUtil.monthLength,
             j= 0,
             personWorkTable;
         for( i = 0; i < names.length; ++i ){
@@ -1366,7 +1359,10 @@ function clone(obj) {
                     $(statisticTable).append('<tr><td>'+name+'</td><td>'+states[0]+'</td><td>'+states[1]+'</td><td>'+states[2]+'</td><td>'+states[3]+'</td></tr>');
                 }
             }
-            $('#output').html('<thead><tr><th>考勤异常人员姓名</th><th>岗位</th><th>异常时间段</th><th>异常事件</th><th>异常缘由</th><th>直接上级签核</th><th>备注</th></tr></thead>');
+            $('#output').html('<thead><tr><th colspan="6">香醍漫步 项目 客服中心部门考勤异常统计表（'+
+                monthUtil.month.getFullYear() +'年'+  (monthUtil.month.getMonth() + 1) +'月）</th>' +
+                '<th></th></tr><tr><th>考勤异常人员姓名</th><th>岗位</th><th>异常时间段</th>' +
+                '<th>异常事件</th><th>异常缘由</th><th>直接上级签核</th><th>备注</th></tr></thead>');
             $('#statistic').html('<thead><tr><th>姓名</th><th>迟到</th><th>早退</th><th>早上未打卡</th><th>晚上未打卡</th></tr></thead>');
             var person,
                 name,

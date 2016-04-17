@@ -39,7 +39,10 @@
                 <button class="btn-base btn-edit btn-gt3-chars" id="convert">转换表格</button>
                 <button class="btn-base btn-edit btn-2-chars" id="advanced">高级</button>
 
-                <button class="icon-btn r m5" onclick="doit();"><span class="icon-16-16 icon-download"></span>导出EXCEL</button>
+                <button class="icon-btn r m5" onclick="saveScheduleTable();"><span
+                        class="icon-16-16 icon-download"></span>导出EXCEL</button>
+                <button class="btn-base btn-confirm btn-gt3-chars r"
+                        onclick="window.getSelection().selectAllChildren($('#table')[0]);">选中班表</button>
             </div>
 
             <table id="table" class="table"></table>
@@ -57,9 +60,16 @@
             </div>
             <div class="clearfix">
                 <div class="l output-wrap">
-                    <h2>表1：考勤异常事件<button class="btn-base btn-confirm btn-gt3-chars r" onclick="window.getSelection().selectAllChildren($('#output')[0]);">选中表1</button></h2>
+                    <h2>
+                        表1：考勤异常事件
+                        <button class="icon-btn r m5" style="font-size: 12px;font-weight: normal;"
+                                onclick="saveAttendanceTable()"><span class="icon-16-16 icon-download"></span>导出EXCEL</button>
+                        <button class="btn-base btn-confirm btn-gt3-chars r"
+                                onclick="window.getSelection().selectAllChildren($('#output')[0]);">选中表1</button>
+                    </h2>
                     <table id="output" class="table">
                         <thead>
+                        <tr><th colspan="6">香醍漫步 项目 客服中心部门考勤异常统计表</th><th></th></tr>
                         <tr><th>考勤异常人员姓名</th>
                             <th>岗位</th>
                             <th>异常时间段</th>
@@ -123,7 +133,8 @@
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
         <script>
-            function doit() { export_table_to_excel('table'); }
+            function saveScheduleTable() { export_table_to_excel('table'); }
+            function saveAttendanceTable() { export_table_to_excel('output'); }
         </script>
     </body>
 </html>

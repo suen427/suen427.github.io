@@ -152,6 +152,9 @@ ul.tab li.active, ul.tab li:hover {
     text-align: center;
     border: 1px solid #D7D7D7;
 }
+.table .header {
+    font-size: 24px;
+}
 .table thead {
     background: #F4F4F4 none repeat scroll 0% 0%;
     color: #929292;
@@ -161,7 +164,7 @@ ul.tab li.active, ul.tab li:hover {
     height: 30px;
 }
 .table thead tr:first-child {
-    text-align: left;
+    /*text-align: left;*/
 }
 .table thead tr:first-child th {
     padding-left: 5px;
@@ -426,7 +429,6 @@ input {
     color: #DC4F52;
     font-weight: bold;
 }
-
 
 
 
