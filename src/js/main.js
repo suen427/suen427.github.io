@@ -923,7 +923,7 @@ MonthUtil.prototype = {
 
             var names = [];
             var name = '';
-            for( i = 0 ; i < trs.length; ++i ){
+            for( i = 5 ; i < trs.length; ++i ){
                 name = trs[i].getElementsByTagName('th')[1].innerHTML;
                 names.push(name);
             }
@@ -931,7 +931,7 @@ MonthUtil.prototype = {
                 if( tables.length < 1 ){ return }
                 n = names.indexOf(menbers[i].name);
                 if( n === -1 ){ break }
-                tds = trs[n].getElementsByTagName('td');
+                tds = trs[n+5].getElementsByTagName('td');
                 table = tables.splice(Math.floor(Math.random()*100)%tables.length,1)[0];
                 table = table.slice((firstDay+6)%7,(firstDay+6)%7+monthLength);
                 for( j = 0; j < monthLength; ++j ){
@@ -1307,13 +1307,13 @@ function clone(obj) {
                             continue
                         }
                         if( !morning ){
-                            result.messages.push([month+'月'+(i+1)+'日'+ (isSummer?'9:00':'8:30'),'未打卡上班',isLate,isLeave]);
+                            result.messages.push([month+'月'+(i+1)+'日上午'+ (isSummer?'9:00':'8:30'),'未打卡上班',isLate,isLeave]);
                             states[2] = states[2]+1;
                             if(isLate){states[0] = states[0]+1;}
                             continue
                         }
                         if( !afternoon ){
-                            result.messages.push([month+'月'+(i+1)+'日'+ (isSummer?'17:30':'17:00'),'未打卡下班',isLate,isLeave]);
+                            result.messages.push([month+'月'+(i+1)+'日下午'+ (isSummer?'17:30':'17:00'),'未打卡下班',isLate,isLeave]);
                             states[3] = states[3]+1;
                             if(isLeave){states[1] = states[1]+1;}
                             continue
