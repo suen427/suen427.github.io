@@ -65,12 +65,12 @@ MonthUtil.prototype = {
                 0,1,1,1,1,1,0,
                 0,1,1,1,1,1,0,
                 0,1,1,1,1,1,0],
-            tableB = [0,1,1,1,1,1,1,
+            tableB = [0,1,1,1,1,1,0,
                 0,1,1,1,1,1,1,
-                0,1,1,1,1,1,1,
-                0,1,1,1,1,1,1,
-                0,1,1,1,1,1,1,
-                0,1,1,1,1,1,1];
+                0,1,1,1,1,1,0,
+                0,1,1,1,1,1,0,
+                0,1,1,1,1,1,0,
+                0,1,1,1,1,1,0];
         this.tableA = tableA.slice(this.firstDay,this.firstDay+this.monthLength);
         this.tableB = tableB.slice(this.firstDay,this.firstDay+this.monthLength);
 
@@ -153,8 +153,9 @@ MonthUtil.prototype = {
                     this.table[i] = this.table[i]>-1?this.table[i]:this.monthUtil.tableA[i];
                 }
             }else if(this.type == "B"){
-                for( i = 0; i<this.monthUtil.monthLength; i++){
-                    this.table[i] = this.table[i]>-1?this.table[i]:this.monthUtil.tableB[i];
+                for(var i = 0; i<this.monthUtil.monthLength; i++){
+                    this.computeStat();
+                    this.table[i] = this.table[i]>-1?this.table[i]:((this.stat[this.jobs[0]] >= this.holiday && this.monthUtil.tableB[i]==0)? 1:this.monthUtil.tableB[i]);
                 }
             }
             this.computeStat();
