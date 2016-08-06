@@ -994,19 +994,14 @@ MonthUtil.prototype = {
             jobs:["休","岗1","岗2","岗3","岗4"],
             persons:[
                 {name:"戎超群",type:"C"},
-                {name:"吴艳",type:"C"},
-                {name:"吴丹丹",type:"C"},
+                {name:"蒲磾",type:"C"},
                 {name:"叶佳莹",type:"C"},
                 {name:"张智",type:"C"},
-                {name:"夏雨",type:"C"},
-                {name:"谢素梅",type:"A"},
                 {name:"邬凯",type:"A"},
-                {name:"向前",type:"A"},
-                {name:"司超",type:"A"},
-                {name:"谢素梅",type:"A"},
+                {name:"吴艳",type:"A"},
                 {name:"沈桂玲",type:"B"},
                 {name:"宓雪玲",type:"B"},
-                {name:"谢少华",type:"B"}
+                {name:"谢井平",type:"B"}
             ],
             monthSetting:{
                 //yearNum:2016,
