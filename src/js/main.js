@@ -1255,6 +1255,7 @@ function clone(obj) {
         }
         function stat(mode, persons, clockPersons, names){
             function getClockTable(clockPersons,name ){
+                if (name == "蒲磾") name = "蒲蒂";
                 for( var i = 0; i < clockPersons.length; ++i ){
                     if( name === clockPersons[i].name ){
                         return clockPersons[i].timeFlags;
@@ -1382,7 +1383,7 @@ function clone(obj) {
                 name = person.name;
                 workTable = person.workTable;
                 clockTable = getClockTable(clockPersons,name );
-                if( name === '值夜' || name === '值班' ){continue}
+                if( /班次|岗位|说明|特殊/.test(name) ){continue}
                 personInfo = statPerson(name,workTable,clockTable,mode);
                 outputInfo(name,personInfo,'#output','#statistic');
             }
