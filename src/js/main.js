@@ -1109,6 +1109,12 @@ function clone(obj) {
     $('#workTable').on('change',readWorkTable);
 
     $('#analyze').on('click', analyze );
+
+    if( ~[5,6,7,8,9].indexOf(new Date().getMonth()) ){
+        $('#season').addClass('opened');
+    } else{
+        $('#season').removeClass('opened');
+    }
     function analyze(){
         var mode = $('#season').hasClass('opened')? 'summer':'winter',
             monthZh = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
@@ -1287,13 +1293,19 @@ function clone(obj) {
                         pm5 = clockObj.pm5;
                         pm6 = clockObj.pm6;
                         pm7 = clockObj.pm7;
-                        if( workObj.type == '休' ){
-                            continue
-                        }
+
                         morning =  (am1 || am2) || ( am3 && isSummer);
                         isLate = (!morning) && (am3 || am4 || am5);
                         afternoon = (pm7 || pm6 || pm5) || ( pm4 && isWinter);
                         isLeave = (!afternoon) && (pm1 || pm2 || pm3 || pm4 || pm5);
+
+                        if( workObj.type == '休' ){
+                            if(am1||am2||am3||am4||am5||pm1||pm2||pm3||pm4||pm5||pm6||pm7){
+                                result.messages.push([month+'月'+(i+1)+'日','<span class="green">休息日打卡</span>', false, false, true]);
+                            }
+                            continue
+                        }
+
                         if( !( morning || afternoon )){
                             result.messages.push([month+'月'+(i+1)+'日全天','未打卡',isLate,isLeave]);
                             states[2] = states[2]+1;
@@ -1340,7 +1352,7 @@ function clone(obj) {
                     states = personInfo.states;
                 if ( personInfo.err ){
                     temp[5] = '';
-                    temp[7] = '<spam class="warning">'+personInfo.err+'</span>';
+                    temp[7] = '<span class="warning">'+personInfo.err+'</span>';
                     html = temp.join('');
                     $(infoTable).append(html);
                 } else{
@@ -1377,6 +1389,7 @@ function clone(obj) {
         }
         stat(mode,persons,clockPersons,names);
     }
+
 }();
 
 function strPlus(str,n){
