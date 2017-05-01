@@ -124,5 +124,5 @@ wb.Sheets[ws_name] = ws;
 
 var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary',cellStyles: true});
 
-saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}),id == "table" ? "2016年龙湖香醍漫步物业中心排班表.xlsx":"香醍漫步项目考勤异常统计表.xlsx")
+saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}),id == "table" ? "香醍漫步物业中心排班表.xlsx":"香醍漫步项目考勤异常统计表 （适用于非OA打卡的情况）.xlsx")
 }

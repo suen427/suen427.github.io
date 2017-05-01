@@ -1162,6 +1162,7 @@ function clone(obj) {
             for(var i = 20; i < 36; ++i){
                 times = tds[i].innerHTML;
                 r.timeFlags.push({
+                    times:times,
                     am1 : /0[567]:\d\d/.test(times),
                     am2 : /08:[012]\d/.test(times),//8点-8点半
                     am3 : /08:[345]\d/.test(times),//8点半-9点
@@ -1179,6 +1180,7 @@ function clone(obj) {
             for(var i = 54; i < 69; ++i){
                 times = tds[i].innerHTML;
                 r.timeFlags.push({
+                    times:times,
                     am1 : /0[567]:\d\d/.test(times),
                     am2 : /08:[012]\d/.test(times),//8点-8点半
                     am3 : /08:[345]\d/.test(times),//8点半-9点
@@ -1300,9 +1302,15 @@ function clone(obj) {
                         afternoon = (pm7 || pm6 || pm5) || ( pm4 && isWinter);
                         isLeave = (!afternoon) && (pm1 || pm2 || pm3 || pm4 || pm5);
 
-                        if( workObj.type == '休' ){
-                            if(am1||am2||am3||am4||am5||pm1||pm2||pm3||pm4||pm5||pm6||pm7){
-                                result.messages.push([month+'月'+(i+1)+'日','<span class="green">休息日打卡</span>', false, false, true]);
+                        if( /休|假/.test(workObj.type) ){
+                            var am = am1||am2||am3||am4||am5
+                            var pm = pm1||pm2||pm3||pm4||pm5||pm6||pm7
+                            if(am && pm){
+                                result.messages.push([month+'月'+(i+1)+'日','<span class="green">休息日打卡<br>'+ clockObj.times +'</span>', false, false, true]);
+                            } else if(am) {
+                                result.messages.push([month+'月'+(i+1)+'日','<span class="green">休息日上午打卡<br>'+ clockObj.times +'</span>', false, false, true]);
+                            } else if(pm) {
+                                result.messages.push([month+'月'+(i+1)+'日','<span class="green">休息日下午打卡<br>'+ clockObj.times +'</span>', false, false, true]);
                             }
                             continue
                         }
@@ -1345,7 +1353,10 @@ function clone(obj) {
                         '物业库管员': '物业库管员',
                         '邬凯': '物业项目经理',
                         '向前': '物业工程主管',
-                        '谢井平': '物业保洁员'
+                        '沈桂玲': '物业库管员',
+                        '谢井平': '物业保洁员',
+                        '蒋叶武':'物业秩序主管',
+                        '蒲磾':'物业客服专员'
                     },
                     temp = ['<tr><td>',name,'</td><td>',positions[name],'</td><td>','异常时间段','</td><td>','异常事件','</td><td></td><td></td><td>','','</td>'],
                     mesags = personInfo.messages,
@@ -1387,6 +1398,8 @@ function clone(obj) {
                 personInfo = statPerson(name,workTable,clockTable,mode);
                 outputInfo(name,personInfo,'#output','#statistic');
             }
+            $('#output').append('<tr><td colspan="4">部门负责人签核</td><td colspan="3"></td></tr><tr>' +
+                '<td colspan="6">备注：考勤异常适用于因工作安排或考勤设备故障无法正常打上下班卡/签到。</td><td></td></tr>')
         }
         stat(mode,persons,clockPersons,names);
     }
